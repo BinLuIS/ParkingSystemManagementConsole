@@ -1,10 +1,10 @@
-#language: node_js
-#node_js:
-#  - "stable"
+language: node_js
+node_js:
+  - "stable"
 #sudo: false
-#cache:
-#  directories:
-#    - node_modules
+cache:
+  directories:
+    - node_modules
 script:
 #  - npm run build
    - echo "npm test temporarily disabled"
