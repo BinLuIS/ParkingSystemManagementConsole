@@ -7,7 +7,7 @@
 #    - node_modules
 script:
 #  - npm run build
-   - npm test temporarily disabled
+   - echo "npm test temporarily disabled"
 deploy:
   provider: heroku
   api_key:
