@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 export default class TablePage extends Component {
   state={abc:'',age:''}
   getAllTodo=()=>{
-    fetch("http://parkingsystem.herokuapp.com/employees/abc", {
+    fetch("https://parkingsystem.herokuapp.com/employees/abc", {
             method: 'GET', 
             mode: 'cors',
         }).then(res => res.json())
