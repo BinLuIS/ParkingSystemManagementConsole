@@ -6,6 +6,7 @@ import {Route, Link,Switch} from 'react-router-dom'
 import WelcomePage from './components/WelcomePage';
 import TablePage from './components/TablePage'
 import employeePage from './components/employeePage';
+import parkingLotPage from './components/parkingLotPage';
 
 const { Header, Sider, Content } = Layout;
 class App extends Component {
@@ -78,9 +79,11 @@ class App extends Component {
             {/* <p style={{textAlign: 'center',marginTop:'15rem',color:'#1890ff', fontSize:'2rem'}}>Welcome to our new Web APP</p> */}
             <Switch>
               <Route path="/" exact component={()=><h1>home page</h1>}></Route>
-              <Route path="/welcomePage" component={WelcomePage}></Route>
-              <Route path="/tablePage" component={TablePage}></Route>
               <Route path="/employeePage" component={employeePage}></Route>
+              <Route path="/parkingLotPage" component={parkingLotPage}></Route>
+              {/* <Route path="/parkingClerkPage" component={parkingClerkPage}></Route>
+              <Route path="/dashboardPage" component={dashboardPage}></Route>
+              <Route path="/orderPage" component={orderPage}></Route> */}
               <Route path="/nav3Page" component={()=><p style={{textAlign: 'center',marginTop:'15rem',color:'#1890ff', fontSize:'2rem'}}>Nav3 Page</p>}></Route>
           </Switch>
           </Content>

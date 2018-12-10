@@ -97,9 +97,9 @@ const TablePaginationActionsWrapped = withStyles(actionsStyles, { withTheme: tru
 );
 
 let counter = 0;
-function createData(employeeId, employeeName, email, phoneNumber, choice) {
+function createData(parkingLotId, parkingLotName, capacity, choice) {
     counter += 1;
-    return { id: counter, employeeId, employeeName, email, phoneNumber, choice };
+    return { id: counter, parkingLotId, parkingLotName, capacity, choice };
 }
 
 const styles = theme => ({
@@ -118,21 +118,22 @@ const styles = theme => ({
 class CustomPaginationActionsTable extends React.Component {
     state = {
         rows: [
-            createData(1, '張三', 'sanzhang@parkinglot.com', 13939391313),
-            createData(2, '李四', 'four@parkinglot.com', 13939391586),
-            createData(3, '李四', 'four@parkinglot.com', 13939391586),
-            createData(4, '李四', 'four@parkinglot.com', 13939391586),
-            createData(5, '李四', 'four@parkinglot.com', 13939391586),
-            createData(6, '李四', 'four@parkinglot.com', 13939391586),
-            createData(7, '李四', 'four@parkinglot.com', 13939391586),
-            createData(8, '李四', 'four@parkinglot.com', 13939391586),
-            createData(9, '李四', 'four@parkinglot.com', 13939391586),
-            createData(10, '李四', 'four@parkinglot.com', 13939391586),
-            createData(11, '李四', 'four@parkinglot.com', 13939391586),
-            createData(12, '李四', 'four@parkinglot.com', 13939391586),
-            createData(13, '李四', 'four@parkinglot.com', 13939391586),
-            createData(14, '李四', 'four@parkinglot.com', 13939391586),
-            createData(15, '李四', 'four@parkinglot.com', 13939391586),
+            createData(1, '停車場A', 10),
+            createData(2, '停車場B', 23),
+            createData(3, '停車場C', 49),
+            createData(4, '停車場D', 9),
+            createData(5, '停車場E', 13),
+            createData(6, '停車場F', 16),
+            createData(7, '停車場G', 5),
+            createData(8, '停車場H', 3),
+            createData(9, '停車場I', 22),
+            createData(10, '停車場J', 12),
+            createData(11, '停車場K', 17),
+            createData(12, '停車場L', 25),
+            createData(13, '停車場M', 66),
+            createData(14, '停車場N', 28),
+            createData(15, '停車場O', 38),
+           
            
         ],
         page: 0,
@@ -171,9 +172,8 @@ class CustomPaginationActionsTable extends React.Component {
                         <TableHead >
                             <TableRow style={{ background: '#1890ff' }}>
                                 <TableCell style={{ color: 'white' }}><b>ID</b></TableCell>
-                                <TableCell style={{ color: 'white' }}><b>姓名</b></TableCell>
-                                <TableCell style={{ color: 'white' }}><b>Email</b></TableCell>
-                                <TableCell style={{ color: 'white' }}><b>電話號碼</b></TableCell>
+                                <TableCell style={{ color: 'white' }}><b>名字</b></TableCell>
+                                <TableCell style={{ color: 'white' }}><b>大小</b></TableCell>
                                 <TableCell style={{ color: 'white' }}><b>操作</b></TableCell>
 
                             </TableRow>
@@ -184,11 +184,10 @@ class CustomPaginationActionsTable extends React.Component {
                                 return (
                                     <TableRow key={row.id}>
                                         <TableCell component="th" scope="row">
-                                            {row.employeeId}
+                                            {row.parkingLotId}
                                         </TableCell>
-                                        <TableCell>{row.employeeName}</TableCell>
-                                        <TableCell>{row.email}</TableCell>
-                                        <TableCell>{row.phoneNumber}</TableCell>
+                                        <TableCell>{row.parkingLotName}</TableCell>
+                                        <TableCell>{row.capacity}</TableCell>
                                         <TableCell><a href=" ">修改</a>|<a href=" "> 凍結</a></TableCell>
                                     </TableRow>
                                 );
