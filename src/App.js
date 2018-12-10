@@ -5,6 +5,7 @@ import { Layout, Menu, Icon } from 'antd';
 import {Route, Link,Switch} from 'react-router-dom'
 import WelcomePage from './components/WelcomePage';
 import TablePage from './components/TablePage'
+import employeePage from './components/employeePage';
 
 const { Header, Sider, Content } = Layout;
 class App extends Component {
@@ -30,21 +31,33 @@ class App extends Component {
           <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
           
             <Menu.Item key="1">
-            <Link to = "/welcomePage">
-              <Icon type="welcomePage" />
-              <span>Welcome Page</span>
+            <Link to = "/employeePage">
+              <Icon type="team" />
+              <span>員工管理</span>
               </Link>
             </Menu.Item>
             <Menu.Item key="2">
-            <Link to = "/tablePage">
-              <Icon type="table" />
-              <span>Table Page</span>
+            <Link to = "/parkingLotPage">
+              <Icon type="car" />
+              <span>停車場管理</span>
           </Link>
             </Menu.Item>
             <Menu.Item key="3">
-            <Link to = "/nav3Page">
-              <Icon type="upload" />
-              <span>nav 3</span>
+            <Link to = "/parkingClerkPage">
+              <Icon type="user" />
+              <span>停車員管理</span>
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="4">
+            <Link to = "/dashboardPage">
+              <Icon type="table" />
+              <span>停車場Dashboard</span>
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="5">
+            <Link to = "/orderPage">
+              <Icon type="form" />
+              <span>訂單管理</span>
               </Link>
             </Menu.Item>
           </Menu>
@@ -56,7 +69,7 @@ class App extends Component {
               type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
               onClick={this.toggle}
             />
-            <span>This is a Title</span>
+            
           </Header>
           <Content style={{
             margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280,
@@ -67,6 +80,7 @@ class App extends Component {
               <Route path="/" exact component={()=><h1>home page</h1>}></Route>
               <Route path="/welcomePage" component={WelcomePage}></Route>
               <Route path="/tablePage" component={TablePage}></Route>
+              <Route path="/employeePage" component={employeePage}></Route>
               <Route path="/nav3Page" component={()=><p style={{textAlign: 'center',marginTop:'15rem',color:'#1890ff', fontSize:'2rem'}}>Nav3 Page</p>}></Route>
           </Switch>
           </Content>
