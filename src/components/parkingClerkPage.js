@@ -189,7 +189,7 @@ class CustomPaginationActionsTable extends React.Component {
                                         <TableCell>{row.parkingClerkName}</TableCell>
                                         <TableCell>{row.phoneNumber}</TableCell>
                                         <TableCell>{row.parkingClerkStatus}</TableCell>
-                                        <TableCell><a href=" ">修改</a>|<a href=" "> 凍結</a></TableCell>
+                                        <TableCell><a href=" ">修改 </a>|<a href=" "> 凍結</a></TableCell>
                                     </TableRow>
                                 );
                             })}

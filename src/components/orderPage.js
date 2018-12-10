@@ -97,9 +97,9 @@ const TablePaginationActionsWrapped = withStyles(actionsStyles, { withTheme: tru
 );
 
 let counter = 0;
-function createData(employeeId, employeeName, email, phoneNumber, choice) {
+function createData(orderId, carNumber, requestType, status, choice) {
     counter += 1;
-    return { id: counter, employeeId, employeeName, email, phoneNumber, choice };
+    return { id: counter, orderId, carNumber, requestType, status, choice };
 }
 
 const styles = theme => ({
@@ -118,21 +118,21 @@ const styles = theme => ({
 class CustomPaginationActionsTable extends React.Component {
     state = {
         rows: [
-            createData(1, '張三', 'sanzhang@parkinglot.com', 13939391313),
-            createData(2, '李四', 'four@parkinglot.com', 13939391586),
-            createData(3, '李四', 'four@parkinglot.com', 13939391586),
-            createData(4, '李四', 'four@parkinglot.com', 13939391586),
-            createData(5, '李四', 'four@parkinglot.com', 13939391586),
-            createData(6, '李四', 'four@parkinglot.com', 13939391586),
-            createData(7, '李四', 'four@parkinglot.com', 13939391586),
-            createData(8, '李四', 'four@parkinglot.com', 13939391586),
-            createData(9, '李四', 'four@parkinglot.com', 13939391586),
-            createData(10, '李四', 'four@parkinglot.com', 13939391586),
-            createData(11, '李四', 'four@parkinglot.com', 13939391586),
-            createData(12, '李四', 'four@parkinglot.com', 13939391586),
-            createData(13, '李四', 'four@parkinglot.com', 13939391586),
-            createData(14, '李四', 'four@parkinglot.com', 13939391586),
-            createData(15, '李四', 'four@parkinglot.com', 13939391586),
+            createData(1, '粵A123456', '取車', '存取中'),
+            createData(2, '粵A159533', '存車', '存取中'),
+            createData(3, '粵A789153', '取車', '存取中'),
+            createData(4, '粵A962586', '取車', '存取中'),
+            createData(5, '粵A456789', '存車', '存取中'),
+            createData(6, '粵A258117', '取車', '存取中'),
+            createData(7, '粵A789126', '取車', '存取中'),
+            createData(8, '粵A965812', '存車', '無人處理'),
+            createData(9, '粵A120556', '取車', '無人處理'),
+            createData(10, '粵A456823', '取車', '無人處理'),
+            createData(11, '粵A375193', '存車', '無人處理'),
+            createData(12, '粵A100543', '取車', '無人處理'),
+            createData(13, '粵A459213', '存車', '無人處理'),
+            createData(14, '粵A415932', '取車', '無人處理'),
+            createData(15, '粵A721663', '取車', '無人處理'),
            
         ],
         page: 0,
@@ -171,9 +171,9 @@ class CustomPaginationActionsTable extends React.Component {
                         <TableHead >
                             <TableRow style={{ background: '#1890ff' }}>
                                 <TableCell style={{ color: 'white' }}><b>ID</b></TableCell>
-                                <TableCell style={{ color: 'white' }}><b>姓名</b></TableCell>
-                                <TableCell style={{ color: 'white' }}><b>Email</b></TableCell>
-                                <TableCell style={{ color: 'white' }}><b>電話號碼</b></TableCell>
+                                <TableCell style={{ color: 'white' }}><b>車牌號碼</b></TableCell>
+                                <TableCell style={{ color: 'white' }}><b>類型</b></TableCell>
+                                <TableCell style={{ color: 'white' }}><b>狀態</b></TableCell>
                                 <TableCell style={{ color: 'white' }}><b>操作</b></TableCell>
 
                             </TableRow>
@@ -184,12 +184,12 @@ class CustomPaginationActionsTable extends React.Component {
                                 return (
                                     <TableRow key={row.id}>
                                         <TableCell component="th" scope="row">
-                                            {row.employeeId}
+                                            {row.orderId}
                                         </TableCell>
-                                        <TableCell>{row.employeeName}</TableCell>
-                                        <TableCell>{row.email}</TableCell>
-                                        <TableCell>{row.phoneNumber}</TableCell>
-                                        <TableCell><a href=" ">修改 </a>|<a href=" "> 凍結</a></TableCell>
+                                        <TableCell>{row.carNumber}</TableCell>
+                                        <TableCell>{row.requestType}</TableCell>
+                                        <TableCell>{row.status}</TableCell>
+                                        <TableCell><a href=" ">指派</a></TableCell>
                                     </TableRow>
                                 );
                             })}
@@ -201,7 +201,7 @@ class CustomPaginationActionsTable extends React.Component {
                         </TableBody>
                         <TableFooter>
                             <TableRow>
-                                <TablePagination
+                                <TablePagination  
                                     rowsPerPageOptions={[10, 20, 30]}
                                     colSpan={3}
                                     count={rows.length}

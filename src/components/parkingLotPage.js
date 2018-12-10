@@ -188,7 +188,7 @@ class CustomPaginationActionsTable extends React.Component {
                                         </TableCell>
                                         <TableCell>{row.parkingLotName}</TableCell>
                                         <TableCell>{row.capacity}</TableCell>
-                                        <TableCell><a href=" ">修改</a>|<a href=" "> 凍結</a></TableCell>
+                                        <TableCell><a href=" ">修改 </a>|<a href=" "> 凍結</a></TableCell>
                                     </TableRow>
                                 );
                             })}
