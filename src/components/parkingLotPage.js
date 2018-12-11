@@ -117,29 +117,17 @@ const styles = theme => ({
 
 class CustomPaginationActionsTable extends React.Component {
     state = {
-        rows: [
-            createData(1, '停車場A', 10),
-            createData(2, '停車場B', 23),
-            createData(3, '停車場C', 49),
-            createData(4, '停車場D', 9),
-            createData(5, '停車場E', 13),
-            createData(6, '停車場F', 16),
-            createData(7, '停車場G', 5),
-            createData(8, '停車場H', 3),
-            createData(9, '停車場I', 22),
-            createData(10, '停車場J', 12),
-            createData(11, '停車場K', 17),
-            createData(12, '停車場L', 25),
-            createData(13, '停車場M', 66),
-            createData(14, '停車場N', 28),
-            createData(15, '停車場O', 38),
-           
-           
-        ],
+        rows: [],
         page: 0,
         rowsPerPage: 10,
     };
-
+    componentDidMount(){
+        fetch('https://parkingsystem.herokuapp.com/parkinglots/')
+        .then(results => results.json())
+        .then(res => {
+        this.setState({rows:res});
+        });
+        }
     handleChangePage = (event, page) => {
         this.setState({ page });
     };
@@ -152,6 +140,7 @@ class CustomPaginationActionsTable extends React.Component {
 	'creatParkingLot','width=600,height=400,left=200,top=200')}
 
     render() {
+        console.log(this.state.rows)
         const { classes } = this.props;
         const { rows, rowsPerPage, page } = this.state;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
@@ -183,13 +172,13 @@ class CustomPaginationActionsTable extends React.Component {
 
                         </TableHead>
                         <TableBody>
-                            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
+                            {this.state.rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
                                 return (
                                     <TableRow key={row.id}>
                                         <TableCell component="th" scope="row">
-                                            {row.parkingLotId}
+                                            {row.id}
                                         </TableCell>
-                                        <TableCell>{row.parkingLotName}</TableCell>
+                                        <TableCell>{row.name}</TableCell>
                                         <TableCell>{row.capacity}</TableCell>
                                         <TableCell><a href=" ">修改 </a>|<a href=" "> 凍結</a></TableCell>
                                     </TableRow>
