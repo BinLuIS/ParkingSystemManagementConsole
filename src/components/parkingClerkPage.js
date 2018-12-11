@@ -18,6 +18,7 @@ import Button from '@material-ui/core/Button';
 import { Input } from 'antd';
 import { Modal } from 'antd';
 import TextField from '@material-ui/core/TextField';
+import { message} from 'antd';
 
 const actionsStyles = theme => ({
     root: {
@@ -202,7 +203,9 @@ class CustomPaginationActionsTable extends React.Component {
         setTimeout(() => {
             this.setState({ visible: false });
             window.location.reload();
-        }, 1500)
+        }, 1500);
+        
+        
     }
 
 
@@ -283,6 +286,7 @@ class CustomPaginationActionsTable extends React.Component {
                 <Modal
                     visible={visible}
                     title= {<span><h2>新建停車員</h2></span>}
+                    title={<span><h2>新建停車員</h2></span>}
                     onOk={this.submitRequest}
                     onCancel={this.handleCancel}
                     footer={[
