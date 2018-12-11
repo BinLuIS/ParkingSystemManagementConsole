@@ -18,6 +18,14 @@ import Button from '@material-ui/core/Button';
 import { Input } from 'antd';
 import { Modal } from 'antd';
 import TextField from '@material-ui/core/TextField';
+import {
+    Form, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, AutoComplete,
+} from 'antd';
+
+const FormItem = Form.Item;
+const Option = Select.Option;
+const AutoCompleteOption = AutoComplete.Option;
+
 
 const actionsStyles = theme => ({
     root: {
@@ -122,18 +130,28 @@ class CustomPaginationActionsTable extends React.Component {
         rows: [],
         page: 0,
         rowsPerPage: 10,
-        loading: false,
         visible: false,
+        id: -1,
         name: '',
-        capacity: ''
+        capacity: '',
+        NotImportant: 1,
+        activeModal: null,
+        selectedClerkId: -1,
+        parkingclecks: [],
+
     };
-    componentDidMount(){
+    componentDidMount() {
         fetch('https://parkingsystem.herokuapp.com/parkinglots/')
-        .then(results => results.json())
-        .then(res => {
-        this.setState({rows:res});
-        });
-        }
+            .then(results => results.json())
+            .then(res => {
+                this.setState({ rows: res });
+            });
+        fetch('https://parkingsystem.herokuapp.com/parkingclerks/')
+            .then(results => results.json())
+            .then(res => {
+                this.setState({ parkingclecks: res });
+            });
+    }
     handleChangePage = (event, page) => {
         this.setState({ page });
     };
@@ -142,24 +160,32 @@ class CustomPaginationActionsTable extends React.Component {
         this.setState({ rowsPerPage: event.target.value });
     };
 
-    createParkingLot = ()=>{window.open('http://localhost:3000/createParkingLot',
-	'creatParkingLot','width=600,height=400,left=200,top=200')}
+    createParkingLot = () => {
+        window.open('http://localhost:3000/createParkingLot',
+            'creatParkingLot', 'width=600,height=400,left=200,top=200')
+    }
 
-    showModal = () => {
+    showModal = (type) => {
         this.setState({
             visible: true,
+            activeModal: type,
         });
+    }
+    passDatatoModal = (type, id, name, capacity) => {
+        this.setState({
+            id, name, capacity
+        })
+        this.showModal(type);
     }
 
     handleOk = () => {
-        this.setState({ loading: true });
         setTimeout(() => {
-            this.setState({ loading: false, visible: false });
+            this.setState({ visible: false });
         }, 3000);
     }
 
     handleCancel = () => {
-        this.setState({ visible: false });
+        this.setState({ visible: false, activeModal: null });
     }
 
     handleChange = name => event => {
@@ -181,23 +207,24 @@ class CustomPaginationActionsTable extends React.Component {
             })
             .then(res => res.json()).then(res => console.log(res))
         alert("Create Parking Lot Successfully")
-        this.setState({ loading: true });
+
         setTimeout(() => {
-            this.setState({ loading: false, visible: false });
+            this.setState({ visible: false });
         }, 400);
+        window.location.reload();
     }
 
 
     render() {
-        console.log(this.state.rows)
+        console.log(this.state.parkingclecks)
         const { classes } = this.props;
-        const { rows, rowsPerPage, page, loading, visible, capacity} = this.state;
+        const { rows, rowsPerPage, page, visible, capacity, activeModal, id, selectedClerkId } = this.state;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
         const Search = Input.Search;
         return (
             <Paper className={classes.root}>
                 <div>
-                    <Button style={{ padding: '10px', background: '#1890ff', color: 'white', marginTop: '10px', marginLeft: '10px', marginBottom: '10px' }} variant="contained" className={classes.button} onClick={this.showModal}>新建</Button>
+                    <Button style={{ padding: '10px', background: '#1890ff', color: 'white', marginTop: '10px', marginLeft: '10px', marginBottom: '10px' }} variant="contained" className={classes.button} onClick={() => this.showModal("Create")}>新建</Button>
                     <Search style={{ width: 200, float: 'right', marginTop: '10px', marginBottom: '10px', marginRight: '10px' }}
                         placeholder="輸入文字搜索"
                         onSearch={value => console.log(value)}
@@ -231,7 +258,7 @@ class CustomPaginationActionsTable extends React.Component {
                                         <TableCell>{row.name}</TableCell>
                                         <TableCell>{row.capacity}</TableCell>
                                         <TableCell>{row.parkingClerk}</TableCell>
-                                        <TableCell><a href=" ">修改 </a>|<a href=" "> 凍結 </a>|<a href=" "> 指派停車員</a></TableCell>
+                                        <TableCell><a>修改 </a>|<a> 凍結 </a>|<a onClick={() => this.passDatatoModal("Associate", row.id, row.name, row.capacity)}> 指派停車員</a></TableCell>
                                     </TableRow>
                                 );
                             })}
@@ -262,13 +289,13 @@ class CustomPaginationActionsTable extends React.Component {
                 </div>
                 {/* Creation Modal */}
                 <Modal
-                    visible={visible}
-                    title= {<span><h2>新建停車員</h2></span>}
+                    visible={activeModal === "Create"}
+                    title="新建停車員"
                     onOk={this.submitRequest}
                     onCancel={this.handleCancel}
                     footer={[
                         <Button key="back" onClick={this.handleCancel}>取消</Button>,
-                        <Button key="submit" type="primary" loading={loading} onClick={this.submitRequest}>
+                        <Button key="submit" type="primary" onClick={this.submitRequest}>
                             確認
                     </Button>,
                     ]}
@@ -299,6 +326,42 @@ class CustomPaginationActionsTable extends React.Component {
 
                     </form>
                 </Modal>
+                <Modal
+                    title="指派停車員"
+                    visible={activeModal === "Associate"}
+                    onOk={this.handleOk}
+                    onCancel={this.handleCancel}
+                    footer={[
+                        <Button key="back" onClick={this.handleCancel}>取消</Button>,
+                        <Button key="submit" type="primary"  >
+                            確認
+                    </Button>,
+                    ]}
+                >
+                    <Form layout="vertical">
+                        <FormItem label="ID">
+                            <Input value={this.state.id} disabled />
+                        </FormItem>
+                        <FormItem label="名字">
+                            <Input value={this.state.name} disabled />
+                        </FormItem>
+                        <FormItem label="大小">
+                            <Input value={this.state.capacity} disabled />
+                        </FormItem>
+                        <FormItem label="指派停車員">
+                            <Select >
+                                {this.state.parkingclecks.map(
+                                    parkingCleck=>{
+                                        return(<Option value={parkingCleck.name} key={parkingCleck.id}></Option>);
+                                       
+                                    }
+                                )}
+                            </Select>
+                        </FormItem>
+                    </Form>
+                </Modal>
+
+
             </Paper>
         );
     }

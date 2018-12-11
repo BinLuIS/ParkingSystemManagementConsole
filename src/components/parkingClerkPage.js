@@ -116,7 +116,6 @@ class CustomPaginationActionsTable extends React.Component {
         rows: [],
         page: 0,
         rowsPerPage: 10,
-        loading: false,
         visible: false,
         name: '',
         email: '',
@@ -152,9 +151,8 @@ class CustomPaginationActionsTable extends React.Component {
     }
 
     handleOk = () => {
-        this.setState({ loading: true });
         setTimeout(() => {
-            this.setState({ loading: false, visible: false });
+            this.setState({ visible: false });
         }, 3000);
     }
 
@@ -168,7 +166,7 @@ class CustomPaginationActionsTable extends React.Component {
         });
     };
 
-    submitRequest = () => {
+    submitRequest = (event) => {
         fetch("https://parkingsystem.herokuapp.com/parkingclerks/",
             {
                 method: 'POST', headers: new Headers({
@@ -182,18 +180,19 @@ class CustomPaginationActionsTable extends React.Component {
                 })
             })
             .then(res => res.json()).then(res => console.log(res))
+        event.preventDefault();
         alert("Create Parking Clerk Successfully")
-        this.setState({ loading: true });
         setTimeout(() => {
-            this.setState({ loading: false, visible: false });
+            this.setState({ visible: false });
         }, 400);
+        window.location.reload();
     }
 
 
 
     render() {
         const { classes } = this.props;
-        const { rows, rowsPerPage, page, loading, visible, email, phoneNumber, status } = this.state;
+        const { rows, rowsPerPage, page,  visible, email, phoneNumber, status } = this.state;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
         const Search = Input.Search;
         return (
@@ -262,7 +261,7 @@ class CustomPaginationActionsTable extends React.Component {
                         </TableFooter>
                     </Table>
                 </div>
-                
+
                 {/* Creation Modal */}
                 <Modal
                     visible={visible}
@@ -271,7 +270,7 @@ class CustomPaginationActionsTable extends React.Component {
                     onCancel={this.handleCancel}
                     footer={[
                         <Button key="back" onClick={this.handleCancel}>取消</Button>,
-                        <Button key="submit" type="primary" loading={loading} onClick={this.submitRequest}>
+                        <Button key="submit" type="primary" onClick={this.submitRequest}>
                             確認
                     </Button>,
                     ]}
