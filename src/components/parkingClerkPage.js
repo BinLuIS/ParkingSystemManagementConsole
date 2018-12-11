@@ -16,6 +16,8 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import Button from '@material-ui/core/Button';
 import { Input } from 'antd';
+import { Modal } from 'antd';
+import TextField from '@material-ui/core/TextField';
 
 const actionsStyles = theme => ({
     root: {
@@ -111,18 +113,24 @@ const styles = theme => ({
 
 class CustomPaginationActionsTable extends React.Component {
     state = {
-        rows :[],
+        rows: [],
         page: 0,
         rowsPerPage: 10,
+        loading: false,
+        visible: false,
+        name: '',
+        email: '',
+        phoneNumber: '',
+        status: 'available',
     };
 
-     componentDidMount(){
+    componentDidMount() {
         fetch('https://parkingsystem.herokuapp.com/parkingclerks/')
-        .then(results => results.json())
-        .then(res => {
-            this.setState({rows:res});   
-        });
-   }
+            .then(results => results.json())
+            .then(res => {
+                this.setState({ rows: res });
+            });
+    }
 
     handleChangePage = (event, page) => {
         this.setState({ page });
@@ -131,19 +139,67 @@ class CustomPaginationActionsTable extends React.Component {
     handleChangeRowsPerPage = event => {
         this.setState({ rowsPerPage: event.target.value });
     };
-	
-	createParkingClerk = ()=>{window.open('http://localhost:3000/createParkingClerk',
-	'creatParkingClerk','width=600,height=400,left=200,top=200')}
+
+    createParkingClerk = () => {
+        window.open('http://localhost:3000/createParkingClerk',
+            'creatParkingClerk', 'width=600,height=400,left=200,top=200')
+    }
+
+    showModal = () => {
+        this.setState({
+            visible: true,
+        });
+    }
+
+    handleOk = () => {
+        this.setState({ loading: true });
+        setTimeout(() => {
+            this.setState({ loading: false, visible: false });
+        }, 3000);
+    }
+
+    handleCancel = () => {
+        this.setState({ visible: false });
+    }
+
+    handleChange = name => event => {
+        this.setState({
+            [name]: event.target.value,
+        });
+    };
+
+    submitRequest = () => {
+        fetch("https://parkingsystem.herokuapp.com/parkingclerks/",
+            {
+                method: 'POST', headers: new Headers({
+                    'Content-Type': 'application/json'
+                }), mode: 'cors',
+                body: JSON.stringify({
+                    name: this.state.name,
+                    email: this.state.email,
+                    phoneNumber: this.state.phoneNumber,
+                    status: this.state.status
+                })
+            })
+            .then(res => res.json()).then(res => console.log(res))
+        alert("Create Parking Clerk Successfully")
+        this.setState({ loading: true });
+        setTimeout(() => {
+            this.setState({ loading: false, visible: false });
+        }, 400);
+    }
+
+
 
     render() {
         const { classes } = this.props;
-        const { rows, rowsPerPage, page } = this.state;
+        const { rows, rowsPerPage, page, loading, visible, email, phoneNumber, status } = this.state;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
         const Search = Input.Search;
         return (
             <Paper className={classes.root}>
                 <div>
-                    <Button style={{ padding: '10px', background: '#1890ff', color: 'white', marginTop: '10px', marginLeft: '10px', marginBottom: '10px' }} variant="contained" className={classes.button} onClick={this.createParkingClerk}>新建</Button>
+                    <Button style={{ padding: '10px', background: '#1890ff', color: 'white', marginTop: '10px', marginLeft: '10px', marginBottom: '10px' }} variant="contained" className={classes.button} onClick={this.showModal}>新建</Button>
                     <Search style={{ width: 200, float: 'right', marginTop: '10px', marginBottom: '10px', marginRight: '10px' }}
                         placeholder="輸入文字搜索"
                         onSearch={value => console.log(value)}
@@ -206,6 +262,57 @@ class CustomPaginationActionsTable extends React.Component {
                         </TableFooter>
                     </Table>
                 </div>
+                
+                {/* Creation Modal */}
+                <Modal
+                    visible={visible}
+                    title={<span><h2>新建停車員</h2></span>}
+                    onOk={this.submitRequest}
+                    onCancel={this.handleCancel}
+                    footer={[
+                        <Button key="back" onClick={this.handleCancel}>取消</Button>,
+                        <Button key="submit" type="primary" loading={loading} onClick={this.submitRequest}>
+                            確認
+                    </Button>,
+                    ]}
+                >
+                    <form className={classes.container} noValidate autoComplete="off">
+
+                        <div>
+                            <TextField
+                                id="standard-name"
+                                label="姓名"
+                                className={classes.textField}
+                                value={this.state.name}
+                                onChange={this.handleChange('name')}
+                                margin="normal"
+                            />
+                        </div>
+
+                        <div>
+                            <TextField
+                                id="standard-email"
+                                label="Email"
+                                className={classes.textField}
+                                value={this.state.email}
+                                onChange={this.handleChange('email')}
+                                margin="normal"
+                            />
+                        </div>
+
+                        <div>
+                            <TextField
+                                id="standard-phoneNumber"
+                                label="電話號碼"
+                                className={classes.textField}
+                                value={this.state.phoneNumber}
+                                onChange={this.handleChange('phoneNumber')}
+                                margin="normal"
+                            />
+                        </div>
+
+                    </form>
+                </Modal>
             </Paper>
         );
     }
