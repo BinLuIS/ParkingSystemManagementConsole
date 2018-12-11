@@ -19,8 +19,9 @@ import { Input } from 'antd';
 import { Modal } from 'antd';
 import TextField from '@material-ui/core/TextField';
 import {
-    Form, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, AutoComplete,
+    Form, Select, AutoComplete,
 } from 'antd';
+import { message} from 'antd';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -206,17 +207,39 @@ class CustomPaginationActionsTable extends React.Component {
                 })
             })
             .then(res => res.json()).then(res => console.log(res))
-        alert("Create Parking Lot Successfully")
+            message.success('成功添加停車場', 1);
 
         setTimeout(() => {
             this.setState({ visible: false });
-        }, 400);
-        window.location.reload();
+            window.location.reload();
+        }, 1500);
+        
+        
+    }
+
+    getParkingClerkId=(event)=>{
+        this.setState({selectedClerkId : event})
+        console.log(this.state.selectedClerkId)
+    }
+
+    submitAssignRequest= ()=>{
+        // console.log("boy: " + this.state.selectedClerkId);
+        // console.log("lot: " + this.state.id)
+        fetch("https://parkingsystem.herokuapp.com/parkingclerks/"+this.state.selectedClerkId+"/parkinglots/",
+            {
+                method: 'POST', headers: new Headers({
+                    'Content-Type': 'application/json'
+                }), mode: 'cors',
+                body: JSON.stringify({
+                    parkingLotId: this.state.id,
+                })
+            })
+            .then(res => res.json()).then(res => console.log(res))
+        
     }
 
 
     render() {
-        console.log(this.state.parkingclecks)
         const { classes } = this.props;
         const { rows, rowsPerPage, page, visible, capacity, activeModal, id, selectedClerkId } = this.state;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
@@ -305,7 +328,7 @@ class CustomPaginationActionsTable extends React.Component {
                         <div>
                             <TextField
                                 id="standard-name"
-                                label="名字"
+                                label="停車場名字"
                                 className={classes.textField}
                                 value={this.state.name}
                                 onChange={this.handleChange('name')}
@@ -316,7 +339,7 @@ class CustomPaginationActionsTable extends React.Component {
                         <div>
                             <TextField
                                 id="standard-capacity"
-                                label="大小"
+                                label="停車場大小"
                                 className={classes.textField}
                                 value={this.state.capacity}
                                 onChange={this.handleChange('capacity')}
@@ -333,7 +356,7 @@ class CustomPaginationActionsTable extends React.Component {
                     onCancel={this.handleCancel}
                     footer={[
                         <Button key="back" onClick={this.handleCancel}>取消</Button>,
-                        <Button key="submit" type="primary"  >
+                        <Button key="submit" type="primary"  onClick={this.submitAssignRequest}>
                             確認
                     </Button>,
                     ]}
@@ -342,21 +365,21 @@ class CustomPaginationActionsTable extends React.Component {
                         <FormItem label="ID">
                             <Input value={this.state.id} disabled />
                         </FormItem>
-                        <FormItem label="名字">
+                        <FormItem label="停車場名字">
                             <Input value={this.state.name} disabled />
                         </FormItem>
-                        <FormItem label="大小">
+                        <FormItem label="停車場大小">
                             <Input value={this.state.capacity} disabled />
                         </FormItem>
                         <FormItem label="指派停車員">
-                            <Select >
+                            <Select onChange={(e) => this.setState({ selectedClerkId: e })}>
                                 {this.state.parkingclecks.map(
                                     parkingCleck=>{
-                                        return(<Option value={parkingCleck.name} key={parkingCleck.id}></Option>);
-                                       
+                                        return(<Option value={parkingCleck.id} key={parkingCleck.id}>{parkingCleck.name}</Option>);    
                                     }
                                 )}
                             </Select>
+                            
                         </FormItem>
                     </Form>
                 </Modal>

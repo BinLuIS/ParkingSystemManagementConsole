@@ -18,6 +18,7 @@ import Button from '@material-ui/core/Button';
 import { Input } from 'antd';
 import { Modal } from 'antd';
 import TextField from '@material-ui/core/TextField';
+import { message} from 'antd';
 
 const actionsStyles = theme => ({
     root: {
@@ -180,12 +181,13 @@ class CustomPaginationActionsTable extends React.Component {
                 })
             })
             .then(res => res.json()).then(res => console.log(res))
-        event.preventDefault();
-        alert("Create Parking Clerk Successfully")
+            message.success('成功添加停車員',1);
         setTimeout(() => {
             this.setState({ visible: false });
-        }, 400);
-        window.location.reload();
+            window.location.reload();
+        }, 1500);
+        
+        
     }
 
 
