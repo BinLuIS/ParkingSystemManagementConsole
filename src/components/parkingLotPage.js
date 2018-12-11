@@ -16,6 +16,8 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import Button from '@material-ui/core/Button';
 import { Input } from 'antd';
+import { Modal } from 'antd';
+import TextField from '@material-ui/core/TextField';
 
 const actionsStyles = theme => ({
     root: {
@@ -120,6 +122,10 @@ class CustomPaginationActionsTable extends React.Component {
         rows: [],
         page: 0,
         rowsPerPage: 10,
+        loading: false,
+        visible: false,
+        name: '',
+        capacity: ''
     };
     componentDidMount(){
         fetch('https://parkingsystem.herokuapp.com/parkinglots/')
@@ -139,16 +145,59 @@ class CustomPaginationActionsTable extends React.Component {
     createParkingLot = ()=>{window.open('http://localhost:3000/createParkingLot',
 	'creatParkingLot','width=600,height=400,left=200,top=200')}
 
+    showModal = () => {
+        this.setState({
+            visible: true,
+        });
+    }
+
+    handleOk = () => {
+        this.setState({ loading: true });
+        setTimeout(() => {
+            this.setState({ loading: false, visible: false });
+        }, 3000);
+    }
+
+    handleCancel = () => {
+        this.setState({ visible: false });
+    }
+
+    handleChange = name => event => {
+        this.setState({
+            [name]: event.target.value,
+        });
+    };
+
+    submitRequest = () => {
+        fetch("https://parkingsystem.herokuapp.com/parkinglots/",
+            {
+                method: 'POST', headers: new Headers({
+                    'Content-Type': 'application/json'
+                }), mode: 'cors',
+                body: JSON.stringify({
+                    name: this.state.name,
+                    capacity: this.state.capacity
+                })
+            })
+            .then(res => res.json()).then(res => console.log(res))
+        alert("Create Parking Lot Successfully")
+        this.setState({ loading: true });
+        setTimeout(() => {
+            this.setState({ loading: false, visible: false });
+        }, 400);
+    }
+
+
     render() {
         console.log(this.state.rows)
         const { classes } = this.props;
-        const { rows, rowsPerPage, page } = this.state;
+        const { rows, rowsPerPage, page, loading, visible, capacity} = this.state;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
         const Search = Input.Search;
         return (
             <Paper className={classes.root}>
                 <div>
-                    <Button style={{ padding: '10px', background: '#1890ff', color: 'white', marginTop: '10px', marginLeft: '10px', marginBottom: '10px' }} variant="contained" className={classes.button} onClick={this.createParkingLot}>新建</Button>
+                    <Button style={{ padding: '10px', background: '#1890ff', color: 'white', marginTop: '10px', marginLeft: '10px', marginBottom: '10px' }} variant="contained" className={classes.button} onClick={this.showModal}>新建</Button>
                     <Search style={{ width: 200, float: 'right', marginTop: '10px', marginBottom: '10px', marginRight: '10px' }}
                         placeholder="輸入文字搜索"
                         onSearch={value => console.log(value)}
@@ -211,6 +260,45 @@ class CustomPaginationActionsTable extends React.Component {
                         </TableFooter>
                     </Table>
                 </div>
+                {/* Creation Modal */}
+                <Modal
+                    visible={visible}
+                    title= {<span><h2>新建停車員</h2></span>}
+                    onOk={this.submitRequest}
+                    onCancel={this.handleCancel}
+                    footer={[
+                        <Button key="back" onClick={this.handleCancel}>取消</Button>,
+                        <Button key="submit" type="primary" loading={loading} onClick={this.submitRequest}>
+                            確認
+                    </Button>,
+                    ]}
+                >
+                    <form className={classes.container} noValidate autoComplete="off">
+
+                        <div>
+                            <TextField
+                                id="standard-name"
+                                label="名字"
+                                className={classes.textField}
+                                value={this.state.name}
+                                onChange={this.handleChange('name')}
+                                margin="normal"
+                            />
+                        </div>
+
+                        <div>
+                            <TextField
+                                id="standard-capacity"
+                                label="大小"
+                                className={classes.textField}
+                                value={this.state.capacity}
+                                onChange={this.handleChange('capacity')}
+                                margin="normal"
+                            />
+                        </div>
+
+                    </form>
+                </Modal>
             </Paper>
         );
     }
