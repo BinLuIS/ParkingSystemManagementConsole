@@ -195,14 +195,14 @@ class CustomPaginationActionsTable extends React.Component {
                     // phoneNumber: this.state.phoneNumber,
                 })
             })
-            .then(res => res.json()).then(res => {alert("Create Parking Clerk Successfully")})
+            .then(res => res.json()).then(res => { message.success('成功添加停車員',1);})
             })
         
         this.setState({ loading: true });
         setTimeout(() => {
             this.setState({ visible: false });
-        }, 400);
-       // window.location.reload();
+            window.location.reload();
+        }, 1500)
     }
 
 
