@@ -21,7 +21,7 @@ import TextField from '@material-ui/core/TextField';
 import {
     Form, Select, AutoComplete,
 } from 'antd';
-import { message} from 'antd';
+import { message } from 'antd';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -207,25 +207,25 @@ class CustomPaginationActionsTable extends React.Component {
                 })
             })
             .then(res => res.json()).then(res => console.log(res))
-            message.success('成功添加停車場', 1);
+        message.success('成功添加停車場', 1);
 
         setTimeout(() => {
             this.setState({ visible: false });
             window.location.reload();
         }, 1500);
-        
-        
+
+
     }
 
-    getParkingClerkId=(event)=>{
-        this.setState({selectedClerkId : event})
+    getParkingClerkId = (event) => {
+        this.setState({ selectedClerkId: event })
         console.log(this.state.selectedClerkId)
     }
 
-    submitAssignRequest= ()=>{
+    submitAssignRequest = () => {
         // console.log("boy: " + this.state.selectedClerkId);
         // console.log("lot: " + this.state.id)
-        fetch("https://parkingsystem.herokuapp.com/parkingclerks/"+this.state.selectedClerkId+"/parkinglots/",
+        fetch("https://parkingsystem.herokuapp.com/parkingclerks/" + this.state.selectedClerkId + "/parkinglots/",
             {
                 method: 'POST', headers: new Headers({
                     'Content-Type': 'application/json'
@@ -234,8 +234,15 @@ class CustomPaginationActionsTable extends React.Component {
                     parkingLotId: this.state.id,
                 })
             })
-            .then(res => res.json()).then(res => console.log(res))
-        
+            .then(res => res.json())
+        message.success('成功指派停車員ID ' + this.state.selectedClerkId + '管理停車場'+this.state.name, 2);
+
+        setTimeout(() => {
+            this.setState({ visible: false });
+            window.location.reload();
+        }, 2500);
+
+
     }
 
 
@@ -356,7 +363,7 @@ class CustomPaginationActionsTable extends React.Component {
                     onCancel={this.handleCancel}
                     footer={[
                         <Button key="back" onClick={this.handleCancel}>取消</Button>,
-                        <Button key="submit" type="primary"  onClick={this.submitAssignRequest}>
+                        <Button key="submit" type="primary" onClick={this.submitAssignRequest}>
                             確認
                     </Button>,
                     ]}
@@ -374,12 +381,12 @@ class CustomPaginationActionsTable extends React.Component {
                         <FormItem label="指派停車員">
                             <Select onChange={(e) => this.setState({ selectedClerkId: e })}>
                                 {this.state.parkingclecks.map(
-                                    parkingCleck=>{
-                                        return(<Option value={parkingCleck.id} key={parkingCleck.id}>{parkingCleck.name}</Option>);    
+                                    parkingCleck => {
+                                        return (<Option value={parkingCleck.id} key={parkingCleck.id}>{parkingCleck.name}</Option>);
                                     }
                                 )}
                             </Select>
-                            
+
                         </FormItem>
                     </Form>
                 </Modal>
