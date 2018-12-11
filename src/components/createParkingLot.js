@@ -25,12 +25,10 @@ const styles = theme => ({
 });
 
 
-class createParkingClerk extends React.Component {
+class createParkingLot extends React.Component {
   state = {
     name: '',
-    email: '',
-    phoneNumber: '',
-    status: 'available',
+    capacity: '',
   };
 
   handleChange = name => event => {
@@ -40,48 +38,38 @@ class createParkingClerk extends React.Component {
   };
   
   submitRequest = ()=>{
-	  fetch("https://parkingsystem.herokuapp.com/parkingclerks/", 
+	  fetch("https://parkingsystem.herokuapp.com/parkinglots/", 
 	  {method: 'POST', headers: new Headers({
     'Content-Type': 'application/json'
   }), mode: 'cors', 
   body: JSON.stringify({name: this.state.name, 
-  email: this.state.email,
-  phoneNumber: this.state.phoneNumber,
-  status: this.state.status})})
+  capacity: this.state.capacity,})})
   .then(res => res.json()).then(res => console.log(res))
-  alert("Create Parking Clerk Successfully")}
+  alert("Create Parking Lot Successfully")}
 
   render() {
     const { classes } = this.props;
 
     return (
       <form className={classes.container} noValidate autoComplete="off">
-      <span><h2>新建停車員</h2></span>
+      <span><h2>新建停車場</h2></span>
         <TextField
           id="standard-name"
-          label="姓名"
+          label="名字"
           className={classes.textField}
           value={this.state.name}
           onChange={this.handleChange('name')}
           margin="normal"
         />
 		<TextField
-          id="standard-email"
-          label="Email"
+          id="standard-capacity"
+          label="大小"
           className={classes.textField}
-          value={this.state.email}
-          onChange={this.handleChange('email')}
+          value={this.state.capacity}
+          onChange={this.handleChange('capacity')}
           margin="normal"
         />
-		<TextField
-          id="standard-phoneNumber"
-          label="電話號碼"
-          className={classes.textField}
-          value={this.state.phoneNumber}
-          onChange={this.handleChange('phoneNumber')}
-          margin="normal"
-        />
-      <Button style={{background: '#1890ff', color: 'white'}} variant="contained" color="primary" className={classes.button} onClick={this.submitRequest}>
+      <Button style={{background: '#1890ff', color: 'white'}}  variant="contained" color="primary" className={classes.button} onClick={this.submitRequest}>
       提交
       </Button>
 	  
@@ -90,8 +78,8 @@ class createParkingClerk extends React.Component {
   }
 }
 
-createParkingClerk.propTypes = {
+createParkingLot.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(createParkingClerk);
+export default withStyles(styles)(createParkingLot);
