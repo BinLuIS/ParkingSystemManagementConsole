@@ -16,6 +16,15 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import Button from '@material-ui/core/Button';
 import { Input } from 'antd';
+import { Modal } from 'antd';
+import { message } from 'antd';
+import {
+    Form, Select, AutoComplete,
+} from 'antd';
+
+const FormItem = Form.Item;
+const Option = Select.Option;
+const AutoCompleteOption = AutoComplete.Option;
 
 const actionsStyles = theme => ({
     root: {
@@ -120,6 +129,11 @@ class CustomPaginationActionsTable extends React.Component {
 		rows: [],
         page: 0,
         rowsPerPage: 10,
+		activeModal: null,
+		visible: false,
+		selectedClerkId:-1,
+		parkingclecks: [],
+		id:-1
     };
 	
 	componentDidMount(){
@@ -128,11 +142,20 @@ class CustomPaginationActionsTable extends React.Component {
         .then(res => {
         this.setState({rows:res});
         });
+		fetch('https://parkingsystem.herokuapp.com/parkingclerks/')
+        .then(results => results.json())
+        .then(res => {
+        this.setState({ parkingclecks: res });
+        });
     }
 
     handleChangePage = (event, page) => {
         this.setState({ page });
     };
+	
+	handleCancel = () => {
+        this.setState({ visible: false, activeModal: null });
+    }
 
     handleChangeRowsPerPage = event => {
         this.setState({ rowsPerPage: event.target.value });
@@ -144,6 +167,7 @@ class CustomPaginationActionsTable extends React.Component {
 		}return "取車"
 	}
 	
+	
 	changeStatusToBinaryClassification = (e)=> {
 		if (e == "pendingParking") {
 			return "無人處理"
@@ -154,17 +178,50 @@ class CustomPaginationActionsTable extends React.Component {
 		return "存取中"
 		
 	}
+	submitAssignRequest = () =>{console.log(this.state)}
 	
-	assignParkingClerkToOrder = (e)=>{
-		if (e == "pendingParking"){
-			return <a href=" ">指派</a>
+	showModal = (type) => {
+        this.setState({
+            visible: true,
+            activeModal: type,
+        });
+    }
+	
+	passDatatoModal = (type,id) => {
+        this.setState({
+            id
+        })
+        this.showModal(type);
+    }
+	
+	assignParkingClerkToOrder = (row)=>{
+		if (row.status == "pendingParking"){
+			return <a onClick={() => this.passDatatoModal("Associate",row.id)}> 指派</a>
 		}
 	}
+	submitAssignRequest = (state) => {
+        fetch("https://parkingsystem.herokuapp.com/parkingclerks/"+state.selectedClerkId+'/orders',
+            {
+                method: 'POST', headers: new Headers({
+                    'Content-Type': 'application/json'
+                }), mode: 'cors',
+                body: JSON.stringify({
+                    parkingOrderId: state.id
+                })
+            })
+            .then(res => res.json()).then(res => console.log(res))
+        message.success('成功指派停車員', 1);
+		
+		setTimeout(() => {
+            this.setState({ visible: false });
+            window.location.reload();
+        }, 2500);
+		}
 	
 
     render() {
         const { classes } = this.props;
-        const { rows, rowsPerPage, page } = this.state;
+        const { rows, page, rowsPerPage, activeModal, visible, selectedClerkId, parkingclecks,id } = this.state;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
         const Search = Input.Search;
         return (
@@ -201,7 +258,7 @@ class CustomPaginationActionsTable extends React.Component {
                                         <TableCell>{row.carNumber}</TableCell>
                                         <TableCell>{this.changeRequestTypeToChinese(row.requestType)}</TableCell>
                                         <TableCell>{this.changeStatusToBinaryClassification(row.status)}</TableCell>
-                                        <TableCell>{this.assignParkingClerkToOrder(row.status)}</TableCell>
+                                        <TableCell>{this.assignParkingClerkToOrder(row)}</TableCell>
                                     </TableRow>
                                 );
                             })}
@@ -230,6 +287,31 @@ class CustomPaginationActionsTable extends React.Component {
                         </TableFooter>
                     </Table>
                 </div>
+                <Modal
+                    title="指派"
+                    visible={activeModal === "Associate"}
+                    onOk={this.handleOk}
+                    onCancel={this.handleCancel}
+                    footer={[
+                        <Button key="back" onClick={this.handleCancel}>取消</Button>,
+                        <Button key="submit" type="primary" onClick={()=>this.submitAssignRequest(this.state)}>
+                            確認
+                    </Button>,
+                    ]}
+                >
+                    <Form layout="vertical">
+					    <FormItem label="指派">
+                            <Select onChange={(e) => this.setState({ selectedClerkId: e })}>
+                                {this.state.parkingclecks.map(
+                                    parkingCleck => {
+                                        return (<Option value={parkingCleck.id} key={parkingCleck.id}>{parkingCleck.name}</Option>);
+                                    }
+                                )}
+                            </Select>
+
+                        </FormItem>
+                    </Form>
+                </Modal>
             </Paper>
         );
     }
