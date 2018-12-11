@@ -145,7 +145,7 @@ class CustomPaginationActionsTable extends React.Component {
 	}
 	
 	changeStatusToBinaryClassification = (e)=> {
-		if (e == "pending") {
+		if (e == "pendingParking") {
 			return "無人處理"
 		}
 		if (e == "completed") {
@@ -156,7 +156,7 @@ class CustomPaginationActionsTable extends React.Component {
 	}
 	
 	assignParkingClerkToOrder = (e)=>{
-		if (e == "pending"){
+		if (e == "pendingParking"){
 			return <a href=" ">指派</a>
 		}
 	}
