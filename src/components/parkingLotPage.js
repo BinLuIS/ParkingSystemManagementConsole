@@ -97,9 +97,9 @@ const TablePaginationActionsWrapped = withStyles(actionsStyles, { withTheme: tru
 );
 
 let counter = 0;
-function createData(parkingLotId, parkingLotName, capacity, choice) {
+function createData(parkingLotId, parkingLotName, capacity, parkingClerk, choice) {
     counter += 1;
-    return { id: counter, parkingLotId, parkingLotName, capacity, choice };
+    return { id: counter, parkingLotId, parkingLotName, capacity, parkingClerk, choice };
 }
 
 const styles = theme => ({
@@ -166,6 +166,7 @@ class CustomPaginationActionsTable extends React.Component {
                                 <TableCell style={{ color: 'white' }}><b>ID</b></TableCell>
                                 <TableCell style={{ color: 'white' }}><b>名字</b></TableCell>
                                 <TableCell style={{ color: 'white' }}><b>大小</b></TableCell>
+                                <TableCell style={{ color: 'white' }}><b>負責停車員</b></TableCell>
                                 <TableCell style={{ color: 'white' }}><b>操作</b></TableCell>
 
                             </TableRow>
@@ -180,7 +181,8 @@ class CustomPaginationActionsTable extends React.Component {
                                         </TableCell>
                                         <TableCell>{row.name}</TableCell>
                                         <TableCell>{row.capacity}</TableCell>
-                                        <TableCell><a href=" ">修改 </a>|<a href=" "> 凍結</a></TableCell>
+                                        <TableCell>{row.parkingClerk}</TableCell>
+                                        <TableCell><a href=" ">修改 </a>|<a href=" "> 凍結 </a>|<a href=" "> 指派停車員</a></TableCell>
                                     </TableRow>
                                 );
                             })}
