@@ -117,27 +117,18 @@ const styles = theme => ({
 
 class CustomPaginationActionsTable extends React.Component {
     state = {
-        rows: [
-            createData(1, '粵A123456', '取車', '存取中'),
-            createData(2, '粵A159533', '存車', '存取中'),
-            createData(3, '粵A789153', '取車', '存取中'),
-            createData(4, '粵A962586', '取車', '存取中'),
-            createData(5, '粵A456789', '存車', '存取中'),
-            createData(6, '粵A258117', '取車', '存取中'),
-            createData(7, '粵A789126', '取車', '存取中'),
-            createData(8, '粵A965812', '存車', '無人處理'),
-            createData(9, '粵A120556', '取車', '無人處理'),
-            createData(10, '粵A456823', '取車', '無人處理'),
-            createData(11, '粵A375193', '存車', '無人處理'),
-            createData(12, '粵A100543', '取車', '無人處理'),
-            createData(13, '粵A459213', '存車', '無人處理'),
-            createData(14, '粵A415932', '取車', '無人處理'),
-            createData(15, '粵A721663', '取車', '無人處理'),
-           
-        ],
+		rows: [],
         page: 0,
         rowsPerPage: 10,
     };
+	
+	componentDidMount(){
+        fetch('https://parkingsystem.herokuapp.com/orders')
+        .then(results => results.json())
+        .then(res => {
+        this.setState({rows:res});
+        });
+    }
 
     handleChangePage = (event, page) => {
         this.setState({ page });
@@ -146,6 +137,30 @@ class CustomPaginationActionsTable extends React.Component {
     handleChangeRowsPerPage = event => {
         this.setState({ rowsPerPage: event.target.value });
     };
+	
+	changeRequestTypeToChinese = (e) => {
+		if(e == "parking") {
+			return "存車"
+		}return "取車"
+	}
+	
+	changeStatusToBinaryClassification = (e)=> {
+		if (e == "pending") {
+			return "無人處理"
+		}
+		if (e == "completed") {
+			return "完結"
+		}
+		return "存取中"
+		
+	}
+	
+	assignParkingClerkToOrder = (e)=>{
+		if (e == "pending"){
+			return <a href=" ">指派</a>
+		}
+	}
+	
 
     render() {
         const { classes } = this.props;
@@ -180,16 +195,16 @@ class CustomPaginationActionsTable extends React.Component {
 
                         </TableHead>
                         <TableBody>
-                            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
+                            {this.state.rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
                                 return (
                                     <TableRow key={row.id}>
                                         <TableCell component="th" scope="row">
-                                            {row.orderId}
+                                            {row.id}
                                         </TableCell>
                                         <TableCell>{row.carNumber}</TableCell>
-                                        <TableCell>{row.requestType}</TableCell>
-                                        <TableCell>{row.status}</TableCell>
-                                        <TableCell><a href=" ">指派</a></TableCell>
+                                        <TableCell>{this.changeRequestTypeToChinese(row.requestType)}</TableCell>
+                                        <TableCell>{this.changeStatusToBinaryClassification(row.status)}</TableCell>
+                                        <TableCell>{this.assignParkingClerkToOrder(row.status)}</TableCell>
                                     </TableRow>
                                 );
                             })}
