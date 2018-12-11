@@ -148,6 +148,9 @@ class CustomPaginationActionsTable extends React.Component {
         this.setState({ rowsPerPage: event.target.value });
     };
 
+    createParkingLot = ()=>{window.open('http://localhost:3000/createParkingLot',
+	'creatParkingLot','width=600,height=400,left=200,top=200')}
+
     render() {
         const { classes } = this.props;
         const { rows, rowsPerPage, page } = this.state;
@@ -156,7 +159,7 @@ class CustomPaginationActionsTable extends React.Component {
         return (
             <Paper className={classes.root}>
                 <div>
-                    <Button style={{ padding: '10px', background: '#1890ff', color: 'white', marginTop: '10px', marginLeft: '10px', marginBottom: '10px' }} variant="contained" className={classes.button}>新建</Button>
+                    <Button style={{ padding: '10px', background: '#1890ff', color: 'white', marginTop: '10px', marginLeft: '10px', marginBottom: '10px' }} variant="contained" className={classes.button} onClick={this.createParkingLot}>新建</Button>
                     <Search style={{ width: 200, float: 'right', marginTop: '10px', marginBottom: '10px', marginRight: '10px' }}
                         placeholder="輸入文字搜索"
                         onSearch={value => console.log(value)}

@@ -9,6 +9,7 @@ import parkingLotPage from './components/parkingLotPage';
 import parkingClerkPage from './components/parkingClerkPage';
 import orderPage from './components/orderPage';
 import createParkingClerk from './components/createParkingClerk';
+import createParkingLot from './components/createParkingLot';
 
 const { Header, Sider, Content } = Layout;
 class App extends Component {
@@ -86,7 +87,8 @@ class App extends Component {
               {/* <Route path="/dashboardPage" component={dashboardPage}></Route> */}
               <Route path="/orderPage" component={orderPage}></Route> 
               <Route path="/nav3Page" component={()=><p style={{textAlign: 'center',marginTop:'15rem',color:'#1890ff', fontSize:'2rem'}}>Nav3 Page</p>}></Route>
-			  <Route path="/createParkingClerk" component={createParkingClerk}></Route>
+			        <Route path="/createParkingClerk" component={createParkingClerk}></Route>
+              <Route path="/createParkingLot" component={createParkingLot}></Route>
           </Switch>
           </Content>
         </Layout>
