@@ -96,12 +96,6 @@ const TablePaginationActionsWrapped = withStyles(actionsStyles, { withTheme: tru
     TablePaginationActions,
 );
 
-let counter = 0;
-function createData(parkingClerkId, parkingClerkName, phoneNumber, parkingClerkStatus, choice) {
-    counter += 1;
-    return { id: counter, parkingClerkId, parkingClerkName, phoneNumber, parkingClerkStatus, choice };
-}
-
 const styles = theme => ({
     root: {
         width: '100%',
@@ -117,27 +111,18 @@ const styles = theme => ({
 
 class CustomPaginationActionsTable extends React.Component {
     state = {
-        rows: [
-            createData(1, '張三', 13939391313, '上班'),
-            createData(2, '李四', 13939391586, '請假'),
-            createData(3, '李四', 13939391586, '下班'),
-            createData(4, '李四', 13939391586, '遲到'),
-            createData(5, '李四', 13939391586, '下班'),
-            createData(6, '李四', 13939391586, '上班'),
-            createData(7, '李四', 13939391586, '請假'),
-            createData(8, '李四', 13939391586, '下班'),
-            createData(9, '李四', 13939391586, '遲到'),
-            createData(10, '李四', 13939391586, '請假'),
-            createData(11, '李四', 13939391586, '下班'),
-            createData(12, '李四', 13939391586, '請假'),
-            createData(13, '李四', 13939391586, '遲到'),
-            createData(14, '李四', 13939391586, '下班'),
-            createData(15, '李四', 13939391586, '上班'),
-           
-        ],
+        rows :[],
         page: 0,
         rowsPerPage: 10,
     };
+
+     componentDidMount(){
+        fetch('https://parkingsystem.herokuapp.com/parkingclerks/')
+        .then(results => results.json())
+        .then(res => {
+            this.setState({rows:res});   
+        });
+   }
 
     handleChangePage = (event, page) => {
         this.setState({ page });
@@ -183,15 +168,15 @@ class CustomPaginationActionsTable extends React.Component {
 
                         </TableHead>
                         <TableBody>
-                            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
+                            {this.state.rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
                                 return (
                                     <TableRow key={row.id}>
                                         <TableCell component="th" scope="row">
-                                            {row.parkingClerkId}
+                                            {row.id}
                                         </TableCell>
-                                        <TableCell>{row.parkingClerkName}</TableCell>
+                                        <TableCell>{row.name}</TableCell>
                                         <TableCell>{row.phoneNumber}</TableCell>
-                                        <TableCell>{row.parkingClerkStatus}</TableCell>
+                                        <TableCell>{row.status}</TableCell>
                                         <TableCell><a href=" ">修改 </a>|<a href=" "> 凍結</a></TableCell>
                                     </TableRow>
                                 );
