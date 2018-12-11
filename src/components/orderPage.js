@@ -169,16 +169,13 @@ class CustomPaginationActionsTable extends React.Component {
         const Search = Input.Search;
         return (
             <Paper className={classes.root}>
-                <div>
-                    <Button style={{ padding: '10px', background: '#1890ff', color: 'white', marginTop: '10px', marginLeft: '10px', marginBottom: '10px' }} variant="contained" className={classes.button}>新建</Button>
-                    <Search style={{ width: 200, float: 'right', marginTop: '10px', marginBottom: '10px', marginRight: '10px' }}
+                {/* <div>
+                    <Search style={{ padding: '5px', width: 200, float: 'right', marginTop: '10px', marginBottom: '10px', marginRight: '10px' }}
                         placeholder="輸入文字搜索"
                         onSearch={value => console.log(value)}
                         enterButton
                     />
-
-
-                </div>
+                </div> */}
 
                 <div className={classes.tableWrapper}>
 
