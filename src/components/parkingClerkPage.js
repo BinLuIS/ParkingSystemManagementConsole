@@ -179,13 +179,30 @@ class CustomPaginationActionsTable extends React.Component {
                     status: this.state.status
                 })
             })
-            .then(res => res.json()).then(res => console.log(res))
-        event.preventDefault();
-        alert("Create Parking Clerk Successfully")
+            .then(res => res.json()).then(res => {
+                console.log("success")
+                console.log(res)
+                fetch("https://parkingsystem.herokuapp.com/api/auth/signup/",
+            {
+                method: 'POST', headers: new Headers({
+                    'Content-Type': 'application/json'
+                }), mode: 'cors',
+                body: JSON.stringify({
+                    name: this.state.name,
+                    username: this.state.name,
+                    email: this.state.email,
+                    password: this.state.name,
+                    // phoneNumber: this.state.phoneNumber,
+                })
+            })
+            .then(res => res.json()).then(res => {alert("Create Parking Clerk Successfully")})
+            })
+        
+        this.setState({ loading: true });
         setTimeout(() => {
             this.setState({ visible: false });
         }, 400);
-        window.location.reload();
+       // window.location.reload();
     }
 
 
@@ -265,7 +282,7 @@ class CustomPaginationActionsTable extends React.Component {
                 {/* Creation Modal */}
                 <Modal
                     visible={visible}
-                    title={<span><h2>新建停車員</h2></span>}
+                    title= {<span><h2>新建停車員</h2></span>}
                     onOk={this.submitRequest}
                     onCancel={this.handleCancel}
                     footer={[
