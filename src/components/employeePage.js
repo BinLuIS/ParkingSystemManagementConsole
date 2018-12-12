@@ -230,7 +230,7 @@ class CustomPaginationActionsTable extends React.Component {
             // .then(results => results.json())
             getAllEmployees()
             .then(res => {
-                this.setState({ rows: res });
+                this.setState({ name:'', email:'', phoneNumber:'', role:'PARKINGCLERK', rows: res });
             });
         }, 2500);
 

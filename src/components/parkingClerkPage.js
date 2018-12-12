@@ -215,7 +215,7 @@ class CustomPaginationActionsTable extends React.Component {
             // .then(results => results.json())
             getAllParkingClerks()
             .then(res => {
-                this.setState({ rows: res });
+                this.setState({ name:'', email: '', phoneNumber: '', rows: res });
             });
         }, 1500);
         

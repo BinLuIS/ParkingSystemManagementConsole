@@ -139,7 +139,7 @@ class CustomPaginationActionsTable extends React.Component {
         NotImportant: 1,
         activeModal: null,
         selectedClerkId: -1,
-        parkingclecks: [],
+        parkingclerks: [],
 
     };
     componentDidMount() {
@@ -153,7 +153,7 @@ class CustomPaginationActionsTable extends React.Component {
         //     .then(results => results.json())
         getAllParkingClerks()
             .then(res => {
-                this.setState({ parkingclecks: res });
+                this.setState({ parkingclerks: res });
             });
     }
     handleChangePage = (event, page) => {
@@ -215,7 +215,7 @@ class CustomPaginationActionsTable extends React.Component {
             // .then(results => results.json())
             getAllParkingLots()
             .then(res => {
-                this.setState({ rows: res });
+                this.setState({ name:'', capacity: '', rows: res });
             });
         }, 1500);
 
@@ -249,7 +249,7 @@ class CustomPaginationActionsTable extends React.Component {
             // .then(results => results.json())
             getAllParkingLots()
             .then(res => {
-                this.setState({ rows: res });
+                this.setState({ name:'', capacity: '', parkingClerks:'', rows: res });
             });
         }, 2500);
 
@@ -391,9 +391,9 @@ class CustomPaginationActionsTable extends React.Component {
                         </FormItem>
                         <FormItem label="指派停車員">
                             <Select onChange={(e) => this.setState({ selectedClerkId: e })}>
-                                {this.state.parkingclecks.map(
-                                    parkingCleck => {
-                                        return (<Option value={parkingCleck.id} key={parkingCleck.id}>{parkingCleck.name}</Option>);
+                                {this.state.parkingclerks.map(
+                                    parkingClerk => {
+                                        return (<Option value={parkingClerk.id} key={parkingClerk.id}>{parkingClerk.name}</Option>);
                                     }
                                 )}
                             </Select>
