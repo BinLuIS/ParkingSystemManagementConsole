@@ -22,7 +22,6 @@ class dashboardPage extends Component {
 			
 			{	const capacity = row.capacity
 				const availableCapacity = row.availableCapacity
-				console.log(row.availableCapacity/row.capacity)
 				return ( 	<Col span={3}>
                         <div style={{ display: 'flex', padding: '5px 0'}}>
                             <Card title={row.name} bordered={false}>
@@ -40,7 +39,6 @@ class dashboardPage extends Component {
 
 	
     render() {
-		console.log(this.state.rows);
         return (
             <div style={{ background: '#ECECEC', padding: '30px' }}>
                 <Row gutter={30}>
