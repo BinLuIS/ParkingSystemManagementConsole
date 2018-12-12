@@ -199,10 +199,14 @@ class CustomPaginationActionsTable extends React.Component {
             .then(res => res.json()).then(res => { message.success('成功添加停車員',1);})
             })
         
-        this.setState({ loading: true });
+        
         setTimeout(() => {
             this.setState({ visible: false });
-            window.location.reload();
+            fetch('https://parkingsystem.herokuapp.com/parkingclerks/')
+            .then(results => results.json())
+            .then(res => {
+                this.setState({ rows: res });
+            });
         }, 1500);
         
         

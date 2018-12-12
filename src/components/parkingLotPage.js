@@ -210,8 +210,12 @@ class CustomPaginationActionsTable extends React.Component {
         message.success('成功添加停車場', 1);
 
         setTimeout(() => {
-            this.setState({ visible: false });
-            window.location.reload();
+            this.setState({ activeModal: null });
+            fetch('https://parkingsystem.herokuapp.com/parkinglots/')
+            .then(results => results.json())
+            .then(res => {
+                this.setState({ rows: res });
+            });
         }, 1500);
 
 
@@ -238,8 +242,12 @@ class CustomPaginationActionsTable extends React.Component {
         message.success('成功指派停車員ID ' + this.state.selectedClerkId + '管理停車場'+this.state.name, 2);
 
         setTimeout(() => {
-            this.setState({ visible: false });
-            window.location.reload();
+            this.setState({ activeModal: null });
+            fetch('https://parkingsystem.herokuapp.com/parkinglots/')
+            .then(results => results.json())
+            .then(res => {
+                this.setState({ rows: res });
+            });
         }, 2500);
 
 
@@ -272,7 +280,7 @@ class CustomPaginationActionsTable extends React.Component {
                                 <TableCell style={{ color: 'white' }}><b>ID</b></TableCell>
                                 <TableCell style={{ color: 'white' }}><b>名字</b></TableCell>
                                 <TableCell style={{ color: 'white' }}><b>大小</b></TableCell>
-                                <TableCell style={{ color: 'white' }}><b>負責停車員</b></TableCell>
+                                {/* <TableCell style={{ color: 'white' }}><b>負責停車員</b></TableCell> */}
                                 <TableCell style={{ color: 'white' }}><b>操作</b></TableCell>
 
                             </TableRow>
@@ -287,7 +295,7 @@ class CustomPaginationActionsTable extends React.Component {
                                         </TableCell>
                                         <TableCell>{row.name}</TableCell>
                                         <TableCell>{row.capacity}</TableCell>
-                                        <TableCell>{row.parkingClerk}</TableCell>
+                                        {/* <TableCell>{row.parkingClerk}</TableCell> */}
                                         <TableCell><a>修改 </a>|<a> 凍結 </a>|<a onClick={() => this.passDatatoModal("Associate", row.id, row.name, row.capacity)}> 指派停車員</a></TableCell>
                                     </TableRow>
                                 );
