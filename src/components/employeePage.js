@@ -20,6 +20,9 @@ import { Modal } from 'antd';
 import TextField from '@material-ui/core/TextField';
 import { message } from 'antd';
 import { Radio } from 'antd';
+import { Select } from 'antd';
+
+const Option = Select.Option;
 
 
 
@@ -123,6 +126,9 @@ const styles = theme => ({
         overflowX: 'auto',
     },
 });
+function handleChange(value) {
+    console.log(`selected ${value}`);
+}
 
 class CustomPaginationActionsTable extends React.Component {
     state = {
@@ -133,7 +139,7 @@ class CustomPaginationActionsTable extends React.Component {
         name: '',
         email: '',
         phoneNumber: '',
-        role: '',
+        role: 'PARKINGCLERK',
     };
 
     componentDidMount() {
@@ -181,14 +187,16 @@ class CustomPaginationActionsTable extends React.Component {
 
     submitRequest = () => {
 
-        fetch("https://parkingsystem.herokuapp.com/employees/",
+        fetch("https://parkingsystem.herokuapp.com/api/auth/signup/",
             {
                 method: 'POST', headers: new Headers({
                     'Content-Type': 'application/json'
                 }), mode: 'cors',
                 body: JSON.stringify({
                     name: this.state.name,
+                    username: this.state.name,
                     email: this.state.email,
+                    password: this.state.name,
                     phoneNumber: this.state.phoneNumber,
                     role: this.state.role,
                 })
@@ -198,7 +206,11 @@ class CustomPaginationActionsTable extends React.Component {
 
         setTimeout(() => {
             this.setState({ visible: false });
-            window.location.reload();
+            fetch('https://parkingsystem.herokuapp.com/api/users/')
+            .then(results => results.json())
+            .then(res => {
+                this.setState({ rows: res });
+            });
         }, 2500);
 
 
@@ -328,10 +340,17 @@ class CustomPaginationActionsTable extends React.Component {
                             <br />
                             <br />
                             <span><h3>職位</h3></span>
-                            <Radio.Group defaultValue="PARKINGCLERK" buttonStyle="solid" onChange={(e) => this.setState({ role: e.target.value })}>
+                            <Radio.Group defaultValue="PARKINGCLERK" buttonStyle="solid" onChange={(e) => {this.setState({ role: e.target.value } );}}>
                                 <Radio.Button value="PARKINGCLERK">PARKINGCLERK</Radio.Button>
                                 <Radio.Button value="MANAGER">MANAGER</Radio.Button>
+                               
                             </Radio.Group>
+                            
+                            {/* <Select defaultValue="PARKINGCLERK" style={{ width: 120 }} onChange={(e) => {this.setState({ role: e.target.value })}}>
+                                <Option value="PARKINGCLERK">PARKINGCLERK</Option>
+                                <Option value="MANAGER">MANAGER</Option>
+                                
+                            </Select> */}
                         </div>
                     </form>
                 </Modal>
