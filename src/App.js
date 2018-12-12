@@ -71,14 +71,14 @@ class App extends Component {
               type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
               onClick={this.toggle}
             />
-            
+             BinLuIS Parking Management System
           </Header>
           <Content style={{
             margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280,
           }}
           >
             <Switch>
-              <Route path="/" exact component={()=><h1>home page</h1>}></Route>
+              <Route path="/" exact component={()=><h1 style={{textAlign: 'center',marginTop:'15rem',color:'#1890ff', fontSize:'2rem'}}>Welcome to BinLuIS Parking Management System</h1>}></Route>
               <Route path="/employeePage" component={employeePage}></Route>
               <Route path="/parkingLotPage" component={parkingLotPage}></Route>
               <Route path="/parkingClerkPage" component={parkingClerkPage}></Route>
