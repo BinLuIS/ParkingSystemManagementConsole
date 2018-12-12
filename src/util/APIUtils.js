@@ -23,6 +23,17 @@ const request = (options) => {
     );
 };
 
+export function getCurrentUser() {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("No access token set.");
+    }
+
+    return request({
+        url: API_BASE_URL + "/user/me",
+        method: 'GET'
+    });
+}
+
 export function getAllParkingLots() {
     return request({
         url: BASE_URL + "/parkinglots",
@@ -81,5 +92,13 @@ export function assignParkingLotToParkingClerks(parkingClerksId,lot) {
         url: BASE_URL + "/parkingclerks/" + parkingClerksId + "/parkinglots/",
         method: 'POST',
         body: JSON.stringify(lot)
+    });
+}
+
+export function login(loginRequest) {
+    return request({
+        url: API_BASE_URL + "/auth/signin",
+        method: 'POST',
+        body: JSON.stringify(loginRequest)
     });
 }

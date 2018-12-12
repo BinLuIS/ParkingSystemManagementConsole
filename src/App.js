@@ -1,23 +1,92 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { Layout, Menu, Icon } from 'antd';
-import {Route, Link,Switch} from 'react-router-dom'
+import { Menu, Icon } from 'antd';
+import {Route, Link,Switch, withRouter} from 'react-router-dom'
 import employeePage from './components/employeePage';
 import parkingLotPage from './components/parkingLotPage';
 import parkingClerkPage from './components/parkingClerkPage';
 import orderPage from './components/orderPage';
 import dashboardPage from './components/dashboardPage';
+import { getCurrentUser } from './util/APIUtils';
+import Login from './user/login/Login';
+import { Layout, notification } from 'antd';
+import { ACCESS_TOKEN } from './constants';
+
 
 const { Header, Sider, Content } = Layout;
 class App extends Component {
-  state = {
-    collapsed: false,
-  };
+  
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentUser: null,
+      isAuthenticated: false,
+      isLoading: false,
+	  collapsed: false
+    }
+    this.handleLogout = this.handleLogout.bind(this);
+    this.loadCurrentUser = this.loadCurrentUser.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
+	{console.log(this.props)}
+    notification.config({
+      placement: 'topRight',
+      top: 70,
+      duration: 3,
+    });    
+  }
+  
 
   toggle = () => {
     this.setState({
       collapsed: !this.state.collapsed,
+    });
+  }
+  
+  loadCurrentUser() {
+    this.setState({
+      isLoading: true
+    });
+    getCurrentUser()
+    .then(response => {
+      this.setState({
+        currentUser: response.name,
+        isAuthenticated: true,
+        isLoading: false
+      });
+    }).catch(error => {
+      this.setState({
+        isLoading: false
+      });  
+    });
+  }
+
+  componentDidMount() {
+    this.loadCurrentUser();
+  }
+  
+  handleLogin() {
+    notification.success({
+      message: 'Parking System',
+      description: "You're successfully logged in.",
+    });
+    this.loadCurrentUser();
+    this.props.history.push("/");
+  }
+  
+  handleLogout(redirectTo="/", notificationType="success", description="You're successfully logged out.") {
+    localStorage.removeItem(ACCESS_TOKEN);
+
+    this.setState({
+      currentUser: null,
+      isAuthenticated: false
+    });
+
+    this.props.history.push(redirectTo);
+    
+    notification[notificationType]({
+      message: 'Parking System',
+      description: description,
     });
   }
 
@@ -85,6 +154,7 @@ class App extends Component {
               <Route path="/dashboardPage" component={dashboardPage}></Route>
               <Route path="/orderPage" component={orderPage}></Route> 
               <Route path="/nav3Page" component={()=><p style={{textAlign: 'center',marginTop:'15rem',color:'#1890ff', fontSize:'2rem'}}>Nav3 Page</p>}></Route>
+			  <Route path="/login" render={(props) => <Login onLogin={this.handleLogin} {...props} />}></Route>
           </Switch>
           </Content>
         </Layout>
@@ -93,4 +163,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);
