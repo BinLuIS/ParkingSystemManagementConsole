@@ -186,6 +186,9 @@ class CustomPaginationActionsTable extends React.Component {
         if(this.state.name.length<1){
             message.error("名字需大於1個字元",3);
         }
+        if(!this.state.email.includes('@')){
+            message.error("電郵不正確",3);
+        }
         if(this.state.phoneNumber.length>11){
             message.error("電話號碼需少於11個數字",3);
         }
