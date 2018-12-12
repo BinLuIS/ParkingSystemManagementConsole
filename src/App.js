@@ -12,6 +12,7 @@ import { getCurrentUser } from './util/APIUtils';
 import Login from './user/login/Login';
 import { Layout, notification } from 'antd';
 import { ACCESS_TOKEN } from './constants';
+import AppHeader from './common/AppHeader';
 
 
 const { Header, Sider, Content } = Layout;
@@ -74,7 +75,7 @@ class App extends Component {
     this.props.history.push("/");
   }
   
-  handleLogout(redirectTo="/", notificationType="success", description="You're successfully logged out.") {
+  handleLogout(redirectTo="/login", notificationType="success", description="You're successfully logged out.") {
     localStorage.removeItem(ACCESS_TOKEN);
 
     this.setState({
@@ -92,7 +93,11 @@ class App extends Component {
 
   render() {
     return (
+
       <Layout>
+	  <AppHeader isAuthenticated={this.state.isAuthenticated} 
+            currentUser={this.state.currentUser} 
+            onLogout={this.handleLogout} />
         <Sider
           trigger={null}
           collapsible
