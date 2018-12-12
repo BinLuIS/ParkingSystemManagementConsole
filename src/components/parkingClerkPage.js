@@ -168,6 +168,15 @@ class CustomPaginationActionsTable extends React.Component {
     };
 
     submitRequest = (event) => {
+        if(this.state.name.length<6){
+            message.error("名字需大於6個字元",3);
+        }
+        if(!this.state.email.includes('@')){
+            message.error("電郵輸入不正確",3);
+        }
+        if(this.state.phoneNumber.length>11){
+            message.error("電話號碼需少於11個數字",3);
+        }
         fetch("https://parkingsystem.herokuapp.com/api/auth/signup/",
             {
                 method: 'POST', headers: new Headers({
@@ -184,6 +193,11 @@ class CustomPaginationActionsTable extends React.Component {
                 })
             })
             .then(res => res.json()).then(res => { message.success('成功添加停車員',1);})
+            .catch(error=>{
+                if(error.status===400){
+                    message.error("輸入資料不符規格，請重新輸入",3);
+                }
+            })
             
         
         
