@@ -22,7 +22,6 @@ import {
     Form, Select, AutoComplete,
 } from 'antd';
 import { message } from 'antd';
-import { getAllParkingLots,getAllParkingClerks, addParkingLots,assignParkingLotToParkingClerks } from '../util/APIUtils';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -139,21 +138,19 @@ class CustomPaginationActionsTable extends React.Component {
         NotImportant: 1,
         activeModal: null,
         selectedClerkId: -1,
-        parkingclerks: [],
+        parkingclecks: [],
 
     };
     componentDidMount() {
-        // fetch('https://parkingsystem.herokuapp.com/parkinglots/')
-        //     .then(results => results.json())
-        getAllParkingLots()
+        fetch('https://parkingsystem.herokuapp.com/parkinglots/')
+            .then(results => results.json())
             .then(res => {
                 this.setState({ rows: res });
             });
-        // fetch('https://parkingsystem.herokuapp.com/parkingclerks/')
-        //     .then(results => results.json())
-        getAllParkingClerks()
+        fetch('https://parkingsystem.herokuapp.com/parkingclerks/')
+            .then(results => results.json())
             .then(res => {
-                this.setState({ parkingclerks: res });
+                this.setState({ parkingclecks: res });
             });
     }
     handleChangePage = (event, page) => {
@@ -163,6 +160,11 @@ class CustomPaginationActionsTable extends React.Component {
     handleChangeRowsPerPage = event => {
         this.setState({ rowsPerPage: event.target.value });
     };
+
+    createParkingLot = () => {
+        window.open('http://localhost:3000/createParkingLot',
+            'creatParkingLot', 'width=600,height=400,left=200,top=200')
+    }
 
     showModal = (type) => {
         this.setState({
@@ -194,28 +196,25 @@ class CustomPaginationActionsTable extends React.Component {
     };
 
     submitRequest = () => {
-        // fetch("https://parkingsystem.herokuapp.com/parkinglots/",
-        //     {
-        //         method: 'POST', headers: new Headers({
-        //             'Content-Type': 'application/json'
-        //         }), mode: 'cors',
-        //         body: JSON.stringify({
-        //             name: this.state.name,
-        //             capacity: this.state.capacity
-        //         })
-        //     })
-        //     .then(res => res.json())
-        addParkingLots({name: this.state.name,capacity: this.state.capacity})
-            .then(res => console.log(res))
+        fetch("https://parkingsystem.herokuapp.com/parkinglots/",
+            {
+                method: 'POST', headers: new Headers({
+                    'Content-Type': 'application/json'
+                }), mode: 'cors',
+                body: JSON.stringify({
+                    name: this.state.name,
+                    capacity: this.state.capacity
+                })
+            })
+            .then(res => res.json()).then(res => console.log(res))
         message.success('成功添加停車場', 1);
 
         setTimeout(() => {
             this.setState({ activeModal: null });
-            // fetch('https://parkingsystem.herokuapp.com/parkinglots/')
-            // .then(results => results.json())
-            getAllParkingLots()
+            fetch('https://parkingsystem.herokuapp.com/parkinglots/')
+            .then(results => results.json())
             .then(res => {
-                this.setState({ name:'', capacity: '', rows: res });
+                this.setState({ rows: res });
             });
         }, 1500);
 
@@ -230,32 +229,41 @@ class CustomPaginationActionsTable extends React.Component {
     submitAssignRequest = () => {
         // console.log("boy: " + this.state.selectedClerkId);
         // console.log("lot: " + this.state.id)
-        // fetch("https://parkingsystem.herokuapp.com/parkingclerks/" + this.state.selectedClerkId + "/parkinglots/",
-        //     {
-        //         method: 'POST', headers: new Headers({
-        //             'Content-Type': 'application/json'
-        //         }), mode: 'cors',
-        //         body: JSON.stringify({
-        //             parkingLotId: this.state.id,
-        //         })
-        //     })
-        //     .then(res => res.json())
-        assignParkingLotToParkingClerks(this.state.selectedClerkId,{parkingLotId: this.state.id,})
-        .then(res=>message.success('成功指派停車員ID ' + this.state.selectedClerkId + '管理停車場'+this.state.name, 2))
+        fetch("https://parkingsystem.herokuapp.com/parkingclerks/" + this.state.selectedClerkId + "/parkinglots/",
+            {
+                method: 'POST', headers: new Headers({
+                    'Content-Type': 'application/json'
+                }), mode: 'cors',
+                body: JSON.stringify({
+                    parkingLotId: this.state.id,
+                })
+            })
+            .then(res => res.json())
+        message.success('成功指派停車員ID ' + this.state.selectedClerkId + '管理停車場'+this.state.name, 2);
 
         setTimeout(() => {
             this.setState({ activeModal: null });
-            // fetch('https://parkingsystem.herokuapp.com/parkinglots/')
-            // .then(results => results.json())
-            getAllParkingLots()
+            fetch('https://parkingsystem.herokuapp.com/parkinglots/')
+            .then(results => results.json())
             .then(res => {
-                this.setState({ name:'', capacity: '', parkingClerks:'', rows: res });
+                this.setState({ rows: res });
             });
         }, 2500);
-
-
     }
-
+	
+	searchByName = (value)=>{fetch('https://parkingsystem.herokuapp.com/parkinglots/')
+            .then(results => results.json())
+            .then(res => {
+				const result = res.filter((parkingLot)=>{ return parkingLot.name.includes(value)})
+                this.setState({ rows: result });
+            });}
+			
+	searchByCapacity = (value)=>{fetch('https://parkingsystem.herokuapp.com/parkinglots/')
+            .then(results => results.json())
+            .then(res => {
+				const result = res.filter((parkingLot)=>{ return parseInt(parkingLot.capacity) == value})
+                this.setState({ rows: result });
+            });}
 
     render() {
         const { classes } = this.props;
@@ -268,7 +276,7 @@ class CustomPaginationActionsTable extends React.Component {
                     <Button style={{ padding: '10px', background: '#1890ff', color: 'white', marginTop: '10px', marginLeft: '10px', marginBottom: '10px' }} variant="contained" className={classes.button} onClick={() => this.showModal("Create")}>新建</Button>
                     <Search style={{ width: 200, float: 'right', marginTop: '10px', marginBottom: '10px', marginRight: '10px' }}
                         placeholder="輸入文字搜索"
-                        onSearch={value => console.log(value)}
+                        onSearch={value => this.searchByName(value)}
                         enterButton
                     />
 
@@ -391,9 +399,9 @@ class CustomPaginationActionsTable extends React.Component {
                         </FormItem>
                         <FormItem label="指派停車員">
                             <Select onChange={(e) => this.setState({ selectedClerkId: e })}>
-                                {this.state.parkingclerks.map(
-                                    parkingClerk => {
-                                        return (<Option value={parkingClerk.id} key={parkingClerk.id}>{parkingClerk.name}</Option>);
+                                {this.state.parkingclecks.map(
+                                    parkingCleck => {
+                                        return (<Option value={parkingCleck.id} key={parkingCleck.id}>{parkingCleck.name}</Option>);
                                     }
                                 )}
                             </Select>
