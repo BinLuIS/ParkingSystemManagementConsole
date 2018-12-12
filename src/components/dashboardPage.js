@@ -1,6 +1,7 @@
 import { Card, Col, Row } from 'antd';
 import React, { Component } from 'react';
 import { Progress } from 'antd';
+import { getAllParkingLots } from '../util/APIUtils';
 
 class dashboardPage extends Component {
 	
@@ -8,9 +9,10 @@ class dashboardPage extends Component {
 		rows:[]
 	}
 	componentDidMount(){
-	fetch('https://parkingsystem.herokuapp.com/parkinglots/').
-	then(results => results.json()).
-	then(res => {
+	// fetch('https://parkingsystem.herokuapp.com/parkinglots/').
+    // then(results => results.json())
+    getAllParkingLots()
+	.then(res => {
                 this.setState({ rows: res });
             });
 	

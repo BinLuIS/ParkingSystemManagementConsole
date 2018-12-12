@@ -19,6 +19,7 @@ import { Input } from 'antd';
 import { Modal } from 'antd';
 import TextField from '@material-ui/core/TextField';
 import { message} from 'antd';
+import { signup, getAllParkingClerks} from '../util/APIUtils';
 
 const actionsStyles = theme => ({
     root: {
@@ -125,8 +126,9 @@ class CustomPaginationActionsTable extends React.Component {
     };
 
     componentDidMount() {
-        fetch('https://parkingsystem.herokuapp.com/parkingclerks/')
-            .then(results => results.json())
+        // fetch('https://parkingsystem.herokuapp.com/parkingclerks/')
+        //     .then(results => results.json())
+        getAllParkingClerks()
             .then(res => {
                 this.setState({ rows: res });
             });
@@ -139,11 +141,6 @@ class CustomPaginationActionsTable extends React.Component {
     handleChangeRowsPerPage = event => {
         this.setState({ rowsPerPage: event.target.value });
     };
-
-    createParkingClerk = () => {
-        window.open('http://localhost:3000/createParkingClerk',
-            'creatParkingClerk', 'width=600,height=400,left=200,top=200')
-    }
 
     showModal = () => {
         this.setState({
@@ -168,34 +165,45 @@ class CustomPaginationActionsTable extends React.Component {
     };
 
     submitRequest = (event) => {
-        if(this.state.name.length<6){
-            message.error("名字需大於6個字元",3);
-        }
-        if(!this.state.email.includes('@')){
-            message.error("電郵輸入不正確",3);
+        if(this.state.name.length<1){
+            message.error("名字需大於1個字元",3);
         }
         if(this.state.phoneNumber.length>11){
             message.error("電話號碼需少於11個數字",3);
         }
-        fetch("https://parkingsystem.herokuapp.com/api/auth/signup/",
-            {
-                method: 'POST', headers: new Headers({
-                    'Content-Type': 'application/json'
-                }), mode: 'cors',
-                body: JSON.stringify({
-                    name: this.state.name,
-                    username: this.state.name,
-                    email: this.state.email,
-                    password: this.state.name,
-                    phoneNumber: this.state.phoneNumber,
-                    role:"PARKINGCLERK"
+        // fetch("https://parkingsystem.herokuapp.com/api/auth/signup/",
+        //     {
+        //         method: 'POST', headers: new Headers({
+        //             'Content-Type': 'application/json'
+        //         }), mode: 'cors',
+        //         body: JSON.stringify({
+        //             name: this.state.name,
+        //             username: this.state.name,
+        //             email: this.state.email,
+        //             password: this.state.name,
+        //             phoneNumber: this.state.phoneNumber,
+        //             role:"PARKINGCLERK"
 
-                })
-            })
-            .then(res => res.json()).then(res => { message.success('成功添加停車員',1);})
+        //         })
+        //     })
+        //     .then(res => res.json())
+        let signupRequest={
+            name: this.state.name,
+            username: this.state.name,
+            email: this.state.email,
+            password: this.state.name,
+            phoneNumber: this.state.phoneNumber,
+            role:"PARKINGCLERK"
+
+        }
+        signup(signupRequest)
+            .then(res => { message.success('成功添加停車員',1);})
             .catch(error=>{
                 if(error.status===400){
                     message.error("輸入資料不符規格，請重新輸入",3);
+                }
+                if(error.status===500){
+                    message.error("處理申請錯誤",3);
                 }
             })
             
@@ -203,8 +211,9 @@ class CustomPaginationActionsTable extends React.Component {
         
         setTimeout(() => {
             this.setState({ visible: false });
-            fetch('https://parkingsystem.herokuapp.com/parkingclerks/')
-            .then(results => results.json())
+            // fetch('https://parkingsystem.herokuapp.com/parkingclerks/')
+            // .then(results => results.json())
+            getAllParkingClerks()
             .then(res => {
                 this.setState({ name:'', email: '', phoneNumber: '', rows: res });
             });
