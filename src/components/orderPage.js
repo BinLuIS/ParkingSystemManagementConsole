@@ -21,6 +21,7 @@ import { message } from 'antd';
 import {
     Form, Select, AutoComplete,
 } from 'antd';
+import { getAllOrders,getAllParkingClerks, assignOrdersToParkingClerks } from '../util/APIUtils';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -137,13 +138,15 @@ class CustomPaginationActionsTable extends React.Component {
     };
 	
 	componentDidMount(){
-        fetch('https://parkingsystem.herokuapp.com/orders')
-        .then(results => results.json())
+        // fetch('https://parkingsystem.herokuapp.com/orders')
+        // .then(results => results.json())
+        getAllOrders()
         .then(res => {
         this.setState({rows:res});
         });
-		fetch('https://parkingsystem.herokuapp.com/parkingclerks/')
-        .then(results => results.json())
+		// fetch('https://parkingsystem.herokuapp.com/parkingclerks/')
+        // .then(results => results.json())
+        getAllParkingClerks()
         .then(res => {
         this.setState({ parkingclecks: res });
         });
@@ -200,22 +203,25 @@ class CustomPaginationActionsTable extends React.Component {
 		}
 	}
 	submitAssignRequest = (state) => {
-        fetch("https://parkingsystem.herokuapp.com/parkingclerks/"+state.selectedClerkId+'/orders',
-            {
-                method: 'POST', headers: new Headers({
-                    'Content-Type': 'application/json'
-                }), mode: 'cors',
-                body: JSON.stringify({
-                    parkingOrderId: state.id
-                })
-            })
-            .then(res => res.json()).then(res => console.log(res))
+        // fetch("https://parkingsystem.herokuapp.com/parkingclerks/"+state.selectedClerkId+'/orders',
+        //     {
+        //         method: 'POST', headers: new Headers({
+        //             'Content-Type': 'application/json'
+        //         }), mode: 'cors',
+        //         body: JSON.stringify({
+        //             parkingOrderId: state.id
+        //         })
+        //     })
+        //     .then(res => res.json())
+        assignOrdersToParkingClerks(state.selectedClerkId,{parkingOrderId: state.id})
+            .then(res => console.log(res))
         message.success('成功指派停車員', 1);
 		
 		setTimeout(() => {
             this.setState({ activeModal: null });
-            fetch('https://parkingsystem.herokuapp.com/orders')
-            .then(results => results.json())
+            // fetch('https://parkingsystem.herokuapp.com/orders')
+            // .then(results => results.json())
+            getAllOrders()
             .then(res => {
             this.setState({rows:res});
             });

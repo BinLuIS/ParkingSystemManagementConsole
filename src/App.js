@@ -3,7 +3,6 @@ import logo from './logo.svg';
 import './App.css';
 import { Layout, Menu, Icon } from 'antd';
 import {Route, Link,Switch} from 'react-router-dom'
-import TablePage from './components/TablePage'
 import employeePage from './components/employeePage';
 import parkingLotPage from './components/parkingLotPage';
 import parkingClerkPage from './components/parkingClerkPage';
