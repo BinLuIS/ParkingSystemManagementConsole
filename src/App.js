@@ -105,7 +105,6 @@ class App extends Component {
         >
           <div className="logo" />
           <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-          
             <Menu.Item key="1">
             <Link to = "/employeePage">
               <Icon type="team" />
