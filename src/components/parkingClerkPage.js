@@ -168,22 +168,7 @@ class CustomPaginationActionsTable extends React.Component {
     };
 
     submitRequest = (event) => {
-        fetch("https://parkingsystem.herokuapp.com/parkingclerks/",
-            {
-                method: 'POST', headers: new Headers({
-                    'Content-Type': 'application/json'
-                }), mode: 'cors',
-                body: JSON.stringify({
-                    name: this.state.name,
-                    email: this.state.email,
-                    phoneNumber: this.state.phoneNumber,
-                    status: this.state.status
-                })
-            })
-            .then(res => res.json()).then(res => {
-                console.log("success")
-                console.log(res)
-                fetch("https://parkingsystem.herokuapp.com/api/auth/signup/",
+        fetch("https://parkingsystem.herokuapp.com/api/auth/signup/",
             {
                 method: 'POST', headers: new Headers({
                     'Content-Type': 'application/json'
@@ -193,11 +178,13 @@ class CustomPaginationActionsTable extends React.Component {
                     username: this.state.name,
                     email: this.state.email,
                     password: this.state.name,
-                    // phoneNumber: this.state.phoneNumber,
+                    phoneNumber: this.state.phoneNumber,
+                    role:"PARKINGCLERK"
+
                 })
             })
             .then(res => res.json()).then(res => { message.success('成功添加停車員',1);})
-            })
+            
         
         this.setState({ loading: true });
         setTimeout(() => {
