@@ -240,7 +240,7 @@ class CustomPaginationActionsTable extends React.Component {
         //         })
         //     })
         //     .then(res => res.json())
-        assignParkingLotToParkingClerks(this.state.selectedClerkId,{parkingLotId: this.state.id,})
+        assignParkingLotToParkingClerks(this.state.selectedClerkId,{parkingLotId: this.state.id})
         .then(res=>message.success('成功指派停車員ID ' + this.state.selectedClerkId + '管理停車場'+this.state.name, 2))
 
         setTimeout(() => {
