@@ -168,11 +168,8 @@ class CustomPaginationActionsTable extends React.Component {
     };
 
     submitRequest = (event) => {
-        if(this.state.name.length<6){
-            message.error("名字需大於6個字元",3);
-        }
-        if(!this.state.email.includes('@')){
-            message.error("電郵輸入不正確",3);
+        if(this.state.name.length<1){
+            message.error("名字需大於1個字元",3);
         }
         if(this.state.phoneNumber.length>11){
             message.error("電話號碼需少於11個數字",3);
@@ -196,6 +193,9 @@ class CustomPaginationActionsTable extends React.Component {
             .catch(error=>{
                 if(error.status===400){
                     message.error("輸入資料不符規格，請重新輸入",3);
+                }
+                if(error.status===500){
+                    message.error("處理申請錯誤",3);
                 }
             })
             
