@@ -209,7 +209,7 @@ class CustomPaginationActionsTable extends React.Component {
             fetch('https://parkingsystem.herokuapp.com/api/users/')
             .then(results => results.json())
             .then(res => {
-                this.setState({ rows: res });
+                this.setState({ name:'', email:'', phoneNumber:'', role:'PARKINGCLERK', rows: res });
             });
         }, 2500);
 
