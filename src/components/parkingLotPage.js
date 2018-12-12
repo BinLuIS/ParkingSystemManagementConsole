@@ -328,7 +328,7 @@ class CustomPaginationActionsTable extends React.Component {
                 {/* Creation Modal */}
                 <Modal
                     visible={activeModal === "Create"}
-                    title="新建停車員"
+                    title="新建停車場"
                     onOk={this.submitRequest}
                     onCancel={this.handleCancel}
                     footer={[
