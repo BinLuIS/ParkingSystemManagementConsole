@@ -143,9 +143,10 @@ class App extends Component {
              BinLuIS Parking Management System
           </Header>
           <Content style={{
-            margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280,
+            margin: '24px 16px', padding: 24, background: '#fff', minHeight: 750,
           }}
           >
+          <body background="parking_lot.jpg"></body>
             <Switch>
               <Route path="/" exact component={()=><h1 style={{textAlign: 'center',marginTop:'15rem',color:'#1890ff', fontSize:'2rem'}}>Welcome to BinLuIS Parking Management System</h1>}></Route>
               <Route path="/employeePage" component={employeePage}></Route>
