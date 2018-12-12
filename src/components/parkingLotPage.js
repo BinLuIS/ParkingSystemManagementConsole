@@ -252,10 +252,21 @@ class CustomPaginationActionsTable extends React.Component {
                 this.setState({ name:'', capacity: '', parkingClerks:'', rows: res });
             });
         }, 2500);
-
-
     }
-
+	
+	searchByName = (value)=>{fetch('https://parkingsystem.herokuapp.com/parkinglots/')
+            .then(results => results.json())
+            .then(res => {
+				const result = res.filter((parkingLot)=>{ return parkingLot.name.includes(value)})
+                this.setState({ rows: result });
+            });}
+			
+	searchByCapacity = (value)=>{fetch('https://parkingsystem.herokuapp.com/parkinglots/')
+            .then(results => results.json())
+            .then(res => {
+				const result = res.filter((parkingLot)=>{ return parseInt(parkingLot.capacity) == value})
+                this.setState({ rows: result });
+            });}
 
     render() {
         const { classes } = this.props;
@@ -268,7 +279,7 @@ class CustomPaginationActionsTable extends React.Component {
                     <Button style={{ padding: '10px', background: '#1890ff', color: 'white', marginTop: '10px', marginLeft: '10px', marginBottom: '10px' }} variant="contained" className={classes.button} onClick={() => this.showModal("Create")}>新建</Button>
                     <Search style={{ width: 200, float: 'right', marginTop: '10px', marginBottom: '10px', marginRight: '10px' }}
                         placeholder="輸入文字搜索"
-                        onSearch={value => console.log(value)}
+                        onSearch={value => this.searchByName(value)}
                         enterButton
                     />
 
