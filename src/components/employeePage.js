@@ -351,12 +351,12 @@ class CustomPaginationActionsTable extends React.Component {
 
                     <Table className={classes.table}>
                         <TableHead >
-                            <TableRow style={{ background: '#1890ff' }}>
-                                <TableCell style={{ color: 'white' }}><b>ID</b></TableCell>
-                                <TableCell style={{ color: 'white' }}><b>姓名</b></TableCell>
-                                <TableCell style={{ color: 'white' }}><b>Email</b></TableCell>
-                                <TableCell style={{ color: 'white' }}><b>電話號碼</b></TableCell>
-                                <TableCell style={{ color: 'white' }}><b>操作</b></TableCell>
+                            <TableRow style={{ background: '#fafafa' }}>
+                                <TableCell style={{ color: 'black' }}><h3>ID</h3></TableCell>
+                                <TableCell style={{ color: 'black' }}><h3>姓名</h3></TableCell>
+                                <TableCell style={{ color: 'black' }}><h3>電郵</h3></TableCell>
+                                <TableCell style={{ color: 'black' }}><h3>電話號碼</h3></TableCell>
+                                <TableCell style={{ color: 'black' }}><h3>操作</h3></TableCell>
 
                             </TableRow>
 

@@ -159,19 +159,19 @@ export default class parkingClerksTable extends Component {
     render() {
         const Search = Input.Search;
         const columns = [{
-            title: 'Id',
+            title: 'ID',
             dataIndex: 'id',
             key: 'id',
         }, {
-            title: 'Name',
+            title: '姓名',
             dataIndex: 'name',
             key: 'name',
         }, {
-            title: 'PhoneNumber',
+            title: '電話號碼',
             dataIndex: 'phoneNumber',
             key: 'phoneNumber',
         }, {
-            title: 'Status',
+            title: '狀態',
             dataIndex: 'status',
             key: 'status',
         }];
