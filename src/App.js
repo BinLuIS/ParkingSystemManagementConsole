@@ -13,7 +13,7 @@ import Login from './user/login/Login';
 import { Layout, notification } from 'antd';
 import { ACCESS_TOKEN } from './constants';
 import AppHeader from './common/AppHeader';
-import Slider from './components/slider'
+import Slider from './components/slider';
 
 const { Header, Sider, Content } = Layout;
 class App extends Component {

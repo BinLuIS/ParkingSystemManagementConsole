@@ -56,7 +56,7 @@ export default class slider extends Component {
             <Icon type="form" />
             <span>訂單管理</span>
             </Link>
-          </Menu.Item>
+          </Menu.Item>          
         </Menu>
       </Sider>
     )
