@@ -15,7 +15,7 @@ class AppHeader extends Component {
 
     handleMenuClick({ key }) {
       if(key === "logout") {
-        this.props.onLogout();
+        this.props.onLogout(this.props.history);
       }
     }
 
