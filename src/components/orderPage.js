@@ -54,6 +54,12 @@ class TablePaginationActions extends React.Component {
             Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 1),
         );
     };
+	searchByName = (value)=>{fetch('https://parkingsystem.herokuapp.com/orders')
+            .then(results => results.json())
+            .then(res => {
+				const result = res.filter((order)=>{ return order.carNumber.includes(value)})
+                this.setState({ rows: result });
+            });}
 
     render() {
         const { classes, count, page, rowsPerPage, theme } = this.props;

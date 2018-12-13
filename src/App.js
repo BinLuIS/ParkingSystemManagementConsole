@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { Menu, Icon } from 'antd';
-import {Route, Link,Switch, withRouter} from 'react-router-dom'
+import {Route, Link,Switch, withRouter, Redirect} from 'react-router-dom'
 import employeePage from './components/employeePage';
 import parkingLotPage from './components/parkingLotPage';
 import parkingClerkPage from './components/parkingClerkPage';
@@ -11,7 +11,10 @@ import dashboardPage from './components/dashboardPage';
 import { getCurrentUser } from './util/APIUtils';
 import Login from './user/login/Login';
 import { Layout, notification } from 'antd';
-import { ACCESS_TOKEN } from './constants';
+import { ACCESS_TOKEN, MANAGER_ID } from './constants';
+import AppHeader from './common/AppHeader';
+import Slider from './components/slider';
+import PrivateRoute from './common/PrivateRoute';
 
 
 const { Header, Sider, Content } = Layout;
@@ -23,7 +26,7 @@ class App extends Component {
       currentUser: null,
       isAuthenticated: false,
       isLoading: false,
-	  collapsed: false
+      collapsed: false
     }
     this.handleLogout = this.handleLogout.bind(this);
     this.loadCurrentUser = this.loadCurrentUser.bind(this);
@@ -43,17 +46,42 @@ class App extends Component {
     });
   }
   
-  loadCurrentUser() {
+  loadCurrentUser(history) {
     this.setState({
       isLoading: true
     });
+
     getCurrentUser()
-    .then(response => {
-      this.setState({
-        currentUser: response.name,
-        isAuthenticated: true,
-        isLoading: false
-      });
+    .then(response => 
+      {
+        if(response.roles.filter(role=>role.name=='ROLE_MANAGER').length>0){
+        this.setState({
+          currentUser: response.name,
+          isAuthenticated: true,
+          isLoading: false
+        });
+        notification.success({
+          message: '冰露泊車',
+          description: `歡迎你 ${response.name}!!!`,
+        });
+        
+        console.log(history)
+        this.props.history.push('/parkingClerkPage');
+        console.log(history)
+      }else{
+        notification.error({
+          message: '冰露泊車',
+          description: '請核對您的用戶名稱及密碼, 並再次嘗試'
+        });
+        localStorage.removeItem(ACCESS_TOKEN);
+
+        this.setState({
+          currentUser: null,
+          isAuthenticated: false
+        });
+
+        history.push("/login");
+      }
     }).catch(error => {
       this.setState({
         isLoading: false
@@ -62,19 +90,16 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.loadCurrentUser();
+    //this.loadCurrentUser();
   }
   
-  handleLogin() {
-    notification.success({
-      message: 'Parking System',
-      description: "You're successfully logged in.",
-    });
-    this.loadCurrentUser();
-    this.props.history.push("/");
+  handleLogin(history) {
+  
+    this.loadCurrentUser(history);
+    //this.props.history.push("/");
   }
   
-  handleLogout(redirectTo="/", notificationType="success", description="You're successfully logged out.") {
+  handleLogout(history) {
     localStorage.removeItem(ACCESS_TOKEN);
 
     this.setState({
@@ -82,57 +107,22 @@ class App extends Component {
       isAuthenticated: false
     });
 
-    this.props.history.push(redirectTo);
+    history.push("/login");
     
-    notification[notificationType]({
-      message: 'Parking System',
-      description: description,
+    notification["success"]({
+      message: '冰露泊車',
+      description: "你已成功登出"
     });
   }
 
   render() {
     return (
+
       <Layout>
-        <Sider
-          trigger={null}
-          collapsible
-          collapsed={this.state.collapsed}
-        >
-          <div className="logo" />
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-          
-            <Menu.Item key="1">
-            <Link to = "/employeePage">
-              <Icon type="team" />
-              <span>員工管理</span>
-              </Link>
-            </Menu.Item>
-            <Menu.Item key="2">
-            <Link to = "/parkingLotPage">
-              <Icon type="car" />
-              <span>停車場管理</span>
-          </Link>
-            </Menu.Item>
-            <Menu.Item key="3">
-            <Link to = "/parkingClerkPage">
-              <Icon type="user" />
-              <span>停車員管理</span>
-              </Link>
-            </Menu.Item>
-            <Menu.Item key="4">
-            <Link to = "/dashboardPage">
-              <Icon type="table" />
-              <span>停車場Dashboard</span>
-              </Link>
-            </Menu.Item>
-            <Menu.Item key="5">
-            <Link to = "/orderPage">
-              <Icon type="form" />
-              <span>訂單管理</span>
-              </Link>
-            </Menu.Item>
-          </Menu>
-        </Sider>
+	  <AppHeader isAuthenticated={this.state.isAuthenticated} 
+            currentUser={this.state.currentUser} 
+            onLogout={this.handleLogout} />
+        <Slider isLogin={this.state.isAuthenticated}/>
         <Layout>
           <Header style={{ background: '#fff', padding: 0 }}>
             <Icon
@@ -148,14 +138,23 @@ class App extends Component {
           >
           <body background="parking_lot.jpg"></body>
             <Switch>
-              <Route path="/" exact component={()=><h1 style={{textAlign: 'center',marginTop:'15rem',color:'#1890ff', fontSize:'2rem'}}>Welcome to BinLuIS Parking Management System</h1>}></Route>
-              <Route path="/employeePage" component={employeePage}></Route>
-              <Route path="/parkingLotPage" component={parkingLotPage}></Route>
-              <Route path="/parkingClerkPage" component={parkingClerkPage}></Route>
-              <Route path="/dashboardPage" component={dashboardPage}></Route>
-              <Route path="/orderPage" component={orderPage}></Route> 
-              <Route path="/nav3Page" component={()=><p style={{textAlign: 'center',marginTop:'15rem',color:'#1890ff', fontSize:'2rem'}}>Nav3 Page</p>}></Route>
-			  <Route path="/login" render={(props) => <Login onLogin={this.handleLogin} {...props} />}></Route>
+              <Route path="/" exact component={()=>
+			  <div>
+			  <h1 style={{textAlign: 'center',marginTop:'15rem',color:'#1890ff', fontSize:'2rem'}}>
+			  歡迎登入冰露泊車
+			  </h1>
+			  <audio autoplay><source src="./audio/Welcome.mp3"></source></audio>
+			  </div>
+			  
+			  }></Route>
+              <PrivateRoute path="/employeePage" authenticated={this.state.isAuthenticated} component={employeePage}></PrivateRoute>
+              <PrivateRoute path="/parkingLotPage" authenticated={this.state.isAuthenticated} component={parkingLotPage}></PrivateRoute>
+              <PrivateRoute path="/parkingClerkPage" authenticated={this.state.isAuthenticated} component={parkingClerkPage}></PrivateRoute>
+              <PrivateRoute path="/dashboardPage" authenticated={this.state.isAuthenticated} component={dashboardPage}></PrivateRoute>
+              <PrivateRoute path="/orderPage" authenticated={this.state.isAuthenticated} component={orderPage}></PrivateRoute> 
+              <PrivateRoute path="/nav3Page" authenticated={this.state.isAuthenticated} component={()=><p style={{textAlign: 'center',marginTop:'15rem',color:'#1890ff', fontSize:'2rem'}}>Nav3 Page</p>}></PrivateRoute>
+			        <Route path="/login" render={(props) => <Login onLogin={this.handleLogin} {...props} />}></Route>
+              {/* <Redirect paht="*" to="/login"></Redirect> */}
           </Switch>
           </Content>
         </Layout>
