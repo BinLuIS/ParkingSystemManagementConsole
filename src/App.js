@@ -62,13 +62,10 @@ class App extends Component {
         });
         notification.success({
           message: '冰露泊車',
-          description: `歡迎你 ${response.name}!!!`,
+          description: `歡迎您回來，${response.name}。`,
         });
-        
-        console.log(history)
-        this.props.history.push('/parkingClerkPage');
-        console.log(history)
-      }else{
+        this.props.history.push('/employeePage');
+        }else{
         notification.error({
           message: '冰露泊車',
           description: '請核對您的用戶名稱及密碼, 並再次嘗試'
@@ -86,6 +83,22 @@ class App extends Component {
       this.setState({
         isLoading: false
       });  
+      if(error.status === 401) {
+        notification.error({
+            message: '冰露泊車',
+            description: '請核對您的用戶名稱及密碼, 並再次嘗試'
+        });                    
+      } else if(error.status === 403) {
+        notification.error({
+            message: '冰露泊車',
+            description: '禁止訪問，您不被允許登錄此頁面，請重新確認'
+        });                    
+      }else{
+        notification.error({
+            message: '冰露泊車',
+            description: error.message || '系統出現錯誤, 請再嘗試'
+        });                                            
+    }
     });
   }
 

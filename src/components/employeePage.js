@@ -21,7 +21,7 @@ import TextField from '@material-ui/core/TextField';
 import { message } from 'antd';
 import { Radio } from 'antd';
 import { Select } from 'antd';
-import { getAllEmployees, signup } from '../util/APIUtils';
+import { getAllEmployees, signup, editUser } from '../util/APIUtils';
 
 const Option = Select.Option;
 
@@ -144,10 +144,12 @@ class CustomPaginationActionsTable extends React.Component {
         page: 0,
         rowsPerPage: 10,
         visible: false,
+        visibleEdit: false,
+        employeeId:null,
         name: '',
         email: '',
         phoneNumber: '',
-        role: 'PARKINGCLERK',
+        role: 'PARKINGCLERK'
     };
 
     componentDidMount() {
@@ -173,14 +175,34 @@ class CustomPaginationActionsTable extends React.Component {
         });
     }
 
+    showEditModal = (employee) => {
+        this.setState({
+            visibleEdit: true,
+            employeeId:employee.id,
+            name: employee.name,
+            email: employee.email,
+            phoneNumber: employee.phoneNumber
+        });
+    }
+
     handleOk = () => {
         setTimeout(() => {
             this.setState({ visible: false });
         }, 3000);
     }
 
+    handleEditOk = () => {
+        setTimeout(() => {
+            this.setState({ visibleEdit: false });
+        }, 3000);
+    }
+
     handleCancel = () => {
         this.setState({ visible: false });
+    }
+
+    handleEditCancel = () => {
+        this.setState({ visibleEdit: false });
     }
 
     handleChange = name => event => {
@@ -247,11 +269,69 @@ class CustomPaginationActionsTable extends React.Component {
 
     }
 
+    freezeUser=(employee)=>{
+        let freezeRequest=null;
+        if(employee.status=='active'){
+            freezeRequest={status:'freeze'}
+        }else{
+            freezeRequest={status:'active'}
+        }
+        editUser(employee.id,freezeRequest)
+        .then(res=>{
+            getAllEmployees()
+            .then(res => {
+                this.setState({ rows: res });
+                message.success('員工狀態修改成功');
+            });
+        })
+    }
+
+    submitEditRequest = (employeeId) => {
+        if(this.state.name.length<1){
+            message.error("名字需大於1個字元",3);
+        }
+        if(!this.state.email.includes('@')){
+            message.error("電郵不正確",3);
+        }
+        if(this.state.phoneNumber.length>11){
+            message.error("電話號碼需少於11個數字",3);
+        }
+        
+        let editRequest={
+            name: this.state.name,
+            username: this.state.name,
+            email: this.state.email,
+            phoneNumber: this.state.phoneNumber,
+        }
+        editUser(employeeId,editRequest)
+            .then(res=>message.success('成功修改員工', 2))
+            .catch(error=>{
+                if(error.status===400){
+                    message.error("輸入資料不符規格，請重新輸入",3);
+                }
+                if(error.status===500){
+                    message.error("處理申請錯誤",3);
+                }
+            })
+        
+
+        setTimeout(() => {
+            this.setState({ visibleEdit: false });
+            // fetch('https://parkingsystem.herokuapp.com/api/users/')
+            // .then(results => results.json())
+            getAllEmployees()
+            .then(res => {
+                this.setState({ name:'', email:'', phoneNumber:'', role:'PARKINGCLERK', rows: res });
+            });
+        }, 2500);
+
+
+    }
 
     render() {
         console.log(this.state.rows)
         const { classes } = this.props;
-        const { rows, rowsPerPage, page, visible, email, phoneNumber, role } = this.state;
+        const { rows, rowsPerPage, page, visible, visibleEdit, email, phoneNumber, role } = this.state;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
         const Search = Input.Search;
         return (
@@ -283,6 +363,10 @@ class CustomPaginationActionsTable extends React.Component {
                         </TableHead>
                         <TableBody>
                             {this.state.rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
+                                let freezeButton='激活';
+                                if(row.status=='active'){
+                                    freezeButton='凍結'
+                                }
                                 return (
                                     <TableRow key={row.id}>
                                         <TableCell component="th" scope="row">
@@ -291,7 +375,7 @@ class CustomPaginationActionsTable extends React.Component {
                                         <TableCell>{row.name}</TableCell>
                                         <TableCell>{row.email}</TableCell>
                                         <TableCell>{row.phoneNumber}</TableCell>
-                                        <TableCell><a href=" ">修改 </a>|<a href=" "> 凍結</a></TableCell>
+                                        <TableCell><a onClick={()=>this.showEditModal(row)}>修改 </a>|<a onClick={()=>this.freezeUser(row)}> {freezeButton}</a></TableCell>
                                     </TableRow>
                                 );
                             })}
@@ -382,6 +466,54 @@ class CustomPaginationActionsTable extends React.Component {
                                 <Option value="MANAGER">MANAGER</Option>
                                 
                             </Select> */}
+                        </div>
+                    </form>
+                </Modal>
+                <Modal
+                    visible={visibleEdit}
+                    title={<span><h2>修改員工</h2></span>}
+                    onOk={this.submitEeditRequest}
+                    onCancel={this.handleEditCancel}
+                    footer={[
+                        <Button key="back" onClick={this.handleEditCancel}>取消</Button>,
+                        <Button key="submit" type="primary" onClick={()=>this.submitEditRequest(this.state.employeeId)}>
+                            確認
+                    </Button>,
+                    ]}
+                >
+                    <form className={classes.container} noValidate autoComplete="off">
+
+                        <div>
+                            <TextField
+                                id="standard-name"
+                                label="姓名"
+                                className={classes.textField}
+                                value={this.state.name}
+                                onChange={this.handleChange('name')}
+                                margin="normal"
+                            />
+                        </div>
+
+                        <div>
+                            <TextField
+                                id="standard-email"
+                                label="Email"
+                                className={classes.textField}
+                                value={this.state.email}
+                                onChange={this.handleChange('email')}
+                                margin="normal"
+                            />
+                        </div>
+
+                        <div>
+                            <TextField
+                                id="standard-phoneNumber"
+                                label="電話號碼"
+                                className={classes.textField}
+                                value={this.state.phoneNumber}
+                                onChange={this.handleChange('phoneNumber')}
+                                margin="normal"
+                            />
                         </div>
                     </form>
                 </Modal>
