@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { Menu, Icon } from 'antd';
-import {Route, Link,Switch, withRouter} from 'react-router-dom'
+import {Route, Link,Switch, withRouter, Redirect} from 'react-router-dom'
 import employeePage from './components/employeePage';
 import parkingLotPage from './components/parkingLotPage';
 import parkingClerkPage from './components/parkingClerkPage';
@@ -13,7 +13,9 @@ import Login from './user/login/Login';
 import { Layout, notification } from 'antd';
 import { ACCESS_TOKEN } from './constants';
 import AppHeader from './common/AppHeader';
-import Slider from './components/slider'
+import Slider from './components/slider';
+import PrivateRoute from './common/PrivateRoute';
+
 
 const { Header, Sider, Content } = Layout;
 class App extends Component {
@@ -67,10 +69,10 @@ class App extends Component {
   }
   
   handleLogin() {
-    notification.success({
-      message: 'Parking System',
-      description: "You're successfully logged in.",
-    });
+    // notification.success({
+    //   message: 'Parking System',
+    //   description: "You're successfully logged in.",
+    // });
     this.loadCurrentUser();
     this.props.history.push("/");
   }
@@ -123,13 +125,14 @@ class App extends Component {
 			  </div>
 			  
 			  }></Route>
-              <Route path="/employeePage" component={employeePage}></Route>
-              <Route path="/parkingLotPage" component={parkingLotPage}></Route>
-              <Route path="/parkingClerkPage" component={parkingClerkPage}></Route>
-              <Route path="/dashboardPage" component={dashboardPage}></Route>
-              <Route path="/orderPage" component={orderPage}></Route> 
-              <Route path="/nav3Page" component={()=><p style={{textAlign: 'center',marginTop:'15rem',color:'#1890ff', fontSize:'2rem'}}>Nav3 Page</p>}></Route>
-			  <Route path="/login" render={(props) => <Login onLogin={this.handleLogin} {...props} />}></Route>
+              <PrivateRoute path="/employeePage" authenticated={this.state.isAuthenticated} component={employeePage}></PrivateRoute>
+              <PrivateRoute path="/parkingLotPage" authenticated={this.state.isAuthenticated} component={parkingLotPage}></PrivateRoute>
+              <PrivateRoute path="/parkingClerkPage" authenticated={this.state.isAuthenticated} component={parkingClerkPage}></PrivateRoute>
+              <PrivateRoute path="/dashboardPage" authenticated={this.state.isAuthenticated} component={dashboardPage}></PrivateRoute>
+              <PrivateRoute path="/orderPage" authenticated={this.state.isAuthenticated} component={orderPage}></PrivateRoute> 
+              <PrivateRoute path="/nav3Page" authenticated={this.state.isAuthenticated} component={()=><p style={{textAlign: 'center',marginTop:'15rem',color:'#1890ff', fontSize:'2rem'}}>Nav3 Page</p>}></PrivateRoute>
+			        <Route path="/login" render={(props) => <Login onLogin={this.handleLogin} {...props} />}></Route>
+              <Redirect paht="*" to="/login"></Redirect>
           </Switch>
           </Content>
         </Layout>
