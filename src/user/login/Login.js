@@ -38,13 +38,13 @@ class LoginForm extends Component {
                 }).catch(error => {
                     if(error.status === 401) {
                         notification.error({
-                            message: 'Parking System',
-                            description: 'Your Username or Password is incorrect. Please try again!'
+                            message: '冰露泊車',
+                            description: '請核對您的用戶名稱及密碼, 並再次嘗試'
                         });                    
                     } else {
                         notification.error({
-                            message: 'Parking System',
-                            description: error.message || 'Sorry! Something went wrong. Please try again!'
+                            message: '冰露泊車',
+                            description: error.message || '系統出現錯誤, 請再嘗試'
                         });                                            
                     }
                 });
@@ -59,7 +59,7 @@ class LoginForm extends Component {
             <Form onSubmit={this.handleSubmit} className="login-form">
                 <FormItem>
                     {getFieldDecorator('usernameOrEmail', {
-                        rules: [{ required: true, message: 'Please input your username or email!' }],
+                        rules: [{ required: true, message: '請輸入您的用戶名稱或電郵地址' }],
                     })(
                     <Input 
                         prefix={<Icon type="user" />}
@@ -70,7 +70,7 @@ class LoginForm extends Component {
                 </FormItem>
                 <FormItem>
                 {getFieldDecorator('password', {
-                    rules: [{ required: true, message: 'Please input your Password!' }],
+                    rules: [{ required: true, message: '請輸入您的密碼' }],
                 })(
                     <Input 
                         prefix={<Icon type="lock" />}

@@ -61,8 +61,8 @@ class App extends Component {
           isLoading: false
         });
         notification.success({
-          message: 'Parking System',
-          description: "You're successfully logged in.",
+          message: '冰露泊車',
+          description: `歡迎你 ${response.name}!!!`,
         });
         
         console.log(history)
@@ -70,8 +70,8 @@ class App extends Component {
         console.log(history)
       }else{
         notification.error({
-          message: 'Parking System',
-          description: 'Your Username or Password is incorrect. Please try again!'
+          message: '冰露泊車',
+          description: '請核對您的用戶名稱及密碼, 並再次嘗試'
         });
         localStorage.removeItem(ACCESS_TOKEN);
 
@@ -110,8 +110,8 @@ class App extends Component {
     history.push("/login");
     
     notification["success"]({
-      message: 'Parking System',
-      description: "You're successfully logged out."
+      message: '冰露泊車',
+      description: "你已成功登出"
     });
   }
 
