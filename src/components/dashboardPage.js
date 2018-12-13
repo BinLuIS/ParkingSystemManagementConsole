@@ -9,8 +9,7 @@ class dashboardPage extends Component {
 		rows:[]
 	}
 	componentDidMount(){
-		getAllParkingLots.
-	then(results => results.json()).
+	getAllParkingLots().
 	then(res => {
                 this.setState({ rows: res });
             });
