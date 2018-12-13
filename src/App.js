@@ -11,7 +11,7 @@ import dashboardPage from './components/dashboardPage';
 import { getCurrentUser } from './util/APIUtils';
 import Login from './user/login/Login';
 import { Layout, notification } from 'antd';
-import { ACCESS_TOKEN } from './constants';
+import { ACCESS_TOKEN, MANAGER_ID } from './constants';
 import AppHeader from './common/AppHeader';
 import Slider from './components/slider';
 import PrivateRoute from './common/PrivateRoute';
@@ -46,17 +46,42 @@ class App extends Component {
     });
   }
   
-  loadCurrentUser() {
+  loadCurrentUser(history) {
     this.setState({
       isLoading: true
     });
+
     getCurrentUser()
-    .then(response => {
-      this.setState({
-        currentUser: response.name,
-        isAuthenticated: true,
-        isLoading: false
-      });
+    .then(response => 
+      {
+        if(response.roles.filter(role=>role.name=='ROLE_MANAGER').length>0){
+        this.setState({
+          currentUser: response.name,
+          isAuthenticated: true,
+          isLoading: false
+        });
+        notification.success({
+          message: 'Parking System',
+          description: "You're successfully logged in.",
+        });
+        
+        console.log(history)
+        this.props.history.push('/parkingClerkPage');
+        console.log(history)
+      }else{
+        notification.error({
+          message: 'Parking System',
+          description: 'Your Username or Password is incorrect. Please try again!'
+        });
+        localStorage.removeItem(ACCESS_TOKEN);
+
+        this.setState({
+          currentUser: null,
+          isAuthenticated: false
+        });
+
+        history.push("/login");
+      }
     }).catch(error => {
       this.setState({
         isLoading: false
@@ -65,19 +90,16 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.loadCurrentUser();
+    //this.loadCurrentUser();
   }
   
-  handleLogin() {
-    // notification.success({
-    //   message: 'Parking System',
-    //   description: "You're successfully logged in.",
-    // });
-    this.loadCurrentUser();
-    this.props.history.push("/");
+  handleLogin(history) {
+  
+    this.loadCurrentUser(history);
+    //this.props.history.push("/");
   }
   
-  handleLogout(redirectTo="/login", notificationType="success", description="You're successfully logged out.") {
+  handleLogout(history) {
     localStorage.removeItem(ACCESS_TOKEN);
 
     this.setState({
@@ -85,11 +107,11 @@ class App extends Component {
       isAuthenticated: false
     });
 
-    this.props.history.push(redirectTo);
+    history.push("/login");
     
-    notification[notificationType]({
+    notification["success"]({
       message: 'Parking System',
-      description: description,
+      description: "You're successfully logged out."
     });
   }
 
@@ -132,7 +154,7 @@ class App extends Component {
               <PrivateRoute path="/orderPage" authenticated={this.state.isAuthenticated} component={orderPage}></PrivateRoute> 
               <PrivateRoute path="/nav3Page" authenticated={this.state.isAuthenticated} component={()=><p style={{textAlign: 'center',marginTop:'15rem',color:'#1890ff', fontSize:'2rem'}}>Nav3 Page</p>}></PrivateRoute>
 			        <Route path="/login" render={(props) => <Login onLogin={this.handleLogin} {...props} />}></Route>
-              <Redirect paht="*" to="/login"></Redirect>
+              {/* <Redirect paht="*" to="/login"></Redirect> */}
           </Switch>
           </Content>
         </Layout>
