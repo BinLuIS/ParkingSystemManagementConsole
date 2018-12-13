@@ -22,6 +22,7 @@ import { message } from 'antd';
 import { Radio } from 'antd';
 import { Select } from 'antd';
 import { getAllEmployees, signup, editUser } from '../util/APIUtils';
+import { USER_ROLE } from '../constants';
 
 const Option = Select.Option;
 
@@ -328,6 +329,14 @@ class CustomPaginationActionsTable extends React.Component {
 
     }
 
+    showCreateUserButton=(classes)=>{
+        if(localStorage.getItem(USER_ROLE)=='ROLE_ADMIN'){
+        return <Button style={{ padding: '10px', background: '#1890ff', color: 'white', marginTop: '10px', marginLeft: '10px', marginBottom: '10px' }} variant="contained" className={classes.button} onClick={this.showModal}>新建</Button>
+        }else{
+            return <div></div>
+        }
+    }
+
     render() {
         console.log(this.state.rows)
         const { classes } = this.props;
@@ -337,7 +346,7 @@ class CustomPaginationActionsTable extends React.Component {
         return (
             <Paper className={classes.root}>
                 <div>
-                    <Button style={{ padding: '10px', background: '#1890ff', color: 'white', marginTop: '10px', marginLeft: '10px', marginBottom: '10px' }} variant="contained" className={classes.button} onClick={this.showModal}>新建</Button>
+                    {this.showCreateUserButton(classes)}
                     <Search style={{ width: 200, float: 'right', marginTop: '10px', marginBottom: '10px', marginRight: '10px' }}
                         placeholder="輸入文字搜索"
                         onSearch={value => this.searchByName(value)}

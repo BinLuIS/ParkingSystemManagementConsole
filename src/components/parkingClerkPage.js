@@ -4,6 +4,7 @@ import { signup, getAllParkingClerks, getAllParkingLots, assignParkingLotToParki
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
+import { USER_ROLE } from '../constants';
 
 var myID;
 var allLots;
@@ -156,6 +157,14 @@ export default class parkingClerksTable extends Component {
 
     }
 
+    showCreateUserButton=()=>{
+        if(localStorage.getItem(USER_ROLE)=='ROLE_ADMIN'){
+        return <Button style={{ padding: '10px', background: '#1890ff', color: 'white', marginTop: '10px', marginLeft: '10px', marginBottom: '10px' }} onClick={this.showModal}>新建</Button>
+        }else{
+            return <div></div>
+        }
+    }
+
     render() {
         const Search = Input.Search;
         const columns = [{
@@ -181,7 +190,7 @@ export default class parkingClerksTable extends Component {
 
             <div>
                 <Paper>
-                    <Button style={{ padding: '10px', background: '#1890ff', color: 'white', marginTop: '10px', marginLeft: '10px', marginBottom: '10px' }} onClick={this.showModal}>新建</Button>
+                    {this.showCreateUserButton()}
                     <Search style={{ width: 200, float: 'right', marginTop: '10px', marginBottom: '10px', marginRight: '10px' }}
                         placeholder="輸入文字搜索"
                         onSearch={value => this.searchByName(value)}

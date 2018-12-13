@@ -11,7 +11,7 @@ import dashboardPage from './components/dashboardPage';
 import { getCurrentUser } from './util/APIUtils';
 import Login from './user/login/Login';
 import { Layout, notification } from 'antd';
-import { ACCESS_TOKEN, MANAGER_ID } from './constants';
+import { ACCESS_TOKEN, USER_ROLE } from './constants';
 import AppHeader from './common/AppHeader';
 import Slider from './components/slider';
 import PrivateRoute from './common/PrivateRoute';
@@ -54,7 +54,7 @@ class App extends Component {
     getCurrentUser()
     .then(response => 
       {
-        if(response.roles.filter(role=>role.name=='ROLE_MANAGER').length>0){
+        if(response.roles.filter(role=>(role.name=='ROLE_MANAGER'||role.name=='ROLE_ADMIN')).length>0){
         this.setState({
           currentUser: response.name,
           isAuthenticated: true,
@@ -64,6 +64,12 @@ class App extends Component {
           message: '冰露泊車',
           description: `歡迎您回來，${response.name}。`,
         });
+        if(response.roles.filter(role=>(role.name=='ROLE_MANAGER')).length>0){
+          localStorage.setItem(USER_ROLE,'ROLE_MANAGER')
+        }
+        if(response.roles.filter(role=>(role.name=='ROLE_ADMIN')).length>0){
+          localStorage.setItem(USER_ROLE,'ROLE_ADMIN')
+        }
         this.props.history.push('/employeePage');
         }else{
         notification.error({
@@ -71,6 +77,7 @@ class App extends Component {
           description: '請核對您的用戶名稱及密碼, 並再次嘗試'
         });
         localStorage.removeItem(ACCESS_TOKEN);
+        localStorage.removeItem(USER_ROLE);
 
         this.setState({
           currentUser: null,
@@ -114,12 +121,12 @@ class App extends Component {
   
   handleLogout(history) {
     localStorage.removeItem(ACCESS_TOKEN);
+    localStorage.removeItem(USER_ROLE)
 
     this.setState({
       currentUser: null,
       isAuthenticated: false
     });
-
     history.push("/login");
     
     notification["success"]({
