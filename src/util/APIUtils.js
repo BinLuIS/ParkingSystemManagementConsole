@@ -102,3 +102,11 @@ export function login(loginRequest) {
         body: JSON.stringify(loginRequest)
     });
 }
+
+export function editUser(userId,editRequest) {
+    return request({
+        url: API_BASE_URL + "/users/"+userId,
+        method: 'PATCH',
+        body: JSON.stringify(editRequest)
+    });
+}
