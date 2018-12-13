@@ -82,7 +82,8 @@ class LoginForm extends Component {
                 </FormItem>
                 <FormItem>
                     <Button type="primary" htmlType="submit" size="large" className="login-form-button">登入</Button>
-                    
+                    <br></br>
+					<center><font size="5"><i>讓客人享受泊車</i></font></center>
                 </FormItem>
             </Form>
         );

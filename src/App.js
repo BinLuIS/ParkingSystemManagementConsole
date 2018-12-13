@@ -152,7 +152,15 @@ class App extends Component {
           >
           <body background="parking_lot.jpg"></body>
             <Switch>
-              <Route path="/" exact component={()=><h1 style={{textAlign: 'center',marginTop:'15rem',color:'#1890ff', fontSize:'2rem'}}>歡迎登入冰露泊車</h1>}></Route>
+              <Route path="/" exact component={()=>
+			  <div>
+			  <h1 style={{textAlign: 'center',marginTop:'15rem',color:'#1890ff', fontSize:'2rem'}}>
+			  歡迎登入冰露泊車
+			  </h1>
+			  <audio autoplay><source src="./audio/Welcome.mp3"></source></audio>
+			  </div>
+			  
+			  }></Route>
               <Route path="/employeePage" component={employeePage}></Route>
               <Route path="/parkingLotPage" component={parkingLotPage}></Route>
               <Route path="/parkingClerkPage" component={parkingClerkPage}></Route>
