@@ -13,7 +13,7 @@ import Login from './user/login/Login';
 import { Layout, notification } from 'antd';
 import { ACCESS_TOKEN } from './constants';
 import AppHeader from './common/AppHeader';
-
+import Slider from './components/slider'
 
 const { Header, Sider, Content } = Layout;
 class App extends Component {
@@ -24,7 +24,7 @@ class App extends Component {
       currentUser: null,
       isAuthenticated: false,
       isLoading: false,
-	  collapsed: false
+      collapsed: false
     }
     this.handleLogout = this.handleLogout.bind(this);
     this.loadCurrentUser = this.loadCurrentUser.bind(this);
@@ -98,45 +98,7 @@ class App extends Component {
 	  <AppHeader isAuthenticated={this.state.isAuthenticated} 
             currentUser={this.state.currentUser} 
             onLogout={this.handleLogout} />
-        <Sider
-          trigger={null}
-          collapsible
-          collapsed={this.state.collapsed}
-        >
-          <div className="logo" />
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-            <Menu.Item key="1">
-            <Link to = "/employeePage">
-              <Icon type="team" />
-              <span>員工管理</span>
-              </Link>
-            </Menu.Item>
-            <Menu.Item key="2">
-            <Link to = "/parkingLotPage">
-              <Icon type="car" />
-              <span>停車場管理</span>
-          </Link>
-            </Menu.Item>
-            <Menu.Item key="3">
-            <Link to = "/parkingClerkPage">
-              <Icon type="user" />
-              <span>停車員管理</span>
-              </Link>
-            </Menu.Item>
-            <Menu.Item key="4">
-            <Link to = "/dashboardPage">
-              <Icon type="table" />
-              <span>停車場Dashboard</span>
-              </Link>
-            </Menu.Item>
-            <Menu.Item key="5">
-            <Link to = "/orderPage">
-              <Icon type="form" />
-              <span>訂單管理</span>
-              </Link>
-            </Menu.Item>
-          </Menu>
-        </Sider>
+        <Slider isLogin={this.state.isAuthenticated}/>
         <Layout>
           <Header style={{ background: '#fff', padding: 0 }}>
             <Icon
