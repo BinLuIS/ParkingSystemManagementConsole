@@ -269,6 +269,22 @@ class CustomPaginationActionsTable extends React.Component {
 
     }
 
+    freezeUser=(employee)=>{
+        let freezeRequest=null;
+        if(employee.status=='active'){
+            freezeRequest={status:'freeze'}
+        }else{
+            freezeRequest={status:'active'}
+        }
+        editUser(employee.id,freezeRequest)
+        .then(res=>{
+            getAllEmployees()
+            .then(res => {
+                this.setState({ rows: res });
+                message.success('員工狀態修改成功');
+            });
+        })
+    }
 
     submitEditRequest = (employeeId) => {
         if(this.state.name.length<1){
@@ -347,6 +363,10 @@ class CustomPaginationActionsTable extends React.Component {
                         </TableHead>
                         <TableBody>
                             {this.state.rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
+                                let freezeButton='激活';
+                                if(row.status=='active'){
+                                    freezeButton='凍結'
+                                }
                                 return (
                                     <TableRow key={row.id}>
                                         <TableCell component="th" scope="row">
@@ -355,7 +375,7 @@ class CustomPaginationActionsTable extends React.Component {
                                         <TableCell>{row.name}</TableCell>
                                         <TableCell>{row.email}</TableCell>
                                         <TableCell>{row.phoneNumber}</TableCell>
-                                        <TableCell><a onClick={()=>this.showEditModal(row)}>修改 </a>|<a> 凍結</a></TableCell>
+                                        <TableCell><a onClick={()=>this.showEditModal(row)}>修改 </a>|<a onClick={()=>this.freezeUser(row)}> {freezeButton}</a></TableCell>
                                     </TableRow>
                                 );
                             })}
