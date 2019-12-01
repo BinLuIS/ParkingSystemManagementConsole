@@ -1,9 +1,9 @@
 # Parking System Management Console
 
 ## Background
-This repository stores the source code of our parking system backend.
+This repository stores the source code of our parking system management console.
 
-- Parking System: https://parkingwebappmobile.herokuapp.com/ (User Name: mgr, Password: mgr)
+- Parking System Mobile Web App: https://parkingwebappmobile.herokuapp.com/ (User Name: mgr, Password: mgr)
 - Parking System Management Console: https://binluis-parkingwebapp.herokuapp.com/login
 - Parking System Backend: https://parkingsystem.herokuapp.com/
 - Parking System Database: https://parkingsystem.herokuapp.com/h2-console (JDBC URL: jdbc:h2:file:./h2/binluis, User Name: sa, Blank Password)
