@@ -1,4 +1,4 @@
-# Parking System
+# Parking System Management Console
 
 ## Background
 This repository stores the source code of our parking system backend.
