@@ -1,44 +1,50 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Parking System
 
-## Available Scripts
+## Background
+This repository stores the source code of our parking system backend.
 
-In the project directory, you can run:
+- Parking System: https://parkingwebappmobile.herokuapp.com/ (User Name: mgr, Password: mgr)
+- Parking System Management Console: https://binluis-parkingwebapp.herokuapp.com/login
+- Parking System Backend: https://parkingsystem.herokuapp.com/
+- Parking System Database: https://parkingsystem.herokuapp.com/h2-console (JDBC URL: jdbc:h2:file:./h2/binluis, User Name: sa, Blank Password)
 
-### `npm start`
+Remark:
+If the credential for parking system does not work, you may signup as below:
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+POST    https://parkingsystem.herokuapp.com/api/auth/signup
 
-### `npm test`
+{
+    "name":"mgr",
+    "username":"mgr",
+    "email":"mgr@email.com",
+    "password":"mgr",
+    "phoneNumber":"98765432",
+    "role":"MANAGER"
+}
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+This parking system is the final project of a bootcamp which we joint in Nov, 2018, we learnt several technology stacks as below
 
-### `npm run build`
+### Programming Languages
+- Java
+- Javascript
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Frameworks
+- React JS
+- Spring Boot
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+## Business Logic of Parking System
+Assumption:
+We have partnered with some parking service provider which will have their own parking boys helping customers park their cars.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Our parking system is a platform showing which parking lot a customer is going to park his/her car to so that parking boys can take the order and make money. On top of that, this parking system provides a management tool, covering utilization rate of each parking lot, resource planning (who are on duty).
 
-### `npm run eject`
+Our parking system earns money by subscription for each parking service provider and advertisement.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Team Members (in alphabetical order)
+- Connie Ip (Tech Lead & Full Stack)
+- Iker Suen (Full Stack & Security Function)
+- Kyle Yip (Fullstack)
+- Joe Ho (Team Lead & Full Stack)
+- Tommy Hui (Frontend)
+- Venice Lam (Frontend)
