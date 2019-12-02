@@ -42,7 +42,7 @@ class AppHeader extends Component {
         } else {
           menuItems = [
             <Menu.Item key="/login">
-              <Link to="/login">登入</Link>
+              <Link to="/login">Login</Link>
             </Menu.Item>                
           ];
         }
@@ -51,7 +51,7 @@ class AppHeader extends Component {
             <Header className="app-header">
             <div className="container">
               <div className="app-title" >
-                <Link to="/login">冰露泊車</Link>
+                <Link to="/login">BinLu Parking System</Link>
               </div>
               <Menu
                 className="app-menu"
@@ -70,7 +70,7 @@ function ProfileDropdownMenu(props) {
   const dropdownMenu = (
     <Menu onClick={props.handleMenuClick} className="profile-dropdown-menu">
       <Menu.Item key="logout" className="dropdown-item">
-        登出
+        Logout
       </Menu.Item>
     </Menu>
   );

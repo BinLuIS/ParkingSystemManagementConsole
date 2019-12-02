@@ -11,7 +11,7 @@ class Login extends Component {
         const AntWrappedLoginForm = Form.create()(LoginForm)
         return (
             <div className="login-container">
-                <h1 className="page-title">登入</h1>
+                <h1 className="page-title">Login</h1>
                 <div className="login-content">
                     <AntWrappedLoginForm onLogin={this.props.onLogin} />
                 </div>
@@ -38,13 +38,13 @@ class LoginForm extends Component {
                 }).catch(error => {
                     if(error.status === 401) {
                         notification.error({
-                            message: '冰露泊車',
-                            description: '請核對您的用戶名稱及密碼, 並再次嘗試'
+                            message: 'BinLu Parking System',
+                            description: 'Invalid username or email. Please try again.'
                         });                    
                     } else {
                         notification.error({
-                            message: '冰露泊車',
-                            description: error.message || '系統出現錯誤, 請再嘗試'
+                            message: 'BinLu Parking System',
+                            description: error.message || 'System Error. Please contact technical support.'
                         });                                            
                     }
                 });
@@ -59,31 +59,31 @@ class LoginForm extends Component {
             <Form onSubmit={this.handleSubmit} className="login-form">
                 <FormItem>
                     {getFieldDecorator('usernameOrEmail', {
-                        rules: [{ required: true, message: '請輸入您的用戶名稱或電郵地址' }],
+                        rules: [{ required: true, message: 'Username or Email' }],
                     })(
                     <Input 
                         prefix={<Icon type="user" />}
                         size="large"
                         name="usernameOrEmail" 
-                        placeholder="登入名稱" />    
+                        placeholder="Username" />    
                     )}
                 </FormItem>
                 <FormItem>
                 {getFieldDecorator('password', {
-                    rules: [{ required: true, message: '請輸入您的密碼' }],
+                    rules: [{ required: true, message: 'Password' }],
                 })(
                     <Input 
                         prefix={<Icon type="lock" />}
                         size="large"
                         name="password" 
                         type="password" 
-                        placeholder="密碼"  />                        
+                        placeholder="Password"  />                        
                 )}
                 </FormItem>
                 <FormItem>
-                    <Button type="primary" htmlType="submit" size="large" className="login-form-button">登入</Button>
+                    <Button type="primary" htmlType="submit" size="large" className="login-form-button">Login</Button>
                     <br></br>
-					<center><font size="5"><i>讓客人享受泊車</i></font></center>
+					<center><font size="5"><i>Joyful Parking</i></font></center>
                 </FormItem>
             </Form>
         );

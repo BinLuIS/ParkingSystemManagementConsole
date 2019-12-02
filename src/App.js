@@ -61,8 +61,8 @@ class App extends Component {
           isLoading: false
         });
         notification.success({
-          message: '冰露泊車',
-          description: `歡迎您回來，${response.name}。`,
+          message: 'BinLu Parking System',
+          description: `Welcome，${response.name}。`,
         });
         if(response.roles.filter(role=>(role.name=='ROLE_MANAGER')).length>0){
           localStorage.setItem(USER_ROLE,'ROLE_MANAGER')
@@ -73,8 +73,8 @@ class App extends Component {
         this.props.history.push('/employeePage');
         }else{
         notification.error({
-          message: '冰露泊車',
-          description: '請核對您的用戶名稱及密碼, 並再次嘗試'
+          message: 'BinLu Parking System',
+          description: 'Invalid username or password. Please try again.'
         });
         localStorage.removeItem(ACCESS_TOKEN);
         localStorage.removeItem(USER_ROLE);
@@ -92,18 +92,18 @@ class App extends Component {
       });  
       if(error.status === 401) {
         notification.error({
-            message: '冰露泊車',
-            description: '請核對您的用戶名稱及密碼, 並再次嘗試'
+            message: 'BinLu Parking System',
+            description: 'Invalid username or password. Please try again.'
         });                    
       } else if(error.status === 403) {
         notification.error({
-            message: '冰露泊車',
-            description: '禁止訪問，您不被允許登錄此頁面，請重新確認'
+            message: 'BinLu Parking System',
+            description: 'Access denied. You do not have sufficient permission'
         });                    
       }else{
         notification.error({
-            message: '冰露泊車',
-            description: error.message || '系統出現錯誤, 請再嘗試'
+            message: 'BinLu Parking System',
+            description: error.message || 'System Error. Please contact technical support.'
         });                                            
     }
     });
@@ -130,8 +130,8 @@ class App extends Component {
     history.push("/login");
     
     notification["success"]({
-      message: '冰露泊車',
-      description: "你已成功登出"
+      message: 'BinLu Parking System',
+      description: "Successfully logout."
     });
   }
 
@@ -161,7 +161,7 @@ class App extends Component {
               <Route path="/" exact component={()=>
 			  <div>
 			  <h1 style={{textAlign: 'center',marginTop:'15rem',color:'#1890ff', fontSize:'2rem'}}>
-			  歡迎登入冰露泊車
+			  Welcome to BinLu Parking System
 			  </h1>
 			  <audio autoplay><source src="./audio/Welcome.mp3"></source></audio>
 			  </div>

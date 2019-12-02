@@ -214,13 +214,13 @@ class CustomPaginationActionsTable extends React.Component {
 
     submitRequest = () => {
         if(this.state.name.length<1){
-            message.error("名字需大於1個字元",3);
+            message.error("Name cannot be blank",3);
         }
         if(!this.state.email.includes('@')){
-            message.error("電郵不正確",3);
+            message.error("Invalid Email",3);
         }
         if(this.state.phoneNumber.length>11){
-            message.error("電話號碼需少於11個數字",3);
+            message.error("Phone Number should be less than 11 numbers",3);
         }
         // fetch("https://parkingsystem.herokuapp.com/api/auth/signup/",
         //     {
@@ -246,13 +246,13 @@ class CustomPaginationActionsTable extends React.Component {
             role: this.state.role,
         }
         signup(signupRequest)
-            .then(res=>message.success('成功添加員工', 2))
+            .then(res=>message.success('Successfully register a new employee', 2))
             .catch(error=>{
                 if(error.status===400){
-                    message.error("輸入資料不符規格，請重新輸入",3);
+                    message.error("Invalid Information. Please try again.",3);
                 }
                 if(error.status===500){
-                    message.error("處理申請錯誤",3);
+                    message.error("System Error. Please contact technical support.",3);
                 }
             })
         
@@ -273,29 +273,29 @@ class CustomPaginationActionsTable extends React.Component {
     freezeUser=(employee)=>{
         let freezeRequest=null;
         if(employee.status=='active'){
-            freezeRequest={status:'freeze'}
+            freezeRequest={status:'Freezed'}
         }else{
-            freezeRequest={status:'active'}
+            freezeRequest={status:'Active'}
         }
         editUser(employee.id,freezeRequest)
         .then(res=>{
             getAllEmployees()
             .then(res => {
                 this.setState({ rows: res });
-                message.success('員工狀態修改成功');
+                message.success('Successfully change status of employee');
             });
         })
     }
 
     submitEditRequest = (employeeId) => {
         if(this.state.name.length<1){
-            message.error("名字需大於1個字元",3);
+            message.error("Name cannot be blank",3);
         }
         if(!this.state.email.includes('@')){
-            message.error("電郵不正確",3);
+            message.error("Invalid Email",3);
         }
         if(this.state.phoneNumber.length>11){
-            message.error("電話號碼需少於11個數字",3);
+            message.error("Phone Number should be less than 11 numbers",3);
         }
         
         let editRequest={
@@ -305,13 +305,13 @@ class CustomPaginationActionsTable extends React.Component {
             phoneNumber: this.state.phoneNumber,
         }
         editUser(employeeId,editRequest)
-            .then(res=>message.success('成功修改員工', 2))
+            .then(res=>message.success('Successfully change employee information', 2))
             .catch(error=>{
                 if(error.status===400){
-                    message.error("輸入資料不符規格，請重新輸入",3);
+                    message.error("Invalid Information. Please try again.",3);
                 }
                 if(error.status===500){
-                    message.error("處理申請錯誤",3);
+                    message.error("System Error. Please contact technical support.",3);
                 }
             })
         
@@ -331,7 +331,7 @@ class CustomPaginationActionsTable extends React.Component {
 
     showCreateUserButton=(classes)=>{
         if(localStorage.getItem(USER_ROLE)=='ROLE_ADMIN'){
-        return <Button style={{ padding: '10px', background: '#1890ff', color: 'white', marginTop: '10px', marginLeft: '10px', marginBottom: '10px' }} variant="contained" className={classes.button} onClick={this.showModal}>新建</Button>
+        return <Button style={{ padding: '10px', background: '#1890ff', color: 'white', marginTop: '10px', marginLeft: '10px', marginBottom: '10px' }} variant="contained" className={classes.button} onClick={this.showModal}>New</Button>
         }else{
             return <div></div>
         }
@@ -348,7 +348,7 @@ class CustomPaginationActionsTable extends React.Component {
                 <div>
                     {this.showCreateUserButton(classes)}
                     <Search style={{ width: 200, float: 'right', marginTop: '10px', marginBottom: '10px', marginRight: '10px' }}
-                        placeholder="輸入文字搜索"
+                        placeholder="Search"
                         onSearch={value => this.searchByName(value)}
                         enterButton
                     />
@@ -362,19 +362,19 @@ class CustomPaginationActionsTable extends React.Component {
                         <TableHead >
                             <TableRow style={{ background: '#fafafa' }}>
                                 <TableCell style={{ color: 'black' }}><h3>ID</h3></TableCell>
-                                <TableCell style={{ color: 'black' }}><h3>姓名</h3></TableCell>
-                                <TableCell style={{ color: 'black' }}><h3>電郵</h3></TableCell>
-                                <TableCell style={{ color: 'black' }}><h3>電話號碼</h3></TableCell>
-                                <TableCell style={{ color: 'black' }}><h3>操作</h3></TableCell>
+                                <TableCell style={{ color: 'black' }}><h3>Name</h3></TableCell>
+                                <TableCell style={{ color: 'black' }}><h3>Email</h3></TableCell>
+                                <TableCell style={{ color: 'black' }}><h3>Phone Number</h3></TableCell>
+                                <TableCell style={{ color: 'black' }}><h3>Edit</h3></TableCell>
 
                             </TableRow>
 
                         </TableHead>
                         <TableBody>
                             {this.state.rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
-                                let freezeButton='激活';
+                                let freezeButton='Active';
                                 if(row.status=='active'){
-                                    freezeButton='凍結'
+                                    freezeButton='Freezed'
                                 }
                                 return (
                                     <TableRow key={row.id}>
@@ -384,7 +384,7 @@ class CustomPaginationActionsTable extends React.Component {
                                         <TableCell>{row.name}</TableCell>
                                         <TableCell>{row.email}</TableCell>
                                         <TableCell>{row.phoneNumber}</TableCell>
-                                        <TableCell><a onClick={()=>this.showEditModal(row)}>修改 </a>|<a onClick={()=>this.freezeUser(row)}> {freezeButton}</a></TableCell>
+                                        <TableCell><a onClick={()=>this.showEditModal(row)}>Edit </a>|<a onClick={()=>this.freezeUser(row)}> {freezeButton}</a></TableCell>
                                     </TableRow>
                                 );
                             })}
@@ -415,14 +415,14 @@ class CustomPaginationActionsTable extends React.Component {
                 </div>
                 <Modal
                     visible={visible}
-                    title={<span><h2>新建員工</h2></span>}
-                    title={<span><h2>新建員工</h2></span>}
+                    title={<span><h2>Register Employee</h2></span>}
+                    title={<span><h2>Register Employee</h2></span>}
                     onOk={this.submitRequest}
                     onCancel={this.handleCancel}
                     footer={[
-                        <Button key="back" onClick={this.handleCancel}>取消</Button>,
+                        <Button key="back" onClick={this.handleCancel}>Cancel</Button>,
                         <Button key="submit" type="primary" onClick={this.submitRequest}>
-                            確認
+                            Confirm
                     </Button>,
                     ]}
                 >
@@ -431,7 +431,7 @@ class CustomPaginationActionsTable extends React.Component {
                         <div>
                             <TextField
                                 id="standard-name"
-                                label="姓名"
+                                label="Name"
                                 className={classes.textField}
                                 value={this.state.name}
                                 onChange={this.handleChange('name')}
@@ -453,7 +453,7 @@ class CustomPaginationActionsTable extends React.Component {
                         <div>
                             <TextField
                                 id="standard-phoneNumber"
-                                label="電話號碼"
+                                label="Phone Number"
                                 className={classes.textField}
                                 value={this.state.phoneNumber}
                                 onChange={this.handleChange('phoneNumber')}
@@ -463,7 +463,7 @@ class CustomPaginationActionsTable extends React.Component {
                         <div>
                             <br />
                             <br />
-                            <span><h3>職位</h3></span>
+                            <span><h3>Position</h3></span>
                             <Radio.Group defaultValue="PARKINGCLERK" buttonStyle="solid" onChange={(e) => {this.setState({ role: e.target.value } );}}>
                                 <Radio.Button value="PARKINGCLERK">PARKINGCLERK</Radio.Button>
                                 <Radio.Button value="MANAGER">MANAGER</Radio.Button>
@@ -480,13 +480,13 @@ class CustomPaginationActionsTable extends React.Component {
                 </Modal>
                 <Modal
                     visible={visibleEdit}
-                    title={<span><h2>修改員工</h2></span>}
+                    title={<span><h2>Edit</h2></span>}
                     onOk={this.submitEeditRequest}
                     onCancel={this.handleEditCancel}
                     footer={[
-                        <Button key="back" onClick={this.handleEditCancel}>取消</Button>,
+                        <Button key="back" onClick={this.handleEditCancel}>Cancel</Button>,
                         <Button key="submit" type="primary" onClick={()=>this.submitEditRequest(this.state.employeeId)}>
-                            確認
+                            Confirm
                     </Button>,
                     ]}
                 >
@@ -495,7 +495,7 @@ class CustomPaginationActionsTable extends React.Component {
                         <div>
                             <TextField
                                 id="standard-name"
-                                label="姓名"
+                                label="Name"
                                 className={classes.textField}
                                 value={this.state.name}
                                 onChange={this.handleChange('name')}
@@ -517,7 +517,7 @@ class CustomPaginationActionsTable extends React.Component {
                         <div>
                             <TextField
                                 id="standard-phoneNumber"
-                                label="電話號碼"
+                                label="Phone Number"
                                 className={classes.textField}
                                 value={this.state.phoneNumber}
                                 onChange={this.handleChange('phoneNumber')}

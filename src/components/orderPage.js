@@ -172,19 +172,19 @@ class CustomPaginationActionsTable extends React.Component {
 	
 	changeRequestTypeToChinese = (e) => {
 		if(e == "parking") {
-			return "存車"
-		}return "取車"
+			return "Parking"
+		}return "Pick up"
 	}
 	
 	
 	changeStatusToBinaryClassification = (e)=> {
 		if (e == "pendingParking") {
-			return "無人處理"
+			return "Pending"
 		}
 		if (e == "completed") {
-			return "完結"
+			return "Completed"
 		}
-		return "存取中"
+		return "Parking/Picking Up"
 		
 	}
 	submitAssignRequest = () =>{console.log(this.state)}
@@ -205,7 +205,7 @@ class CustomPaginationActionsTable extends React.Component {
 	
 	assignParkingClerkToOrder = (row)=>{
 		if (row.status == "pendingParking"){
-			return <a onClick={() => this.passDatatoModal("Associate",row.id)}> 指派</a>
+			return <a onClick={() => this.passDatatoModal("Associate",row.id)}> Assign</a>
 		}
 	}
 	submitAssignRequest = (state) => {
@@ -221,7 +221,7 @@ class CustomPaginationActionsTable extends React.Component {
         //     .then(res => res.json())
         assignOrdersToParkingClerks(state.selectedClerkId,{parkingOrderId: state.id})
             .then(res => console.log(res))
-        message.success('成功指派停車員', 1);
+        message.success('A Parking Clerk is assigned', 1);
 		
 		setTimeout(() => {
             this.setState({ activeModal: null });
@@ -256,10 +256,10 @@ class CustomPaginationActionsTable extends React.Component {
                         <TableHead >
                             <TableRow style={{ background: '#fafafa' }}>
                                 <TableCell style={{ color: 'black' }}><h3>ID</h3></TableCell>
-                                <TableCell style={{ color: 'black' }}><h3>車牌號碼</h3></TableCell>
-                                <TableCell style={{ color: 'black' }}><h3>類型</h3></TableCell>
-                                <TableCell style={{ color: 'black' }}><h3>狀態</h3></TableCell>
-                                <TableCell style={{ color: 'black' }}><h3>操作</h3></TableCell>
+                                <TableCell style={{ color: 'black' }}><h3>Car Number</h3></TableCell>
+                                <TableCell style={{ color: 'black' }}><h3>Request Type</h3></TableCell>
+                                <TableCell style={{ color: 'black' }}><h3>Status</h3></TableCell>
+                                <TableCell style={{ color: 'black' }}><h3>Edit</h3></TableCell>
 
                             </TableRow>
 
@@ -304,19 +304,19 @@ class CustomPaginationActionsTable extends React.Component {
                     </Table>
                 </div>
                 <Modal
-                    title="指派"
+                    title="Assign"
                     visible={activeModal === "Associate"}
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
                     footer={[
-                        <Button key="back" onClick={this.handleCancel}>取消</Button>,
+                        <Button key="back" onClick={this.handleCancel}>Cancel</Button>,
                         <Button key="submit" type="primary" onClick={()=>this.submitAssignRequest(this.state)}>
-                            確認
+                            Confirm
                     </Button>,
                     ]}
                 >
                     <Form layout="vertical">
-					    <FormItem label="指派">
+					    <FormItem label="Assign">
                             <Select onChange={(e) => this.setState({ selectedClerkId: e })}>
                                 {this.state.parkingclecks.map(
                                     parkingCleck => {

@@ -30,31 +30,31 @@ export default class slider extends Component {
           <Menu.Item key="1">
           <Link to = "/employeePage">
             <Icon type="team" />
-            <span>員工管理</span>
+            <span>Employee Management</span>
             </Link>
           </Menu.Item>
           <Menu.Item key="2">
           <Link to = "/parkingLotPage">
             <Icon type="car" />
-            <span>停車場管理</span>
+            <span>Parking Lot Management</span>
         </Link>
           </Menu.Item>
           <Menu.Item key="3">
           <Link to = "/parkingClerkPage">
             <Icon type="user" />
-            <span>停車員管理</span>
+            <span>Parking Clerk Management</span>
             </Link>
           </Menu.Item>
           <Menu.Item key="4">
           <Link to = "/dashboardPage">
             <Icon type="table" />
-            <span>停車場Dashboard</span>
+            <span>Parking Lot Analytics Dashboard</span>
             </Link>
           </Menu.Item>
           <Menu.Item key="5">
           <Link to = "/orderPage">
             <Icon type="form" />
-            <span>訂單管理</span>
+            <span>Customer Request Management</span>
             </Link>
           </Menu.Item>          
         </Menu>

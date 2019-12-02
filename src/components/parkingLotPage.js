@@ -207,7 +207,7 @@ class CustomPaginationActionsTable extends React.Component {
         //     .then(res => res.json())
         addParkingLots({name: this.state.name,capacity: this.state.capacity})
             .then(res => console.log(res))
-        message.success('成功添加停車場', 1);
+        message.success('Successfully add parking lot', 1);
 
         setTimeout(() => {
             this.setState({ activeModal: null });
@@ -241,7 +241,7 @@ class CustomPaginationActionsTable extends React.Component {
         //     })
         //     .then(res => res.json())
         assignParkingLotToParkingClerks(this.state.selectedClerkId,{parkingLotId: this.state.id})
-        .then(res=>message.success('成功指派停車員ID ' + this.state.selectedClerkId + '管理停車場'+this.state.name, 2))
+        .then(res=>message.success('Successfully assign parking clerk (ID: ' + this.state.selectedClerkId + ') to management parking lot, '+this.state.name, 2))
 
         setTimeout(() => {
             this.setState({ activeModal: null });
@@ -276,9 +276,9 @@ class CustomPaginationActionsTable extends React.Component {
         return (
             <Paper className={classes.root}>
                 <div>
-                    <Button style={{ padding: '10px', background: '#1890ff', color: 'white', marginTop: '10px', marginLeft: '10px', marginBottom: '10px' }} variant="contained" className={classes.button} onClick={() => this.showModal("Create")}>新建</Button>
+                    <Button style={{ padding: '10px', background: '#1890ff', color: 'white', marginTop: '10px', marginLeft: '10px', marginBottom: '10px' }} variant="contained" className={classes.button} onClick={() => this.showModal("Create")}>New</Button>
                     <Search style={{ width: 200, float: 'right', marginTop: '10px', marginBottom: '10px', marginRight: '10px' }}
-                        placeholder="輸入文字搜索"
+                        placeholder="Search"
                         onSearch={value => this.searchByName(value)}
                         enterButton
                     />
@@ -292,10 +292,10 @@ class CustomPaginationActionsTable extends React.Component {
                         <TableHead >
                             <TableRow style={{ background: '#fafafa' }}>
                                 <TableCell style={{ color: 'black' }}><h3>ID</h3></TableCell>
-                                <TableCell style={{ color: 'black' }}><h3>名字</h3></TableCell>
-                                <TableCell style={{ color: 'black' }}><h3>大小</h3></TableCell>
+                                <TableCell style={{ color: 'black' }}><h3>Name</h3></TableCell>
+                                <TableCell style={{ color: 'black' }}><h3>Capacity</h3></TableCell>
                                 {/* <TableCell style={{ color: 'black' }}><h3>負責停車員</h3></TableCell> */}
-                                <TableCell style={{ color: 'black' }}><h3>操作</h3></TableCell>
+                                <TableCell style={{ color: 'black' }}><h3>Edit</h3></TableCell>
 
                             </TableRow>
 
@@ -310,7 +310,7 @@ class CustomPaginationActionsTable extends React.Component {
                                         <TableCell>{row.name}</TableCell>
                                         <TableCell>{row.capacity}</TableCell>
                                         {/* <TableCell>{row.parkingClerk}</TableCell> */}
-                                        <TableCell><a>修改 </a>|<a> 凍結 </a>|<a onClick={() => this.passDatatoModal("Associate", row.id, row.name, row.capacity)}> 指派停車員</a></TableCell>
+                                        <TableCell><a>Edit </a>|<a> Freeze </a>|<a onClick={() => this.passDatatoModal("Associate", row.id, row.name, row.capacity)}> Assign Parking Clerk</a></TableCell>
                                     </TableRow>
                                 );
                             })}
@@ -342,13 +342,13 @@ class CustomPaginationActionsTable extends React.Component {
                 {/* Creation Modal */}
                 <Modal
                     visible={activeModal === "Create"}
-                    title="新建停車場"
+                    title="Register Parking Lot"
                     onOk={this.submitRequest}
                     onCancel={this.handleCancel}
                     footer={[
-                        <Button key="back" onClick={this.handleCancel}>取消</Button>,
+                        <Button key="back" onClick={this.handleCancel}>Cancel</Button>,
                         <Button key="submit" type="primary" onClick={this.submitRequest}>
-                            確認
+                            Confirm
                     </Button>,
                     ]}
                 >
@@ -357,7 +357,7 @@ class CustomPaginationActionsTable extends React.Component {
                         <div>
                             <TextField
                                 id="standard-name"
-                                label="停車場名字"
+                                label="Parking Lot Name"
                                 className={classes.textField}
                                 value={this.state.name}
                                 onChange={this.handleChange('name')}
@@ -368,7 +368,7 @@ class CustomPaginationActionsTable extends React.Component {
                         <div>
                             <TextField
                                 id="standard-capacity"
-                                label="停車場大小"
+                                label="Parking Lot Capacity"
                                 className={classes.textField}
                                 value={this.state.capacity}
                                 onChange={this.handleChange('capacity')}
@@ -379,14 +379,14 @@ class CustomPaginationActionsTable extends React.Component {
                     </form>
                 </Modal>
                 <Modal
-                    title="指派停車員"
+                    title="Assign Parking Clerk"
                     visible={activeModal === "Associate"}
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
                     footer={[
-                        <Button key="back" onClick={this.handleCancel}>取消</Button>,
+                        <Button key="back" onClick={this.handleCancel}>Cancel</Button>,
                         <Button key="submit" type="primary" onClick={this.submitAssignRequest}>
-                            確認
+                            Confirm
                     </Button>,
                     ]}
                 >
@@ -394,13 +394,13 @@ class CustomPaginationActionsTable extends React.Component {
                         <FormItem label="ID">
                             <Input value={this.state.id} disabled />
                         </FormItem>
-                        <FormItem label="停車場名字">
+                        <FormItem label="Parking Lot Name">
                             <Input value={this.state.name} disabled />
                         </FormItem>
-                        <FormItem label="停車場大小">
+                        <FormItem label="Parking Lot Capacity">
                             <Input value={this.state.capacity} disabled />
                         </FormItem>
-                        <FormItem label="指派停車員">
+                        <FormItem label="Assign Parking Clerk">
                             <Select onChange={(e) => this.setState({ selectedClerkId: e })}>
                                 {this.state.parkingclerks.map(
                                     parkingClerk => {

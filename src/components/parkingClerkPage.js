@@ -74,7 +74,7 @@ export default class parkingClerksTable extends Component {
 
         //Assign lot to clerk
         assignParkingLotToParkingClerks(myID, { parkingLotId: moveKeys[0] })
-            .then(res => message.success('成功指派停車員ID ' + myID + '管理停車場' + parkingLotName[0].name, 2))
+            .then(res => message.success('A Parking Clerk (ID ' + myID + ') is assigned to manage Parking Lot (Name: ' + parkingLotName[0].name + ')', 2))
             .then(() => getAllParkingLots()
                 .then(res => {
                     this.setState({ lots: res });
@@ -119,13 +119,13 @@ export default class parkingClerksTable extends Component {
 
     submitRequest = (event) => {
         if (this.state.name.length < 1) {
-            message.error("名字需大於1個字元", 3);
+            message.error("Name cannot be blank", 3);
         }
         if (!this.state.email.includes('@')) {
-            message.error("電郵不正確", 3);
+            message.error("Invalid Email", 3);
         }
         if (this.state.phoneNumber.length > 11) {
-            message.error("電話號碼需少於11個數字", 3);
+            message.error("Phone Number should be less than 11 numbers", 3);
         }
         let signupRequest = {
             name: this.state.name,
@@ -137,13 +137,13 @@ export default class parkingClerksTable extends Component {
 
         }
         signup(signupRequest)
-            .then(res => { message.success('成功添加停車員', 1); })
+            .then(res => { message.success('A Parking Clerk is registered', 1); })
             .catch(error => {
                 if (error.status === 400) {
-                    message.error("輸入資料不符規格，請重新輸入", 3);
+                    message.error("Invalid Information. Please try again.", 3);
                 }
                 if (error.status === 500) {
-                    message.error("處理申請錯誤", 3);
+                    message.error("System Error. Please contact technical support.", 3);
                 }
             })
         setTimeout(() => {
@@ -159,7 +159,7 @@ export default class parkingClerksTable extends Component {
 
     showCreateUserButton=()=>{
         if(localStorage.getItem(USER_ROLE)=='ROLE_ADMIN'){
-        return <Button style={{ padding: '10px', background: '#1890ff', color: 'white', marginTop: '10px', marginLeft: '10px', marginBottom: '10px' }} onClick={this.showModal}>新建</Button>
+        return <Button style={{ padding: '10px', background: '#1890ff', color: 'white', marginTop: '10px', marginLeft: '10px', marginBottom: '10px' }} onClick={this.showModal}>New</Button>
         }else{
             return <div></div>
         }
@@ -172,15 +172,15 @@ export default class parkingClerksTable extends Component {
             dataIndex: 'id',
             key: 'id',
         }, {
-            title: '姓名',
+            title: 'Name',
             dataIndex: 'name',
             key: 'name',
         }, {
-            title: '電話號碼',
+            title: 'Phone Number',
             dataIndex: 'phoneNumber',
             key: 'phoneNumber',
         }, {
-            title: '狀態',
+            title: 'Status',
             dataIndex: 'status',
             key: 'status',
         }];
@@ -192,7 +192,7 @@ export default class parkingClerksTable extends Component {
                 <Paper>
                     {this.showCreateUserButton()}
                     <Search style={{ width: 200, float: 'right', marginTop: '10px', marginBottom: '10px', marginRight: '10px' }}
-                        placeholder="輸入文字搜索"
+                        placeholder="Search"
                         onSearch={value => this.searchByName(value)}
                         enterButton
                     />
@@ -204,7 +204,7 @@ export default class parkingClerksTable extends Component {
                                     dataSource={allLots} //left
                                     targetKeys={targetKeys} //right
                                     showSearch
-                                    titles={['可選停車場', '管理的停車場']}
+                                    titles={['Available Parking Lot', 'Parking Lot under management']}
                                     filterOption={this.filterOption}
                                     onSelectChange={this.handleSelectChange}
                                     onChange={this.handleChange}
@@ -218,14 +218,14 @@ export default class parkingClerksTable extends Component {
                     {/* Creation Modal */}
                     <Modal
                         visible={this.state.visible}
-                        title={<span><h2>新建停車員</h2></span>}
-                        title={<span><h2>新建停車員</h2></span>}
+                        title={<span><h2>Register new parking clerk</h2></span>}
+                        title={<span><h2>Register new parking clerk</h2></span>}
                         onOk={this.submitRequest}
                         onCancel={this.handleCancel}
                         footer={[
-                            <Button key="back" onClick={this.handleCancel}>取消</Button>,
+                            <Button key="back" onClick={this.handleCancel}>Cancel</Button>,
                             <Button key="submit" type="primary" onClick={this.submitRequest}>
-                                確認
+                                Confirm
                     </Button>,
                         ]}
                     >
@@ -234,7 +234,7 @@ export default class parkingClerksTable extends Component {
                             <div>
                                 <TextField
                                     id="standard-name"
-                                    label="姓名"
+                                    label="Name"
                                     value={this.state.name}
                                     onChange={this.handleFieldChange('name')}
                                     margin="normal"
@@ -254,7 +254,7 @@ export default class parkingClerksTable extends Component {
                             <div>
                                 <TextField
                                     id="standard-phoneNumber"
-                                    label="電話號碼"
+                                    label="Phone Number"
                                     value={this.state.phoneNumber}
                                     onChange={this.handleFieldChange('phoneNumber')}
                                     margin="normal"
