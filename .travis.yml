@@ -18,7 +18,7 @@ deploy:
     master: binluis-parkingwebapp
     production: binluis-parking-web
   on:
-    repo: BinLuIS/ParkingWebApp
+    repo: BinLuIS/ParkingSystemManagementConsole
 #notifications:
 #  webhooks:
 #    on_success: change  # options: [always|never|change] default: always
