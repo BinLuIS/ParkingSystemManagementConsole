@@ -204,7 +204,7 @@ export default class parkingClerksTable extends Component {
                                     dataSource={allLots} //left
                                     targetKeys={targetKeys} //right
                                     showSearch
-                                    titles={['Available Parking Lot', 'Parking Lot under management']}
+                                    titles={['Unassigned', 'Owned']}
                                     filterOption={this.filterOption}
                                     onSelectChange={this.handleSelectChange}
                                     onChange={this.handleChange}

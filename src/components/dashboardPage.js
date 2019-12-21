@@ -33,7 +33,7 @@ class dashboardPage extends Component {
                         <div style={{ display: 'flex', padding: '5px 0'}}>
                             <Card title={row.name} bordered={false}>
                                 <div>
-                                    <Progress type="circle" percent={100*row.availableCapacity/row.capacity} format={() => `${availableCapacity}/${capacity}`}  /><br /><br /><span style={{ float: "right", position: "relative", right: "25%"}}><h3>Parking Lot Utilization</h3></span>
+                                    <Progress type="circle" percent={100*row.availableCapacity/row.capacity} format={() => `${availableCapacity}/${capacity}`}  /><br /><br /><span style={{ float: "right", position: "relative", right: "10%"}}><h3>Parking Lot Utilization</h3></span>
                                 </div>
                                 <span style ={{float: "right", position: "relative", right: "10%"}}>{words}</span>
                             </Card>
