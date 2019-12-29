@@ -161,7 +161,7 @@ class App extends Component {
 			  <h1 style={{textAlign: 'center',marginTop:'15rem',color:'#1890ff', fontSize:'2rem'}}>
 			  Welcome to BinLu Parking System
 			  </h1>
-			  <audio autoplay><source src="./audio/Welcome.mp3"></source></audio>
+			  <audio autoPlay><source src="./audio/Welcome.mp3"></source></audio>
 			  </div>
 			  
 			  }></Route>
