@@ -154,7 +154,6 @@ class App extends Component {
             margin: '24px 16px', padding: 24, background: '#fff', minHeight: 750,
           }}
           >
-          <body background="parking_lot.jpg"></body>
             <Switch>
               <Route path="/" exact component={()=>
 			  <div>
