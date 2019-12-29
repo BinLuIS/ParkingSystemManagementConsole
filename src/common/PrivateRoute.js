@@ -11,7 +11,6 @@ const PrivateRoute = ({ component: Component, authenticated, ...rest }) => (
       render={props =>
         {
           if(authenticated){
-            console.log("go to component")
             return <Component {...rest} {...props} />
           }else{
             alert('You need to login to view this page', 3);

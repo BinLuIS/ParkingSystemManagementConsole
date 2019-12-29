@@ -31,7 +31,6 @@ class App extends Component {
     this.handleLogout = this.handleLogout.bind(this);
     this.loadCurrentUser = this.loadCurrentUser.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
-	{console.log(this.props)}
     notification.config({
       placement: 'topRight',
       top: 70,
