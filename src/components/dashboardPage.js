@@ -29,7 +29,7 @@ class dashboardPage extends Component {
 			{	const capacity = row.capacity
 				const availableCapacity = row.availableCapacity
 				const words = (row.parkingBoy == null) ?  "Unassigned Parking Clerk" :  "Parking Clerk: "+row.parkingBoy.name
-				return ( 	<Col span={3}>
+				return ( 	<Col span={3} key={row.id}>
                         <div style={{ display: 'flex', padding: '5px 0'}}>
                             <Card title={row.name} bordered={false}>
                                 <div>
