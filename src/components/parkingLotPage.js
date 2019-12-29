@@ -224,7 +224,6 @@ class CustomPaginationActionsTable extends React.Component {
 
     getParkingClerkId = (event) => {
         this.setState({ selectedClerkId: event })
-        console.log(this.state.selectedClerkId)
     }
 
     submitAssignRequest = () => {

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { Menu, Icon } from 'antd';
-import {Route, Link,Switch, withRouter, Redirect} from 'react-router-dom'
+import { Icon } from 'antd';
+import {Route, Switch, withRouter} from 'react-router-dom'
 import employeePage from './components/employeePage';
 import parkingLotPage from './components/parkingLotPage';
 import parkingClerkPage from './components/parkingClerkPage';
@@ -17,7 +16,7 @@ import Slider from './components/slider';
 import PrivateRoute from './common/PrivateRoute';
 
 
-const { Header, Sider, Content } = Layout;
+const { Header, Content } = Layout;
 class App extends Component {
   
   constructor(props) {
@@ -31,7 +30,6 @@ class App extends Component {
     this.handleLogout = this.handleLogout.bind(this);
     this.loadCurrentUser = this.loadCurrentUser.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
-	{console.log(this.props)}
     notification.config({
       placement: 'topRight',
       top: 70,
@@ -156,14 +154,13 @@ class App extends Component {
             margin: '24px 16px', padding: 24, background: '#fff', minHeight: 750,
           }}
           >
-          <body background="parking_lot.jpg"></body>
             <Switch>
               <Route path="/" exact component={()=>
 			  <div>
 			  <h1 style={{textAlign: 'center',marginTop:'15rem',color:'#1890ff', fontSize:'2rem'}}>
 			  Welcome to BinLu Parking System
 			  </h1>
-			  <audio autoplay><source src="./audio/Welcome.mp3"></source></audio>
+			  <audio autoPlay><source src="./audio/Welcome.mp3"></source></audio>
 			  </div>
 			  
 			  }></Route>
