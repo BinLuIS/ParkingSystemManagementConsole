@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { Menu, Icon } from 'antd';
-import {Route, Link,Switch, withRouter, Redirect} from 'react-router-dom'
+import { Icon } from 'antd';
+import {Route, Switch, withRouter} from 'react-router-dom'
 import employeePage from './components/employeePage';
 import parkingLotPage from './components/parkingLotPage';
 import parkingClerkPage from './components/parkingClerkPage';
@@ -17,7 +16,7 @@ import Slider from './components/slider';
 import PrivateRoute from './common/PrivateRoute';
 
 
-const { Header, Sider, Content } = Layout;
+const { Header, Content } = Layout;
 class App extends Component {
   
   constructor(props) {
