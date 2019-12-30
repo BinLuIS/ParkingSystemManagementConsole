@@ -294,7 +294,7 @@ class CustomPaginationActionsTable extends React.Component {
                                 <TableCell style={{ color: 'black' }}><h3>Name</h3></TableCell>
                                 <TableCell style={{ color: 'black' }}><h3>Capacity</h3></TableCell>
                                 {/* <TableCell style={{ color: 'black' }}><h3>負責停車員</h3></TableCell> */}
-                                <TableCell style={{ color: 'black' }}><h3>Edit</h3></TableCell>
+                                <TableCell style={{ color: 'black' }}><h3>Action</h3></TableCell>
 
                             </TableRow>
 
@@ -309,7 +309,7 @@ class CustomPaginationActionsTable extends React.Component {
                                         <TableCell>{row.name}</TableCell>
                                         <TableCell>{row.capacity}</TableCell>
                                         {/* <TableCell>{row.parkingClerk}</TableCell> */}
-                                        <TableCell><a>Edit </a>|<a> Freeze </a>|<a onClick={() => this.passDatatoModal("Associate", row.id, row.name, row.capacity)}> Assign Parking Clerk</a></TableCell>
+                                        <TableCell><a onClick={() => this.passDatatoModal("Associate", row.id, row.name, row.capacity)}>Assign Parking Clerk</a></TableCell>
                                     </TableRow>
                                 );
                             })}
