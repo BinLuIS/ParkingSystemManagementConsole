@@ -57,14 +57,6 @@ class TablePaginationActions extends React.Component {
             Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 1),
         );
     };
-	
-	searchByName = (value)=>{fetch('https://parkingsystem.herokuapp.com/api/users')
-            .then(results => results.json())
-            .then(res => {
-				const result = res.filter((user)=>{ return user.name.includes(value)})
-                this.setState({ rows: result });
-            });}
-
 
     render() {
         const { classes, count, page, rowsPerPage, theme } = this.props;
@@ -337,6 +329,11 @@ class CustomPaginationActionsTable extends React.Component {
         }
     }
 
+	searchByName = (value)=>{
+        getAllEmployees()
+        .then(res => {const result = res.filter((user)=>{ return user.name.includes(value)});this.setState({ rows: result })});
+    }        
+
     render() {
         const { classes } = this.props;
         const { rows, rowsPerPage, page, visible, visibleEdit, email, phoneNumber, role } = this.state;
@@ -347,7 +344,7 @@ class CustomPaginationActionsTable extends React.Component {
                 <div>
                     {this.showCreateUserButton(classes)}
                     <Search style={{ width: 200, float: 'right', marginTop: '10px', marginBottom: '10px', marginRight: '10px' }}
-                        placeholder="Search"
+                        placeholder="Search By Name"
                         onSearch={value => this.searchByName(value)}
                         enterButton
                     />
