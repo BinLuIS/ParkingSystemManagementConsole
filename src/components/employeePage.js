@@ -365,28 +365,43 @@ class CustomPaginationActionsTable extends React.Component {
                                 <TableCell style={{ color: 'black' }}><h3>Name</h3></TableCell>
                                 <TableCell style={{ color: 'black' }}><h3>Email</h3></TableCell>
                                 <TableCell style={{ color: 'black' }}><h3>Phone Number</h3></TableCell>
-                                <TableCell style={{ color: 'black' }}><h3>Edit</h3></TableCell>
+                                <TableCell style={{ color: 'black' }}><h3>Action</h3></TableCell>
 
                             </TableRow>
 
                         </TableHead>
                         <TableBody>
                             {this.state.rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
+                                console.log(row.roles[0].name)
                                 let freezeButton='Activate';
                                 if(row.status=='active'){
                                     freezeButton='Freeze'
                                 }
-                                return (
-                                    <TableRow key={row.id}>
-                                        <TableCell component="th" scope="row">
-                                            {row.id}
-                                        </TableCell>
-                                        <TableCell>{row.name}</TableCell>
-                                        <TableCell>{row.email}</TableCell>
-                                        <TableCell>{row.phoneNumber}</TableCell>
-                                        <TableCell><a onClick={()=>this.showEditModal(row)}>Edit </a>|<a onClick={()=>this.freezeUser(row)}> {freezeButton}</a></TableCell>
-                                    </TableRow>
-                                );
+                                if (row.roles[0].name == "ROLE_PARKINGCLERK"){
+                                    return (
+                                        <TableRow key={row.id}>
+                                            <TableCell component="th" scope="row">
+                                                {row.id}
+                                            </TableCell>
+                                            <TableCell>{row.name}</TableCell>
+                                            <TableCell>{row.email}</TableCell>
+                                            <TableCell>{row.phoneNumber}</TableCell>
+                                            <TableCell><a onClick={()=>this.showEditModal(row)}>Edit </a>|<a onClick={()=>this.freezeUser(row)}> {freezeButton}</a></TableCell>
+                                        </TableRow>
+                                    )
+                                }else{
+                                    return (
+                                        <TableRow key={row.id}>
+                                            <TableCell component="th" scope="row">
+                                                {row.id}
+                                            </TableCell>
+                                            <TableCell>{row.name}</TableCell>
+                                            <TableCell>{row.email}</TableCell>
+                                            <TableCell>{row.phoneNumber}</TableCell>
+                                        </TableRow>
+                                    )
+                                }
+
                             })}
                             {emptyRows > 0 && (
                                 <TableRow style={{ height: 48 * emptyRows }}>
