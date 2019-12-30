@@ -338,7 +338,6 @@ class CustomPaginationActionsTable extends React.Component {
     }
 
     render() {
-        console.log(this.state.rows)
         const { classes } = this.props;
         const { rows, rowsPerPage, page, visible, visibleEdit, email, phoneNumber, role } = this.state;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
@@ -372,7 +371,6 @@ class CustomPaginationActionsTable extends React.Component {
                         </TableHead>
                         <TableBody>
                             {this.state.rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
-                                console.log(row.roles[0].name)
                                 let freezeButton='Activate';
                                 if(row.status=='active'){
                                     freezeButton='Freeze'
