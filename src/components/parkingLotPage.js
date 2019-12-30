@@ -258,13 +258,6 @@ class CustomPaginationActionsTable extends React.Component {
 				const result = res.filter((parkingLot)=>{ return parkingLot.name.includes(value)})
                 this.setState({ rows: result });
             });}
-			
-	searchByCapacity = (value)=>{fetch('https://parkingsystem.herokuapp.com/parkinglots/')
-            .then(results => results.json())
-            .then(res => {
-				const result = res.filter((parkingLot)=>{ return parseInt(parkingLot.capacity) == value})
-                this.setState({ rows: result });
-            });}
 
     render() {
         const { classes } = this.props;
