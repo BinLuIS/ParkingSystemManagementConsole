@@ -28,14 +28,14 @@ class dashboardPage extends Component {
 			
 			{	const capacity = row.capacity
 				const availableCapacity = row.availableCapacity
-				const words = (row.parkingBoy == null) ?  "Unassigned Parking Clerk" :  "Parking Clerk: "+row.parkingBoy.name
-				return ( 	<Col span={3} key={row.id}>
-                        <div style={{ display: 'flex', padding: '5px 0'}}>
+				const words = (row.parkingBoy == null) ?  "Unassigned" :  "Parking Clerk: "+row.parkingBoy.name
+				return ( 	<Col span={4} key={row.id}>
+                        <div style={{ display: 'flex', padding: '100px 100px 100px;'}}>
                             <Card title={row.name} bordered={false}>
                                 <div>
                                     <Progress type="circle" percent={100*row.availableCapacity/row.capacity} format={() => `${availableCapacity}/${capacity}`}  /><br /><br /><span style={{ float: "right", position: "relative", right: "10%"}}><h3>Parking Lot Utilization</h3></span>
                                 </div>
-                                <span style ={{float: "right", position: "relative", right: "10%"}}>{words}</span>
+                                <span style ={{float: "center", position: "relative", right: "10%"}}>{words}</span>
                             </Card>
                         </div>
                     </Col>
