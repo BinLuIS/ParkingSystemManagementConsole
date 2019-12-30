@@ -273,9 +273,9 @@ class CustomPaginationActionsTable extends React.Component {
     freezeUser=(employee)=>{
         let freezeRequest=null;
         if(employee.status=='active'){
-            freezeRequest={status:'Freeze'}
+            freezeRequest={status:'freezed'}
         }else{
-            freezeRequest={status:'Active'}
+            freezeRequest={status:'active'}
         }
         editUser(employee.id,freezeRequest)
         .then(res=>{
@@ -372,7 +372,7 @@ class CustomPaginationActionsTable extends React.Component {
                         </TableHead>
                         <TableBody>
                             {this.state.rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
-                                let freezeButton='Active';
+                                let freezeButton='Activate';
                                 if(row.status=='active'){
                                     freezeButton='Freeze'
                                 }
