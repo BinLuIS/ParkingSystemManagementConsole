@@ -110,10 +110,6 @@ const TablePaginationActionsWrapped = withStyles(actionsStyles, { withTheme: tru
 );
 
 let counter = 0;
-function createData(employeeId, employeeName, email, phoneNumber, choice) {
-    counter += 1;
-    return { id: counter, employeeId, employeeName, email, phoneNumber, choice };
-}
 
 const styles = theme => ({
     root: {
