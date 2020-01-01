@@ -37,12 +37,12 @@ class LoginForm extends Component {
                 }).catch(error => {
                     if(error.status === 401) {
                         notification.error({
-                            message: 'BinLu Parking System',
+                            message: 'BinLu Management System',
                             description: 'Invalid username or email. Please try again.'
                         });                    
                     } else {
                         notification.error({
-                            message: 'BinLu Parking System',
+                            message: 'BinLu Management System',
                             description: error.message || 'System Error. Please contact technical support.'
                         });                                            
                     }
