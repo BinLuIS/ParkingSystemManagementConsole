@@ -187,7 +187,6 @@ export default class parkingClerksTable extends Component {
                         placeholder="Search By Name"
                         onSearch={value => this.searchByName(value)}
                         enterButton
-                        enabled
                     />
                     <Table dataSource={this.state.clerks} columns={columns}
                         expandedRowRender={
