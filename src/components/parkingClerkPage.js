@@ -178,10 +178,11 @@ export default class parkingClerksTable extends Component {
             <div>
                 <Paper>
                     {this.showCreateUserButton()}
-                    <Search style={{ width: 200, float: 'right', marginTop: '10px', marginBottom: '10px', marginRight: '10px' }}
-                        placeholder="Search"
+                    <Search style={{zIndex:1, width: 200, float:'right', marginTop: '10px', marginBottom: '10px', marginRight: '10px' }}
+                        placeholder="Search By Name"
                         onSearch={value => this.searchByName(value)}
                         enterButton
+                        enabled
                     />
                     <Table dataSource={this.state.clerks} columns={columns}
                         expandedRowRender={
