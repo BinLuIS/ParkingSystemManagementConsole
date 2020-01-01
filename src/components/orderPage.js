@@ -249,7 +249,11 @@ class CustomPaginationActionsTable extends React.Component {
                         enterButton
                     />
                 </div> */}
-
+                
+                <div>
+                <Button style={{ padding: '10px', background: '#ffffff', color: 'white', marginTop: '10px', marginLeft: '10px', marginBottom: '10px' }} className={classes.button} disabled> </Button>
+                </div>
+                
                 <div className={classes.tableWrapper}>
 
                     <Table className={classes.table}>
