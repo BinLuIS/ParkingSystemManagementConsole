@@ -389,6 +389,7 @@ class CustomPaginationActionsTable extends React.Component {
                                             <TableCell>{row.name}</TableCell>
                                             <TableCell>{row.email}</TableCell>
                                             <TableCell>{row.phoneNumber}</TableCell>
+                                            <TableCell></TableCell>
                                         </TableRow>
                                     )
                                 }
