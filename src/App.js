@@ -59,7 +59,7 @@ class App extends Component {
           isLoading: false
         });
         notification.success({
-          message: 'BinLu Parking System',
+          message: 'BinLu Management System',
           description: `Welcome，${response.name}。`,
         });
         if(response.roles.filter(role=>(role.name=='ROLE_MANAGER')).length>0){
@@ -71,7 +71,7 @@ class App extends Component {
         this.props.history.push('/employeePage');
         }else{
         notification.error({
-          message: 'BinLu Parking System',
+          message: 'BinLu Management System',
           description: 'Invalid username or password. Please try again.'
         });
         localStorage.removeItem(ACCESS_TOKEN);
@@ -90,17 +90,17 @@ class App extends Component {
       });  
       if(error.status === 401) {
         notification.error({
-            message: 'BinLu Parking System',
+            message: 'BinLu Management System',
             description: 'Invalid username or password. Please try again.'
         });                    
       } else if(error.status === 403) {
         notification.error({
-            message: 'BinLu Parking System',
+            message: 'BinLu Management System',
             description: 'Access denied. You do not have sufficient permission'
         });                    
       }else{
         notification.error({
-            message: 'BinLu Parking System',
+            message: 'BinLu Management System',
             description: error.message || 'System Error. Please contact technical support.'
         });                                            
     }
@@ -128,7 +128,7 @@ class App extends Component {
     history.push("/login");
     
     notification["success"]({
-      message: 'BinLu Parking System',
+      message: 'BinLu Management System',
       description: "Successfully logout."
     });
   }
@@ -158,7 +158,7 @@ class App extends Component {
               <Route path="/" exact component={()=>
 			  <div>
 			  <h1 style={{textAlign: 'center',marginTop:'15rem',color:'#1890ff', fontSize:'2rem'}}>
-			  Welcome to BinLu Parking System
+			  Welcome to BinLu Management System
 			  </h1>
 			  <audio autoPlay><source src="./audio/Welcome.mp3"></source></audio>
 			  </div>

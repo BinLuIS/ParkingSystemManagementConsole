@@ -80,10 +80,6 @@ export default class parkingClerksTable extends Component {
                     this.setState({ lots: res });
                 }))
 
-
-
-
-
     }
 
     handleFieldChange = name => event => {
@@ -92,15 +88,6 @@ export default class parkingClerksTable extends Component {
         });
     };
 
-    handleSearch = (dir, value) => {
-        console.log('search:', dir, value);
-    };
-
-    handleSelectChange = (sourceSelectedKeys) => {
-        //this.setState({ selectedKeys: [...sourceSelectedKeys, ...targetSelectedKeys] });
-
-        console.log('sourceSelectedKeys: ', sourceSelectedKeys);
-    }
     showModal = () => {
         this.setState({
             visible: true,
@@ -165,6 +152,11 @@ export default class parkingClerksTable extends Component {
         }
     }
 
+	searchByName = (value)=>{
+        getAllParkingClerks()
+        .then(res => {const result = res.filter((user)=>{ return user.name.includes(value)});this.setState({ clerks: result })});
+    }      
+    
     render() {
         const Search = Input.Search;
         const columns = [{
@@ -191,8 +183,8 @@ export default class parkingClerksTable extends Component {
             <div>
                 <Paper>
                     {this.showCreateUserButton()}
-                    <Search style={{ width: 200, float: 'right', marginTop: '10px', marginBottom: '10px', marginRight: '10px' }}
-                        placeholder="Search"
+                    <Search style={{zIndex:1, width: 200, float:'right', marginTop: '10px', marginBottom: '10px', marginRight: '10px' }}
+                        placeholder="Search By Name"
                         onSearch={value => this.searchByName(value)}
                         enterButton
                     />
@@ -206,9 +198,7 @@ export default class parkingClerksTable extends Component {
                                     showSearch
                                     titles={['Unassigned', 'Owned']}
                                     filterOption={this.filterOption}
-                                    onSelectChange={this.handleSelectChange}
                                     onChange={this.handleChange}
-                                    onSearch={this.handleSearch}
                                     render={item => item.title}
                                 />
                         }

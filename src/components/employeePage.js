@@ -57,14 +57,6 @@ class TablePaginationActions extends React.Component {
             Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 1),
         );
     };
-	
-	searchByName = (value)=>{fetch('https://parkingsystem.herokuapp.com/api/users')
-            .then(results => results.json())
-            .then(res => {
-				const result = res.filter((user)=>{ return user.name.includes(value)})
-                this.setState({ rows: result });
-            });}
-
 
     render() {
         const { classes, count, page, rowsPerPage, theme } = this.props;
@@ -118,10 +110,6 @@ const TablePaginationActionsWrapped = withStyles(actionsStyles, { withTheme: tru
 );
 
 let counter = 0;
-function createData(employeeId, employeeName, email, phoneNumber, choice) {
-    counter += 1;
-    return { id: counter, employeeId, employeeName, email, phoneNumber, choice };
-}
 
 const styles = theme => ({
     root: {
@@ -273,9 +261,9 @@ class CustomPaginationActionsTable extends React.Component {
     freezeUser=(employee)=>{
         let freezeRequest=null;
         if(employee.status=='active'){
-            freezeRequest={status:'Freeze'}
+            freezeRequest={status:'freezed'}
         }else{
-            freezeRequest={status:'Active'}
+            freezeRequest={status:'active'}
         }
         editUser(employee.id,freezeRequest)
         .then(res=>{
@@ -337,8 +325,12 @@ class CustomPaginationActionsTable extends React.Component {
         }
     }
 
+	searchByName = (value)=>{
+        getAllEmployees()
+        .then(res => {const result = res.filter((user)=>{ return user.name.includes(value)});this.setState({ rows: result })});
+    }        
+
     render() {
-        console.log(this.state.rows)
         const { classes } = this.props;
         const { rows, rowsPerPage, page, visible, visibleEdit, email, phoneNumber, role } = this.state;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
@@ -346,9 +338,9 @@ class CustomPaginationActionsTable extends React.Component {
         return (
             <Paper className={classes.root}>
                 <div>
-                    {this.showCreateUserButton(classes)}
+                <Button style={{ padding: '10px', background: '#ffffff', color: 'white', marginTop: '10px', marginLeft: '10px', marginBottom: '10px' }} className={classes.button} disabled> </Button>
                     <Search style={{ width: 200, float: 'right', marginTop: '10px', marginBottom: '10px', marginRight: '10px' }}
-                        placeholder="Search"
+                        placeholder="Search By Name"
                         onSearch={value => this.searchByName(value)}
                         enterButton
                     />
@@ -365,28 +357,43 @@ class CustomPaginationActionsTable extends React.Component {
                                 <TableCell style={{ color: 'black' }}><h3>Name</h3></TableCell>
                                 <TableCell style={{ color: 'black' }}><h3>Email</h3></TableCell>
                                 <TableCell style={{ color: 'black' }}><h3>Phone Number</h3></TableCell>
-                                <TableCell style={{ color: 'black' }}><h3>Edit</h3></TableCell>
+                                <TableCell style={{ color: 'black' }}><h3>Action</h3></TableCell>
 
                             </TableRow>
 
                         </TableHead>
                         <TableBody>
                             {this.state.rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
-                                let freezeButton='Active';
+                                let freezeButton='Activate';
                                 if(row.status=='active'){
                                     freezeButton='Freeze'
                                 }
-                                return (
-                                    <TableRow key={row.id}>
-                                        <TableCell component="th" scope="row">
-                                            {row.id}
-                                        </TableCell>
-                                        <TableCell>{row.name}</TableCell>
-                                        <TableCell>{row.email}</TableCell>
-                                        <TableCell>{row.phoneNumber}</TableCell>
-                                        <TableCell><a onClick={()=>this.showEditModal(row)}>Edit </a>|<a onClick={()=>this.freezeUser(row)}> {freezeButton}</a></TableCell>
-                                    </TableRow>
-                                );
+                                if (row.roles[0].name == "ROLE_PARKINGCLERK"){
+                                    return (
+                                        <TableRow key={row.id}>
+                                            <TableCell component="th" scope="row">
+                                                {row.id}
+                                            </TableCell>
+                                            <TableCell>{row.name}</TableCell>
+                                            <TableCell>{row.email}</TableCell>
+                                            <TableCell>{row.phoneNumber}</TableCell>
+                                            <TableCell><a onClick={()=>this.showEditModal(row)}>Edit </a>|<a onClick={()=>this.freezeUser(row)}> {freezeButton}</a></TableCell>
+                                        </TableRow>
+                                    )
+                                }else{
+                                    return (
+                                        <TableRow key={row.id}>
+                                            <TableCell component="th" scope="row">
+                                                {row.id}
+                                            </TableCell>
+                                            <TableCell>{row.name}</TableCell>
+                                            <TableCell>{row.email}</TableCell>
+                                            <TableCell>{row.phoneNumber}</TableCell>
+                                            <TableCell></TableCell>
+                                        </TableRow>
+                                    )
+                                }
+
                             })}
                             {emptyRows > 0 && (
                                 <TableRow style={{ height: 48 * emptyRows }}>

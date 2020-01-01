@@ -253,17 +253,9 @@ class CustomPaginationActionsTable extends React.Component {
         }, 2500);
     }
 	
-	searchByName = (value)=>{fetch('https://parkingsystem.herokuapp.com/parkinglots/')
-            .then(results => results.json())
+	searchByName = (value)=>{getAllParkingLots()
             .then(res => {
 				const result = res.filter((parkingLot)=>{ return parkingLot.name.includes(value)})
-                this.setState({ rows: result });
-            });}
-			
-	searchByCapacity = (value)=>{fetch('https://parkingsystem.herokuapp.com/parkinglots/')
-            .then(results => results.json())
-            .then(res => {
-				const result = res.filter((parkingLot)=>{ return parseInt(parkingLot.capacity) == value})
                 this.setState({ rows: result });
             });}
 
@@ -275,9 +267,9 @@ class CustomPaginationActionsTable extends React.Component {
         return (
             <Paper className={classes.root}>
                 <div>
-                    <Button style={{ padding: '10px', background: '#1890ff', color: 'white', marginTop: '10px', marginLeft: '10px', marginBottom: '10px' }} variant="contained" className={classes.button} onClick={() => this.showModal("Create")}>New</Button>
+                    <Button style={{ padding: '10px', background: '#1890ff', color: 'white', marginTop: '10px', marginLeft: '10px', marginBottom: '10px', fontSize: "11px"}} variant="contained" className={classes.button} onClick={() => this.showModal("Create")}>New</Button>
                     <Search style={{ width: 200, float: 'right', marginTop: '10px', marginBottom: '10px', marginRight: '10px' }}
-                        placeholder="Search"
+                        placeholder="Search By Name"
                         onSearch={value => this.searchByName(value)}
                         enterButton
                     />
@@ -294,7 +286,7 @@ class CustomPaginationActionsTable extends React.Component {
                                 <TableCell style={{ color: 'black' }}><h3>Name</h3></TableCell>
                                 <TableCell style={{ color: 'black' }}><h3>Capacity</h3></TableCell>
                                 {/* <TableCell style={{ color: 'black' }}><h3>負責停車員</h3></TableCell> */}
-                                <TableCell style={{ color: 'black' }}><h3>Edit</h3></TableCell>
+                                <TableCell style={{ color: 'black' }}><h3>Action</h3></TableCell>
 
                             </TableRow>
 
@@ -309,7 +301,7 @@ class CustomPaginationActionsTable extends React.Component {
                                         <TableCell>{row.name}</TableCell>
                                         <TableCell>{row.capacity}</TableCell>
                                         {/* <TableCell>{row.parkingClerk}</TableCell> */}
-                                        <TableCell><a>Edit </a>|<a> Freeze </a>|<a onClick={() => this.passDatatoModal("Associate", row.id, row.name, row.capacity)}> Assign Parking Clerk</a></TableCell>
+                                        <TableCell><a onClick={() => this.passDatatoModal("Associate", row.id, row.name, row.capacity)}>Assign Parking Clerk</a></TableCell>
                                     </TableRow>
                                 );
                             })}

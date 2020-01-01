@@ -28,14 +28,14 @@ class dashboardPage extends Component {
 			
 			{	const capacity = row.capacity
 				const availableCapacity = row.availableCapacity
-				const words = (row.parkingBoy == null) ?  "Unassigned Parking Clerk" :  "Parking Clerk: "+row.parkingBoy.name
-				return ( 	<Col span={3} key={row.id}>
-                        <div style={{ display: 'flex', padding: '5px 0'}}>
+				const words = (row.parkingBoy == null) ?  "Unassigned" : row.parkingBoy.name
+				return ( 	<Col span={4} key={row.id}>
+                        <div style={{ display: 'flex', padding: '100px 100px 100px;'}}>
                             <Card title={row.name} bordered={false}>
                                 <div>
-                                    <Progress type="circle" percent={100*row.availableCapacity/row.capacity} format={() => `${availableCapacity}/${capacity}`}  /><br /><br /><span style={{ float: "right", position: "relative", right: "10%"}}><h3>Parking Lot Utilization</h3></span>
-                                </div>
-                                <span style ={{float: "right", position: "relative", right: "10%"}}>{words}</span>
+                                    <Progress type="circle" percent={100*row.availableCapacity/row.capacity} format={() => `${availableCapacity}/${capacity}`}  /><br /><br />
+									<span><h3 style={{ textAlign: "center"}}>{words}</h3></span>
+								</div>
                             </Card>
                         </div>
                     </Col>
@@ -48,6 +48,7 @@ class dashboardPage extends Component {
     render() {
         return (
             <div style={{ background: '#ECECEC', padding: '30px' }}>
+				<h1 style={{ textAlign: "center"}}>Parking Lots Utilization</h1>
                 <Row gutter={30}>
 					{this.listCards(this.state.rows)}
                 </Row>
