@@ -338,7 +338,7 @@ class CustomPaginationActionsTable extends React.Component {
         return (
             <Paper className={classes.root}>
                 <div>
-                <Button style={{ padding: '10px', background: '#ffffff', color: 'white', marginTop: '10px', marginLeft: '10px', marginBottom: '10px' }} variant="contained" color disabled></Button>
+                <Button style={{ padding: '10px', background: '#ffffff', color: 'white', marginTop: '10px', marginLeft: '10px', marginBottom: '10px' }} className={classes.button} disabled> </Button>
                     <Search style={{ width: 200, float: 'right', marginTop: '10px', marginBottom: '10px', marginRight: '10px' }}
                         placeholder="Search By Name"
                         onSearch={value => this.searchByName(value)}
