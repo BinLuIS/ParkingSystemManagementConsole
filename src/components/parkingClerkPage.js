@@ -152,6 +152,11 @@ export default class parkingClerksTable extends Component {
         }
     }
 
+	searchByName = (value)=>{
+        getAllParkingClerks()
+        .then(res => {const result = res.filter((user)=>{ return user.name.includes(value)});this.setState({ clerks: result })});
+    }      
+    
     render() {
         const Search = Input.Search;
         const columns = [{
