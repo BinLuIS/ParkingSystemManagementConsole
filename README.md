@@ -41,16 +41,10 @@ Customers use our application to ask for car parking service in this web app, ou
 4. Create and assign a parking lot to a parking clerk<br/>
 ![Create and assign a parking lot](https://github.com/BinLuIS/ParkingSystemManagementConsole/blob/master/media/ManagementParkingLot_edit.gif)
 5. Create a car parking request at https://binluis-parking-mobile.herokuapp.com/requestformpage<br/>
-![Step5](https://github.com/BinLuIS/ParkingSystemBackend/blob/master/img/business_flow_step6.png)<br/>
-![Step5_sup](https://github.com/BinLuIS/ParkingSystemBackend/blob/master/img/business_flow_step5_sup.png)
+![Submit Car Parking Request](https://github.com/BinLuIS/ParkingSystemManagementConsole/blob/master/media/BinLuSubmitParkingRequest_edit.gif)<br/>
 6. Customer can view the status of his/her car parking request at https://binluis-parking-mobile.herokuapp.com/requestformpage<br/>
-![Step6](https://github.com/BinLuIS/ParkingSystemBackend/blob/master/img/business_flow_step6.png)<br/>
-![Step6_sup](https://github.com/BinLuIS/ParkingSystemBackend/blob/master/img/business_flow_step6_sup.png)
-7. Manager can view the status of car parking requests<br/>
-![Step7](https://github.com/BinLuIS/ParkingSystemBackend/blob/master/img/business_flow_step7.png)
-8. Manager can view the parking lot utilization rate<br/>
-![Step7](https://github.com/BinLuIS/ParkingSystemBackend/blob/master/img/business_flow_step8.png)
-9. Parking clerk accept the car parking request (Log in to https://binluis-parking-mobile.herokuapp.com/login with User name: clerk & Password: clerk)<br/>
+![Check Car Parking Request is well-received](https://github.com/BinLuIS/ParkingSystemManagementConsole/blob/master/media/BinLuSearchCarToCheckRequestReceived_edit.gif)<br/>
+7. Parking clerk accept the car parking request (Log in to https://binluis-parking-mobile.herokuapp.com/login with User name: clerk & Password: clerk)<br/>
 ![Step9](https://github.com/BinLuIS/ParkingSystemBackend/blob/master/img/business_flow_step9.png)
 
 
