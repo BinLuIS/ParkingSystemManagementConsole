@@ -37,15 +37,19 @@ Customers use our application to ask for car parking service in this web app, ou
    POST https://parkingsystem.herokuapp.com/api/auth/signup
    {"name":"mgr","username":"mgr","email":"mgr@email.com","password":"mgr","phoneNumber":"98765432","role":"MANAGER"}
 3. Log in to Management Console (https://binluis-parkingwebapp.herokuapp.com/login) with User name: mgr & Password: mgr) <br/>
-![Log In to Management Console](https://github.com/BinLuIS/ParkingSystemManagementConsole/blob/master/media/ManagementLogin_edit.gif)
+![Log in to Management Console](https://github.com/BinLuIS/ParkingSystemManagementConsole/blob/master/media/ManagementLogin_edit.gif)
 4. Create and assign a parking lot to a parking clerk<br/>
 ![Create and assign a parking lot](https://github.com/BinLuIS/ParkingSystemManagementConsole/blob/master/media/ManagementParkingLot_edit.gif)
 5. Create a car parking request at https://binluis-parking-mobile.herokuapp.com/requestformpage<br/>
-![Submit Car Parking Request](https://github.com/BinLuIS/ParkingSystemManagementConsole/blob/master/media/BinLuSubmitParkingRequest_edit.gif)<br/>
+![Submit car parking request](https://github.com/BinLuIS/ParkingSystemManagementConsole/blob/master/media/BinLuSubmitParkingRequest_edit.gif)<br/>
 6. Customer can view the status of his/her car parking request at https://binluis-parking-mobile.herokuapp.com/requestformpage<br/>
-![Check Car Parking Request is well-received](https://github.com/BinLuIS/ParkingSystemManagementConsole/blob/master/media/BinLuSearchCarToCheckRequestReceived_edit.gif)<br/>
-7. Parking clerk accept the car parking request (Log in to https://binluis-parking-mobile.herokuapp.com/login with User name: clerk & Password: clerk)<br/>
-![Step9](https://github.com/BinLuIS/ParkingSystemBackend/blob/master/img/business_flow_step9.png)
+![Check car parking request is well-received](https://github.com/BinLuIS/ParkingSystemManagementConsole/blob/master/media/BinLuSearchCarToCheckRequestReceived_edit.gif)<br/>
+7. A parking clerk logs in to https://binluis-parking-mobile.herokuapp.com/login with User name: clerk & Password: clerk)<br/>
+![Parking clerk log in to Web App](https://github.com/BinLuIS/ParkingSystemManagementConsole/blob/master/media/BinLuLogin_edit.gif)
+8. The parking clerk competes with other parking clerks for the car parking order.<br/>
+![Parking clerk compete for order](https://github.com/BinLuIS/ParkingSystemManagementConsole/blob/master/media/BinLuAcceptOrder_edit.gif)
+9. The parking clerk chooses the parking lot and drives the car to the parking log.<br/>
+![Parking clerk parks car](https://github.com/BinLuIS/ParkingSystemManagementConsole/blob/master/media/BinLuParkCar_edit.gif)
 
 
 ## Remark
