@@ -95,3 +95,6 @@ Customers use our application to ask for car parking service in this web app, ou
 - Joe Ho (Team Lead & Full Stack)
 - Tommy Hui (Frontend)
 - Venice Lam (Frontend)
+
+## Contact
+Personal Contact: joe.hochotai@gmail.com
