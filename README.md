@@ -1,6 +1,16 @@
 # Parking System Management Console
 
 If you think this project is intersting or helpful, please give it a star.
+
+## Table of Contents
+1. [Background](#background)
+2. [Business Logic of Parking System](#business-logic-of-parking-system)
+3. [Business Flow (a.k.a Quickstart)](#business-flow-aka-quickstart)
+4. [Additional Functions](#additional-functions)
+5. [Remark](#remark)
+6. [Team Members (in alphabetical order)](#team-members-in-alphabetical-order)
+7. [Contact](#contact)
+
 ## Background
 This repository stores the source code of our parking system management console.
 
