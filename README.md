@@ -30,6 +30,8 @@ Customers use our application to ask for car parking service in this web app, ou
    https://binluis-parkingwebapp.herokuapp.com/login<br/>
    https://parkingsystem.herokuapp.com<br/>
    https://parkingsystem.herokuapp.com/h2-console<br/>
+   
+   Try to refresh the above websites again if you cannot encounter the error, as the application cannot be re-started properly.
 1. Create a parking clerk account <br/>
    POST https://parkingsystem.herokuapp.com/api/auth/signup
    {"name":"clerk","username":"clerk","email":"clerk@email.com","password":"clerk","phoneNumber":"12345678","role":"PARKINGCLERK"}
@@ -48,12 +50,20 @@ Customers use our application to ask for car parking service in this web app, ou
 ![Parking clerk log in to Web App](https://github.com/BinLuIS/ParkingSystemManagementConsole/blob/master/media/BinLuLogin_edit.gif)
 8. The parking clerk competes with other parking clerks for the car parking order.<br/>
 ![Parking clerk compete for order](https://github.com/BinLuIS/ParkingSystemManagementConsole/blob/master/media/BinLuAcceptOrder_edit.gif)
-9. The parking clerk chooses the parking lot and drives the car to the parking log.<br/>
+9. The parking clerk chooses the parking lot and drives the car to the parking lot.<br/>
 ![Parking clerk parks car](https://github.com/BinLuIS/ParkingSystemManagementConsole/blob/master/media/BinLuParkCar_edit.gif)
+10. Customer can check view the status of his/her car parking request.<br/>
+![Verify customer's car is now in parking lot](https://github.com/BinLuIS/ParkingSystemManagementConsole/blob/master/media/BinLuSearchCarToCheckCarIsNowInParkingLot_edit.gif)
+11. Customer send a request to pick up car.<br/>
+![Customer send car picking up request](https://github.com/BinLuIS/ParkingSystemManagementConsole/blob/master/media/BinLuMakeCarFetchingRequest_edit.gif)
+12. Customer can check the status car picking up request.<br/>
+![Check car picking up request status](https://github.com/BinLuIS/ParkingSystemManagementConsole/blob/master/media/BinLuSearchCarToCheckParkingClerkIsFetchingTheCar_edit.gif)
+14. Parking Clerk will pick up the car and drives the car to customer's destination
+![Parking clerk pick up car](https://github.com/BinLuIS/ParkingSystemManagementConsole/blob/master/media/BinLuClerkPickUpCar_edit.gif)
 
 
 ## Remark
-Data will not persist, the database will erase all data whenever it is offline.
+1. Data will not persist, the database will erase all data whenever it is offline.
 
 ## Team Members (in alphabetical order)
 - Connie Ip (Tech Lead & Full Stack)
