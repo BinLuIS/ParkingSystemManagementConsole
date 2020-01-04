@@ -71,7 +71,9 @@ Customers use our application to ask for car parking service in this web app, ou
 4. Manager can view the status of all car parking order
 ![Customer Request](https://github.com/BinLuIS/ParkingSystemManagementConsole/blob/master/media/ManagementCustomerRequest.PNG)
 5. Manager can assign a parking clerk to handle a car parking order (possibly due to no one respond to that order)
+![Assign a parking clerk to a new parking order](https://github.com/BinLuIS/ParkingSystemManagementConsole/blob/master/media/ManagementAssignParkingClerkToNewOrder_edit.gif)
 6. Search parking lots, employees and parking clerks by their name
+![Search resources by name](https://github.com/BinLuIS/ParkingSystemManagementConsole/blob/master/media/ManagementSearchByName_edit.gif)
 
 ## Remark
 1. Data will not persist, the database will erase all data whenever it is offline.
