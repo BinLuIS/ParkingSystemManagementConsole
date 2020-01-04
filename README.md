@@ -61,6 +61,18 @@ Customers use our application to ask for car parking service in this web app, ou
 14. Parking Clerk will pick up the car and drives the car to customer's destination
 ![Parking clerk pick up car](https://github.com/BinLuIS/ParkingSystemManagementConsole/blob/master/media/BinLuClerkPickUpCar_edit.gif)
 
+## Additional Functions
+1. Parking Clerk can change his/her password.<br/>
+![Parking Clerk changes password]
+(https://github.com/BinLuIS/ParkingSystemManagementConsole/blob/master/media/BinLuClerkChangePassword_edit.gif)
+2. Manager can edit basic information of parking clerks.<br/>
+![Manager edits information of a parking clerk]
+(https://github.com/BinLuIS/ParkingSystemManagementConsole/blob/master/media/ManagementEmployee_edit.gif)
+3. Manager can view the utilization of each parking lot
+4. Manager can view the status of all car parking order
+5. Manager can assign a parking clerk to handle a car parking order (possibly due to no one respond to that order)
+6. Search parking lots, employees and parking clerks by their name
+7. Assign multiple parking lots to a parking clerk in a row
 
 ## Remark
 1. Data will not persist, the database will erase all data whenever it is offline.
